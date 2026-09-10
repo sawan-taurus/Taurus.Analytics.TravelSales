@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "99274bfef4d32bdd02e0",
+  "position": {
+    "x": 59.600886917960082,
+    "y": 400.17738359201769,
+    "z": 9000,
+    "height": 319.76348854397634,
+    "width": 1159.8521803399851,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactForecastVsSalesByBrand"
+                    }
+                  },
+                  "Property": "BrandName"
+                }
+              },
+              "queryRef": "FactForecastVsSalesByBrand.BrandName",
+              "nativeQueryRef": "Brand",
+              "active": true,
+              "displayName": "Brand"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "FactForecastVsSalesByBrand"
+                        }
+                      },
+                      "Property": "TotalSalesVolByBrand"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(FactForecastVsSalesByBrand.TotalSalesVolByBrand)",
+              "nativeQueryRef": "Sales Volume",
+              "displayName": "Sales Volume"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "FactForecastVsSalesByBrand"
+                        }
+                      },
+                      "Property": "TotalForecastVolByBrand"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(FactForecastVsSalesByBrand.TotalForecastVolByBrand)",
+              "nativeQueryRef": "Forecast Volume",
+              "displayName": "Forecast Volume"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "FactForecastVsSalesByBrand"
+                      }
+                    },
+                    "Property": "TotalSalesVolByBrand"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

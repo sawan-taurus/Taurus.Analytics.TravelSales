@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "687e0f6ee97f4a8e9c25",
+  "displayName": "TOTAL TAURUS SUMMARY",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "visualInteractions": [
+    {
+      "source": "cb6f52043e06cbab02a4",
+      "target": "0c93483b972ff2f66696",
+      "type": "DataFilter"
+    }
+  ]
+}

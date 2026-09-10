@@ -1,0 +1,511 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "9120a4f40e5d9c776657",
+  "position": {
+    "x": 0,
+    "y": 105.12968299711815,
+    "z": 4000,
+    "height": 946.16714697406337,
+    "width": 1506.85878962536,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "AGGS"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.AGGS",
+              "nativeQueryRef": "AGGS",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy2"
+                    }
+                  },
+                  "Property": "Policy3"
+                }
+              },
+              "queryRef": "DimPolicy2.Policy3",
+              "nativeQueryRef": "Policy3",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Scheme 2"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Scheme 2",
+              "nativeQueryRef": "Scheme 2",
+              "active": false
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Policies (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Policies (Cumulative)",
+              "nativeQueryRef": "Policies",
+              "displayName": "Policies"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NWP (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NWP (Cumulative)",
+              "nativeQueryRef": "NWP",
+              "displayName": "NWP"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NEP (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NEP (Cumulative)",
+              "nativeQueryRef": "NEP",
+              "displayName": "NEP"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Total Incurred (Cumulative)"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Total Incurred (Cumulative)",
+              "nativeQueryRef": "Total Incurred",
+              "displayName": "Total Incurred"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Claims Count (Cumulative)"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Claims Count (Cumulative)",
+              "nativeQueryRef": "Claims Count",
+              "displayName": "Claims Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Total Policies (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Total Policies (Cumulative)",
+              "nativeQueryRef": "Total Policies",
+              "displayName": "Total Policies"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "% Total PoliciesScheme2"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.% Total PoliciesScheme2",
+              "nativeQueryRef": "% Total Policies",
+              "displayName": "% Total Policies"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Total Retail (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Total Retail (Cumulative)",
+              "nativeQueryRef": "Total Retail",
+              "displayName": "Total Retail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "% Total RetailScheme2"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.% Total RetailScheme2",
+              "nativeQueryRef": "% Total Retail",
+              "displayName": "% Total Retail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Avg Retail2"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Avg Retail2",
+              "nativeQueryRef": "Avg Retail",
+              "displayName": "Avg Retail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NELR (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NELR (Cumulative)",
+              "nativeQueryRef": "NELR",
+              "displayName": "NELR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NELR Ex LL (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NELR Ex LL (Cumulative)",
+              "nativeQueryRef": "NELR Ex LL",
+              "displayName": "NELR Ex LL"
+            }
+          ]
+        }
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "fact_master_bdx_switched_on.AGGS"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "AGGS"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "DimPolicy2.Policy3"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "fact_master_bdx_switched_on.Scheme 2"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'DIRECT'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'MTC'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'MSM'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'IDOL'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
+      }
+    ],
+    "objects": {
+      "rowHeaders": [
+        {
+          "properties": {
+            "showExpandCollapseButtons": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#A6ADC6'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Custom'"
+                }
+              }
+            },
+            "shadowSpread": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "shadowBlur": {
+              "expr": {
+                "Literal": {
+                  "Value": "5L"
+                }
+              }
+            },
+            "angle": {
+              "expr": {
+                "Literal": {
+                  "Value": "90L"
+                }
+              }
+            },
+            "shadowDistance": {
+              "expr": {
+                "Literal": {
+                  "Value": "4L"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "85L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E0E0E0'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "4L"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "50c619808b54738ee612",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "% Total Policies"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "b40553dc8015deacb712",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "% Total Retail"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      }
+    ]
+  },
+  "howCreated": "Copilot"
+}

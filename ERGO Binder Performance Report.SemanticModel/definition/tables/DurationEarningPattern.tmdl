@@ -1,0 +1,44 @@
+table DurationEarningPattern
+	lineageTag: 48780cfb-fac6-4ec9-acf0-48cf5271a87b
+
+	column Channel
+		dataType: string
+		lineageTag: 9f8bc460-93c7-4e49-abe6-3fec549d6e62
+		sourceColumn: Channel
+
+	column Type
+		dataType: string
+		lineageTag: 01fce654-44f3-4550-b407-0fd029ef3c36
+		sourceColumn: Type
+
+	column LB
+		dataType: double
+		lineageTag: a960b375-711e-4346-958e-2bbfe3c5979c
+		sourceColumn: LB
+
+	column UB
+		dataType: double
+		lineageTag: 6940ccd4-95e3-4a2c-a6d6-1a13ae45ec6c
+		sourceColumn: UB
+
+	column EarningPctText
+		dataType: string
+		lineageTag: 28315035-7442-4dad-b57a-19599fdbd138
+		sourceColumn: EarningPctText
+
+	column EarningPctValue = IFERROR(VALUE(SUBSTITUTE(DurationEarningPattern[EarningPctText], "%", "")) / 100, 0)
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 1454ed47-05ec-4e14-b6ae-9293d11d64fa
+
+	partition DurationEarningPattern = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-mcybvrzqd3tufdttrjbjhzokdi.datawarehouse.fabric.microsoft.com", "taurus_lakehouse"),
+				    Data = Source{[Schema="bronze",Item="duration_st_earning_pattern"]}[Data],
+				    Renamed = Table.RenameColumns(Data, {{"channel","Channel"},{"type","Type"},{"lb","LB"},{"ub","UB"},{"earning%","EarningPctText"}}),
+				    Typed = Table.TransformColumnTypes(Renamed, {{"Channel", type text}, {"Type", type text}, {"LB", type number}, {"UB", type number}, {"EarningPctText", type text}})
+				in
+				    Typed
+

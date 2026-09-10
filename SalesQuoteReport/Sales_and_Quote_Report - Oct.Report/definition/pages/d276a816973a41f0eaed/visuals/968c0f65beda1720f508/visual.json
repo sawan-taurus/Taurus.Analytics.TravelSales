@@ -1,0 +1,622 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "968c0f65beda1720f508",
+  "position": {
+    "x": 0,
+    "y": 334.94363929146539,
+    "z": 2000,
+    "height": 187.56843800322062,
+    "width": 844.05797101449275,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimMedicalScore"
+                    }
+                  },
+                  "Property": "MedicalScore"
+                }
+              },
+              "queryRef": "DimMedicalScore.MedicalScore",
+              "nativeQueryRef": "Medical Score",
+              "displayName": "Medical Score"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimMedicalScore"
+                    }
+                  },
+                  "Property": "SingleTripMSPer"
+                }
+              },
+              "queryRef": "DimMedicalScore.SingleTripMSPer",
+              "nativeQueryRef": "Single Trip",
+              "displayName": "Single Trip"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "FactSales"
+                        }
+                      },
+                      "Property": "TotalSaleVolume"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(FactSalesAnalysis.RecordCount)",
+              "nativeQueryRef": "Actual Volume",
+              "displayName": "Actual Volume"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactForecastByChannel"
+                    }
+                  },
+                  "Property": "MedicalScoreSingleForecastVolByChannel"
+                }
+              },
+              "queryRef": "FactForecastByChannel.MedicalScoreSingleForecastVolByChannel",
+              "nativeQueryRef": "Forecast Volume1",
+              "displayName": "Forecast Volume"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactForecastByChannel"
+                    }
+                  },
+                  "Property": "MedicalScoreSingleVarianceByChannel"
+                }
+              },
+              "queryRef": "FactForecastByChannel.MedicalScoreSingleVarianceByChannel",
+              "nativeQueryRef": "Variance1",
+              "displayName": "Variance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactForecastByChannel"
+                    }
+                  },
+                  "Property": "MedicalScoreSingleTrend"
+                }
+              },
+              "queryRef": "FactForecastByChannel.MedicalScoreSingleTrend",
+              "nativeQueryRef": "Trend",
+              "displayName": "Trend"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "FactEnquiries"
+                        }
+                      },
+                      "Property": "IsQuoted"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(FactEnquiries.IsQuoted)",
+              "nativeQueryRef": "IsQuoted",
+              "displayName": "IsQuoted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactEnquiries"
+                    }
+                  },
+                  "Property": "MedicalScoreConversionRate"
+                }
+              },
+              "queryRef": "FactEnquiries.MedicalScoreConversionRate",
+              "nativeQueryRef": "Conversion Rate",
+              "displayName": "Conversion Rate"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridHorizontalWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "64.49284758354906D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "FactForecastByChannel.MedicalScoreSingleTrend"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "124.4924560977166D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "FactForecastByChannel.MedicalScoreSingleVarianceByChannel"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "126.42718145933463D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "FactForecastByChannel.MedicalScoreSingleForecastVolByChannel"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "116.68667304717492D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(FactSalesAnalysis.RecordCount)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "91.16769767963025D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DimMedicalScore.SingleTripMSPer"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "117.9788132825424D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DimMedicalScore.MedicalScore"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "6aab3dfe270dc3eb0030",
+        "ordinal": 0,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "TotalGrossExcIPT"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "691fe0821a8a30acc40a",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimPolicyType"
+              }
+            },
+            "Property": "PolicyType"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "DimPolicyType",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "PolicyType"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Single'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "36534db10d2b641407cb",
+        "ordinal": 2,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "TotalSaleVolume"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c4db0c86c4e0671289a0",
+        "ordinal": 3,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimDuration"
+                  }
+                },
+                "Property": "SingleTrip"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "40a189f864b212ecce7d",
+        "ordinal": 4,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimMedicalScore"
+              }
+            },
+            "Property": "MedicalScore"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "DimMedicalScore",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "d"
+                              }
+                            },
+                            "Property": "MedicalScore"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "c4e28a528265dfe6d34b",
+        "ordinal": 5,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimMedicalScore"
+              }
+            },
+            "Property": "SingleTripMSPer"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "74a04c35de5b3ef234cc",
+        "ordinal": 6,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactForecastByChannel"
+              }
+            },
+            "Property": "MedicalScoreSingleForecastVolByChannel"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b950670617e26e0debbe",
+        "ordinal": 7,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactForecastByChannel"
+              }
+            },
+            "Property": "MedicalScoreSingleVarianceByChannel"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "548e3a2d94352926d508",
+        "ordinal": 8,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactForecastByChannel"
+              }
+            },
+            "Property": "MedicalScoreSingleTrend"
+          }
+        },
+        "type": "Advanced"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

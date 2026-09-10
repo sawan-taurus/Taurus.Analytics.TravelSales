@@ -1,0 +1,267 @@
+table FactDailyReport
+	lineageTag: 48d55412-9084-42ff-99dc-092c4a7c6db2
+	sourceLineageTag: [dbo].[FactDailyReport]
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: c2e42b79-b73f-4d79-8992-66674774fe60
+		sourceLineageTag: DateId
+		summarizeBy: none
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeSubsetId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 5b0f0281-5485-4b71-91bd-4085113a4a23
+		sourceLineageTag: SchemeSubsetId
+		summarizeBy: none
+		sourceColumn: SchemeSubsetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateVol
+		dataType: double
+		formatString: 0
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 51d0f0c4-72c7-4858-b783-2018766d1765
+		sourceLineageTag: DateVol
+		summarizeBy: sum
+		sourceColumn: DateVol
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column DateRetail
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: b4c8e6bf-01d6-4657-820e-c2ea2237a1d3
+		sourceLineageTag: DateRetail
+		summarizeBy: sum
+		sourceColumn: DateRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTDVol
+		dataType: double
+		formatString: 0
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 5b82132e-05cb-4c2f-a48d-19685293cb70
+		sourceLineageTag: MTDVol
+		summarizeBy: sum
+		sourceColumn: MTDVol
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MTDRetail
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 0a1a9a07-b228-4ad7-acf3-68c6b66cda9d
+		sourceLineageTag: MTDRetail
+		summarizeBy: sum
+		sourceColumn: MTDRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvgPolPerDay
+		dataType: double
+		formatString: 0
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 302f105c-d5b1-4f72-8960-ac296bb05373
+		sourceLineageTag: AvgPolPerDay
+		summarizeBy: sum
+		sourceColumn: AvgPolPerDay
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column AvgP
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 50509243-2b1d-47a4-b539-88574a01a85e
+		sourceLineageTag: AvgP
+		summarizeBy: sum
+		sourceColumn: AvgP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EstMonEndVol
+		dataType: double
+		formatString: 0
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 45053219-289e-4fc9-8ac0-75133ad352cd
+		sourceLineageTag: EstMonEndVol
+		summarizeBy: sum
+		sourceColumn: EstMonEndVol
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column EstMonEndRetail
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: f883e515-a980-463e-9bd9-2d6c334b9827
+		sourceLineageTag: EstMonEndRetail
+		summarizeBy: sum
+		sourceColumn: EstMonEndRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EstMonEndGrossMargin
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: fbb383cb-bc63-4d7b-84d0-f21db7f23390
+		sourceLineageTag: EstMonEndGrossMargin
+		summarizeBy: sum
+		sourceColumn: EstMonEndGrossMargin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EstMonEndNetMargin
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 67c3b19d-ce47-45ee-aa8f-c57952387020
+		sourceLineageTag: EstMonEndNetMargin
+		summarizeBy: sum
+		sourceColumn: EstMonEndNetMargin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PerToFCastRetail
+		dataType: string
+		sourceProviderType: decimal(18, 2)
+		lineageTag: e59564f4-f493-43d9-96f6-ff88883f3c85
+		sourceLineageTag: PerToFCastRetail
+		summarizeBy: none
+		sourceColumn: PerToFCastRetail
+
+		changedProperty = FormatString
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerToFCastMargin
+		dataType: string
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 7b235370-1232-45a2-9988-91bf9a5b6b29
+		sourceLineageTag: PerToFCastMargin
+		summarizeBy: none
+		sourceColumn: PerToFCastMargin
+
+		changedProperty = FormatString
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerToFCastNo
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: b37496f0-1090-46c7-98ca-ecdb143f8f4d
+		sourceLineageTag: PerToFCastNo
+		summarizeBy: sum
+		sourceColumn: PerToFCastNo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GPW
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 66cc6392-5272-42d7-a673-027e64b683fd
+		sourceLineageTag: GPW
+		summarizeBy: sum
+		sourceColumn: GPW
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TaurusGrossRetained
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 53c6d92c-c217-4f76-b5c6-93c8b5b423b7
+		sourceLineageTag: TaurusGrossRetained
+		summarizeBy: sum
+		sourceColumn: TaurusGrossRetained
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TaurusNetRetained
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: e46cfff6-94b7-49b0-a492-1ff57245ca90
+		sourceLineageTag: TaurusNetRetained
+		summarizeBy: sum
+		sourceColumn: TaurusNetRetained
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvGrossMargin
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: c72e4002-a6ee-4055-9e6a-63ea3674786e
+		sourceLineageTag: AvGrossMargin
+		summarizeBy: sum
+		sourceColumn: AvGrossMargin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvNetMargin
+		dataType: double
+		sourceProviderType: decimal(18, 2)
+		lineageTag: 15d61c67-7341-4e34-a8ae-418e561b365e
+		sourceLineageTag: AvNetMargin
+		summarizeBy: sum
+		sourceColumn: AvNetMargin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactDailyReport = entity
+		mode: directLake
+		source
+			entityName: FactDailyReport
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

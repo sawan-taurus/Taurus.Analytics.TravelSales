@@ -1,0 +1,12 @@
+relationship 2304b5b8-0329-f459-92fc-737e40780970
+	fromColumn: fact_claims_switched_on.Policy3
+	toColumn: DimPolicy2.Policy3
+
+relationship 7fc28d4b-39ea-62c4-6c61-5201497817c8
+	fromColumn: fact_master_bdx_switched_on.Policy2
+	toColumn: DimPolicy2.Policy3
+
+relationship DimPolicy2_Policy3_PolicyTypeOrder_PolicyType
+	fromColumn: DimPolicy2.Policy3
+	toColumn: PolicyTypeOrder.PolicyType
+

@@ -1,0 +1,35 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["DimDate","DimSchemeHeaders","DimTravelBrand","DimLeadTimeGroup","DimDuration","DimPolicyType","DimChannel","DimDestination","DimFamilyGroup","DimAgeGroup","DimCountry","DimOption","DimMedicalScore","FactSalesAnalysis","FactQuoteAnalysis","DimMarketingChannel"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.146.1454.0 (25.08)+901d6c338d1dea81ac3e53073ffb10469f0f37b8
+
+ref table DimDate
+ref table DateTableTemplate_e8d6f13f-9e9e-4855-8192-0efb2aaa4915
+ref table LocalDateTable_a6b11c58-870f-4891-b42a-d8ae726014d7
+ref table DimSchemeHeaders
+ref table DimTravelBrand
+ref table DimLeadTimeGroup
+ref table DimDuration
+ref table DimPolicyType
+ref table DimChannel
+ref table DimDestination
+ref table DimFamilyGroup
+ref table DimAgeGroup
+ref table DimCountry
+ref table DimOption
+ref table DimMedicalScore
+ref table FactSalesAnalysis
+ref table FactQuoteAnalysis
+ref table DimMarketingChannel
+
+ref cultureInfo en-US
+

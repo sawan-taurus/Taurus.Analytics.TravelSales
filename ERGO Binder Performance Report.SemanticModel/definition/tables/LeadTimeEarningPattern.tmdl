@@ -1,0 +1,51 @@
+table LeadTimeEarningPattern
+	lineageTag: 98b310a2-b722-4655-95f5-c1dff9b92d06
+
+	column Channel
+		dataType: string
+		lineageTag: e11036c7-f614-45ed-b47d-cbe573e0aac6
+		sourceColumn: Channel
+
+	column Type
+		dataType: string
+		lineageTag: 27006162-419a-4b7d-8c5c-b57adbad4419
+		sourceColumn: Type
+
+	column LB
+		dataType: double
+		lineageTag: bfc71a36-27ef-4bc3-9009-34ab487758e0
+		sourceColumn: LB
+
+	column UB
+		dataType: double
+		lineageTag: 91fb768a-1e76-44ff-874b-b109554906d9
+		sourceColumn: UB
+
+	column LeadTimeBanding
+		dataType: int64
+		lineageTag: 52e1084e-a3fb-401e-9775-de9230c9aec0
+		sourceColumn: LeadTimeBanding
+
+	column PctText
+		dataType: string
+		lineageTag: ea3cb06d-095b-4ac2-9802-b37a528c899a
+		sourceColumn: PctText
+
+	column PctValue = IFERROR(VALUE(SUBSTITUTE(LeadTimeEarningPattern[PctText], "%", "")) / 100, 0)
+		dataType: double
+		formatString: 0.00%
+		lineageTag: fc73693b-165b-4f11-b163-210d2e561e43
+
+	partition LeadTimeEarningPattern = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-mcybvrzqd3tufdttrjbjhzokdi.datawarehouse.fabric.microsoft.com", "taurus_lakehouse"),
+				    Data = Source{[Schema="bronze",Item="leadtime_st_earning_pattern"]}[Data],
+				    Renamed = Table.RenameColumns(Data, {{"channel","Channel"},{"type","Type"},{"lb","LB"},{"ub","UB"}}),
+				    Unpivoted = Table.UnpivotOtherColumns(Renamed, {"Channel","Type","LB","UB"}, "LeadTimeBandingText", "PctText"),
+				    Typed = Table.TransformColumnTypes(Unpivoted, {{"Channel", type text}, {"Type", type text}, {"LB", type number}, {"UB", type number}, {"LeadTimeBandingText", Int64.Type}, {"PctText", type text}}),
+				    Renamed2 = Table.RenameColumns(Typed, {{"LeadTimeBandingText","LeadTimeBanding"}})
+				in
+				    Renamed2
+

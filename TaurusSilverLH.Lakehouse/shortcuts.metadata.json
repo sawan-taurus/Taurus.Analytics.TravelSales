@@ -1,0 +1,230 @@
+[
+  {
+    "name": "silver_travel_sales_transactions_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactions",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transactions_oasis",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactions",
+        "itemId": "4bfdc9ab-670f-442c-b37c-0d54c9e85cf7",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transactions_atoz",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactions",
+        "itemId": "806726c4-96e8-41e6-a404-46c140efae38",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transaction_persons_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactionPersons",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transaction_persons_oasis",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactionPersons",
+        "itemId": "4bfdc9ab-670f-442c-b37c-0d54c9e85cf7",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transaction_persons_atoz",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactionPersons",
+        "itemId": "806726c4-96e8-41e6-a404-46c140efae38",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transaction_options_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactionOptions",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transaction_options_oasis",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactionOptions",
+        "itemId": "4bfdc9ab-670f-442c-b37c-0d54c9e85cf7",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_sales_transaction_options_atoz",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactionOptions",
+        "itemId": "806726c4-96e8-41e6-a404-46c140efae38",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_enquiry_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelEnquiry",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_enquiry_results_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelEnquiryResults",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_enquiry_persons_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelEnquiryPersons",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_travel_enquiry_options_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelEnquiryOptions",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_schemes_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblSchemes",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_schemes_oasis",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblSchemes",
+        "itemId": "4bfdc9ab-670f-442c-b37c-0d54c9e85cf7",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_schemes_atoz",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblSchemes",
+        "itemId": "806726c4-96e8-41e6-a404-46c140efae38",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_scheme_headers_sales",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblSchemeHeaders",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_scheme_headers_oasis",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblSchemeHeaders",
+        "itemId": "4bfdc9ab-670f-442c-b37c-0d54c9e85cf7",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "silver_scheme_headers_atoz",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblSchemeHeaders",
+        "itemId": "806726c4-96e8-41e6-a404-46c140efae38",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  }
+]

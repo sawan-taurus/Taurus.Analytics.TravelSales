@@ -1,0 +1,29 @@
+table DimAgent
+	lineageTag: 749d2b76-3129-4ce6-ae54-629c63b8a64d
+
+	column AgentId
+		dataType: int64
+		formatString: 0
+		lineageTag: fab1811a-866d-4b9d-979c-a656f3aab059
+		summarizeBy: none
+		sourceColumn: AgentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgentName
+		dataType: string
+		lineageTag: 47e0e188-9c0e-42ce-9e8e-2f3d7b4ddbbc
+		summarizeBy: none
+		sourceColumn: AgentName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimAgent = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimAgent = Source{[Schema="dbo",Item="DimAgent"]}[Data]
+				in
+				    dbo_DimAgent
+

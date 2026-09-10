@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "ad264515d7b52095867f",
+  "position": {
+    "x": 171.69555388093445,
+    "y": 57.874905802562175,
+    "z": 19000,
+    "height": 59.804069329314245,
+    "width": 176.51846269781464,
+    "tabOrder": 18000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimLeadTimeGroup"
+                    }
+                  },
+                  "Property": "LeadTimeGroup"
+                }
+              },
+              "queryRef": "DimLeadTimeGroup.LeadTimeGroup",
+              "nativeQueryRef": "Lead Time Group",
+              "active": true,
+              "displayName": "Lead Time Group"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,59 @@
+table DimDestination
+	lineageTag: 333108fb-bf90-4ddd-86ec-bd362e8d01ba
+
+	column DestinationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 136bf966-06b5-4f21-8c87-bd2aac23ac03
+		summarizeBy: none
+		sourceColumn: DestinationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Destination
+		dataType: string
+		lineageTag: d7d25c9d-ee0d-4b8c-85f6-e5fe1a756ddd
+		summarizeBy: none
+		sourceColumn: Destination
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 1397c90e-eb66-4217-9da8-86c6013e3ff0
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column SingleTrip
+		dataType: double
+		lineageTag: 1a829aa4-3ce9-45a0-b11d-acc548709304
+		summarizeBy: sum
+		sourceColumn: SingleTrip
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMT
+		dataType: double
+		lineageTag: 87f57f54-020d-4e26-aee9-1a6ce9f9c2ff
+		summarizeBy: sum
+		sourceColumn: AMT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimDestination = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimDestination = Source{[Schema="dbo",Item="DimDestination"]}[Data]
+				in
+				    dbo_DimDestination
+
+	annotation PBI_ResultType = Table
+

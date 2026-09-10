@@ -1,0 +1,180 @@
+table SalesAnalysis
+	lineageTag: 498dc5b5-5484-4b71-ac90-c43218a5e10d
+
+	column Brand
+		dataType: string
+		lineageTag: 1a8e1fc2-eb23-4450-9809-6a8a7fba5851
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeName
+		dataType: string
+		lineageTag: e3400906-37d7-4889-a789-7a5870063d30
+		summarizeBy: none
+		sourceColumn: SchemeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 20e561f1-7b82-424c-873a-4b7b469acad4
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 65c87cd4-3287-4b15-81f4-433f4408fdf1
+		summarizeBy: none
+		sourceColumn: TransactionDate
+
+		variation Variation
+			isDefault
+			relationship: 808f8558-6f98-4872-9163-08448474c551
+			defaultHierarchy: LocalDateTable_47f2314f-3985-4209-800c-e06846ff6992.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyType
+		dataType: string
+		lineageTag: e8df33a1-0e72-4979-8659-685ec07cd93e
+		summarizeBy: none
+		sourceColumn: PolicyType
+
+		annotation SummarizationSetBy = Automatic
+
+	column FriendlyName
+		dataType: string
+		lineageTag: 87f19f0a-c3f5-4087-ab69-ab025758a69c
+		summarizeBy: none
+		sourceColumn: FriendlyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Destination
+		dataType: string
+		lineageTag: 772c4f45-5e9b-4ed1-aaed-84aa02140c68
+		summarizeBy: none
+		sourceColumn: Destination
+
+		annotation SummarizationSetBy = Automatic
+
+	column Territory_Trip
+		dataType: string
+		lineageTag: 12a7f389-a2c5-446d-a1ca-6e717726888b
+		summarizeBy: none
+		sourceColumn: Territory_Trip
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroupLabel
+		dataType: string
+		lineageTag: f6d17773-2e92-4615-83f3-83f28b6e79c0
+		summarizeBy: none
+		sourceColumn: AgeGroupLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duration
+		dataType: int64
+		formatString: 0
+		lineageTag: c90f5881-6b75-4b64-8bd8-46bdcafdac21
+		summarizeBy: sum
+		sourceColumn: Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTimeGroup
+		dataType: string
+		lineageTag: edb14214-b7a3-47c9-93e7-169d02995d1e
+		summarizeBy: none
+		sourceColumn: LeadTimeGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column VeriskMedicalScoreGroup
+		dataType: string
+		lineageTag: 75abf0fc-c49f-40df-a386-4c6ef1606c75
+		summarizeBy: none
+		sourceColumn: VeriskMedicalScoreGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column OptionName
+		dataType: string
+		lineageTag: 57af4284-b3d8-4304-b812-37bce0f79d88
+		summarizeBy: none
+		sourceColumn: OptionName
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyGroup
+		dataType: string
+		lineageTag: a609e3b5-0af5-4d5d-9536-1bd1bd400e9e
+		summarizeBy: none
+		sourceColumn: FamilyGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c4f9682-b3eb-4f8c-a185-a5cb80cd94b0
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column GWPincIPTDay
+		dataType: double
+		lineageTag: c7dc4006-e595-4626-b4dc-a6cda480bd5e
+		summarizeBy: sum
+		sourceColumn: GWPincIPTDay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GWPexIPTDay
+		dataType: double
+		lineageTag: a0e94f07-d41f-4812-a280-5ec0099d36e7
+		summarizeBy: sum
+		sourceColumn: GWPexIPTDay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Year = YEAR(SalesAnalysis[TransactionDate])
+		formatString: 0
+		lineageTag: da989161-cacc-45e0-9406-553b564b8bb1
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month = ```
+			FORMAT(SalesAnalysis[TransactionDate], "MMMM")
+			
+			```
+		lineageTag: cf209ab2-20c7-44a4-a06c-862cd2ebed58
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SalesAnalysis = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusBronzeLH"),
+				    dbo_salesanalysis = Source{[Schema="dbo",Item="salesanalysis"]}[Data]
+				in
+				    dbo_salesanalysis
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

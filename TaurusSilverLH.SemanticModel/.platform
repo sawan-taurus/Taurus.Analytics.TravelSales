@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "TaurusSilverLH"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2395f50e-11d6-83a4-4a37-04a22d2cd42e"
+  }
+}

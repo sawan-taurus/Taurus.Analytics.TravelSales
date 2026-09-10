@@ -1,0 +1,665 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "4634bce1d1d40651d02d",
+  "position": {
+    "x": 314.51933701657458,
+    "y": 411.04972375690608,
+    "z": 3000,
+    "height": 308.15469613259665,
+    "width": 965.30386740331483,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimLeadTimeGroup"
+                    }
+                  },
+                  "Property": "LeadTimeGroup"
+                }
+              },
+              "queryRef": "DimLeadTimeGroup.LeadTimeGroup",
+              "nativeQueryRef": "Lead Time Group",
+              "displayName": "Lead Time Group"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimLeadTimeGroup"
+                    }
+                  },
+                  "Property": "SingleTripPer"
+                }
+              },
+              "queryRef": "DimLeadTimeGroup.SingleTripPer",
+              "nativeQueryRef": "Single Trip",
+              "displayName": "Single Trip"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "FactSales"
+                        }
+                      },
+                      "Property": "TotalSaleVolume"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(FactSalesAnalysis.RecordCount)",
+              "nativeQueryRef": "Actual Volume",
+              "displayName": "Actual Volume"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactForecastByChannel"
+                    }
+                  },
+                  "Property": "LeadTimeGroupForecastVolByChannel"
+                }
+              },
+              "queryRef": "FactForecastByChannel.LeadTimeGroupForecastVolByChannel",
+              "nativeQueryRef": "Forecast Volume",
+              "displayName": "Forecast Volume"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactForecastByChannel"
+                    }
+                  },
+                  "Property": "LeadTimeGroupTrend"
+                }
+              },
+              "queryRef": "FactForecastByChannel.LeadTimeGroupTrend",
+              "nativeQueryRef": "Trend",
+              "displayName": "Trend"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactForecastByChannel"
+                    }
+                  },
+                  "Property": "LeadTimeGroupVarianceByChannel"
+                }
+              },
+              "queryRef": "FactForecastByChannel.LeadTimeGroupVarianceByChannel",
+              "nativeQueryRef": "Variance",
+              "displayName": "Variance"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "FactEnquiries"
+                        }
+                      },
+                      "Property": "IsQuoted"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(FactEnquiries.IsQuoted)",
+              "nativeQueryRef": "Enquiries Quoted",
+              "displayName": "Enquiries Quoted"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FactEnquiries"
+                    }
+                  },
+                  "Property": "LeadTimeGroupConversionRate"
+                }
+              },
+              "queryRef": "FactEnquiries.LeadTimeGroupConversionRate",
+              "nativeQueryRef": "Conversion Rate",
+              "displayName": "Conversion Rate"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DimLeadTimeGroup"
+                  }
+                },
+                "Property": "LeadTimeGroup"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridHorizontalWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "57.9022525884002D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "FactForecastByChannel.LeadTimeGroupTrend"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "112.85177025275705D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "FactForecastByChannel.LeadTimeGroupVarianceByChannel"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "131.37334113010354D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(FactSalesAnalysis.RecordCount)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "112.63283049337508D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DimLeadTimeGroup.SingleTripPer"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "139.335393940904D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "DimLeadTimeGroup.LeadTimeGroup"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "126.42718897604932D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "FactForecastByChannel.LeadTimeGroupForecastVolByChannel"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "6aab3dfe270dc3eb0030",
+        "ordinal": 0,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "TotalGrossExcIPT"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "691fe0821a8a30acc40a",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimPolicyType"
+              }
+            },
+            "Property": "PolicyType"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "DimPolicyType",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "PolicyType"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Single'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "36534db10d2b641407cb",
+        "ordinal": 2,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactSales"
+                  }
+                },
+                "Property": "TotalSaleVolume"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e819a50fee6fff9bfc23",
+        "ordinal": 3,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimLeadTimeGroup"
+              }
+            },
+            "Property": "LeadTimeGroup"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "DimLeadTimeGroup",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "d"
+                              }
+                            },
+                            "Property": "LeadTimeGroup"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'Invalid Dates'"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'Invalid (<0)'"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "c13f7b1b25deb0efa672",
+        "ordinal": 4,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimLeadTimeGroup"
+              }
+            },
+            "Property": "SingleTripPer"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "441b321580232f07f510",
+        "ordinal": 5,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactForecastByChannel"
+              }
+            },
+            "Property": "LeadTimeGroupForecastVolByChannel"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a06add6fa1c5ba248f73",
+        "ordinal": 6,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactForecastByChannel"
+              }
+            },
+            "Property": "LeadTimeGroupVarianceByChannel"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b51b7357f573452c6c6a",
+        "ordinal": 7,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactForecastByChannel"
+              }
+            },
+            "Property": "LeadTimeGroupTrend"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "85b1ef0856ab4f007729",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "FactEnquiries"
+                  }
+                },
+                "Property": "IsQuoted"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "8fb49110c890f8a3ac3d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "FactEnquiries"
+              }
+            },
+            "Property": "LeadTimeGroupConversionRate"
+          }
+        },
+        "type": "Advanced"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

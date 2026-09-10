@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Warehouse",
+    "displayName": "TaurusWH"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f2147c92-84fa-a24e-4085-cc3b803397c4"
+  }
+}

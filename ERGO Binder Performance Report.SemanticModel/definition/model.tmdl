@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["LeadTimeEarningPattern","DurationEarningPattern","OverallEarningPattern","AmtEarningPattern"]
+
+annotation PBI_ProTooling = ["WebModelingEdit","DaxQueryView_Desktop","MCP-PBIModeling"]
+
+ref table fact_claims_switched_on
+ref table fact_master_bdx_switched_on
+ref table DimPolicy2
+ref table PolicyTypeOrder
+ref table UnderwritingYearSelector
+ref table LeadTimeEarningPattern
+ref table DurationEarningPattern
+ref table OverallEarningPattern
+ref table AmtEarningPattern
+ref table Brand
+
+ref cultureInfo en-US
+

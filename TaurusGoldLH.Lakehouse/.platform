@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "TaurusGoldLH"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d5fab183-43b1-81c6-4e5a-0efed69a91e4"
+  }
+}

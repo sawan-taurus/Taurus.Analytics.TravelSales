@@ -1,0 +1,362 @@
+table FactSalesAndQuotes
+	lineageTag: fbc36611-9bff-4698-a113-9ee38cada386
+
+	measure TotalSalesFormatted = ```
+			
+			VAR Total = SUM('FactSalesAndQuotes'[TotalSales])
+			RETURN IF(Total = 0 || ISBLANK(Total), BLANK(), FORMAT(Total, "#,##0.00"))
+			
+			
+			```
+		lineageTag: 7d8d5036-b253-4bf7-9192-7855c2eddf33
+
+	measure DurationForecastVol = ```
+			
+			IF(
+			    HASONEVALUE(DimDuration[Duration]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAndQuotes[TotalSales]),
+			            REMOVEFILTERS(DimDuration),
+			            DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimDuration[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimDuration[Duration]),
+			        VAR DurationValue = [Duration]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimDuration[SingleTrip],
+			                DimDuration[Duration], DurationValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAndQuotes[TotalSales]),
+			                REMOVEFILTERS(DimLeadTimeGroup),
+			                DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: c2091295-5f9b-450b-9fbc-244bf78bceca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DurationActualPerPer = ```
+			
+			    IF(HASONEVALUE(DimDuration[Duration]),
+			    FORMAT(DIVIDE(SUM(FactSalesAndQuotes[TotalSales]),
+			    CALCULATE(SUM(FactSalesAndQuotes[TotalSales]),
+			    REMOVEFILTERS(DimDuration)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			```
+		lineageTag: 4476452c-1302-4fbd-a461-13cdd68ac164
+
+	measure DurationVolumeDiff =
+			
+			DIVIDE(
+			    SUM(FactSalesAndQuotes[TotalSales]) - [DurationForecastVolume],
+			    [DurationForecastVolume],
+			    0
+			)
+		lineageTag: ee6c4837-b27a-4c2b-9f71-c987fe26e585
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DurationVarianceSQ = ```
+			
+			    IF(HASONEVALUE(DimDuration[Duration]),
+			    FORMAT([DurationActualPerPer]-VALUES(DimDuration[SingleTrip]),
+			    "0.00")& "%",BLANK()
+			)
+			```
+		lineageTag: 77074338-b0d2-4099-b3eb-2668bcc3b907
+
+	measure MedicalScoreActualPerPer = ```
+			
+			    IF(HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    FORMAT(DIVIDE(SUM(FactSalesAndQuotes[TotalSales]),
+			    CALCULATE(SUM(FactSalesAndQuotes[TotalSales]),
+			    REMOVEFILTERS(DimMedicalScore)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			```
+		lineageTag: 3f266902-c590-49cb-84a1-d4c11ae16ff7
+
+	measure MedicalScoreSingleForecastVol = ```
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAndQuotes[TotalSales]),
+			            REMOVEFILTERS(DimMedicalScore),
+			            DimMedicalScore[MedicalScore] IN { 
+			                "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimMedicalScore[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimMedicalScore[MedicalScore]),
+			        VAR MedicalScoreValue = [MedicalScore]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimMedicalScore[SingleTrip],
+			                DimMedicalScore[MedicalScore], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAndQuotes[TotalSales]),
+			                REMOVEFILTERS(DimMedicalScore),
+			                DimMedicalScore[MedicalScore] IN { 
+			                    "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                    "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: dcdc1b1f-3d57-42a5-b6d7-34ad4909de3b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreAMTForecastVol = ```
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAndQuotes[TotalSales]),
+			            REMOVEFILTERS(DimMedicalScore),
+			            DimMedicalScore[MedicalScore] IN { 
+			                "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimMedicalScore[AMT])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimMedicalScore[MedicalScore]),
+			        VAR MedicalScoreValue = [MedicalScore]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimMedicalScore[AMT],
+			                DimMedicalScore[MedicalScore], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAndQuotes[TotalSales]),
+			                REMOVEFILTERS(DimMedicalScore),
+			                DimMedicalScore[MedicalScore] IN { 
+			                    "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                    "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: 8325f7cf-d252-4195-9624-5c75bf019e09
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ConversionRate = ```
+			
+			DIVIDE(
+			    SUM('FactSalesAndQuotes'[TotalSales]),
+			    SUM('FactSalesAndQuotes'[TotalEnquiry]),
+			    0
+			)
+			
+			```
+		formatString: 0.0000
+		lineageTag: f1db754c-ab57-4a2b-880f-bb5463747d30
+
+	column DateID
+		dataType: int64
+		formatString: 0
+		lineageTag: 68d7ef1b-f954-44f5-8afe-7050d0aee4fb
+		summarizeBy: none
+		sourceColumn: DateID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: dfad0b2f-0be6-40eb-9661-b49cd9d47631
+		summarizeBy: none
+		sourceColumn: ChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgentId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c7ed027-e803-426d-a404-84136b5d9e32
+		summarizeBy: none
+		sourceColumn: AgentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignId
+		dataType: int64
+		formatString: 0
+		lineageTag: 66591dfc-111b-4b32-98ca-ba94a6e70af6
+		summarizeBy: none
+		sourceColumn: CampaignId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeHeaderId
+		dataType: int64
+		formatString: 0
+		lineageTag: 773fe310-58e3-4756-9c64-f37d62431217
+		summarizeBy: none
+		sourceColumn: SchemeHeaderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalSales
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ea3aaa8-a3af-46e4-a6a3-d0a8a45a2c51
+		summarizeBy: sum
+		sourceColumn: TotalSales
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalGrossIncIPT
+		dataType: double
+		lineageTag: 90ac748d-0804-4342-b941-bd1995a3912c
+		summarizeBy: sum
+		sourceColumn: TotalGrossIncIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalNetToUnderwriter
+		dataType: double
+		lineageTag: 3e34858c-8885-47e4-ac36-f5bbada4b307
+		summarizeBy: sum
+		sourceColumn: TotalNetToUnderwriter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LeadTimeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 27d806d6-9f1e-4352-9658-fde905be6f51
+		summarizeBy: none
+		sourceColumn: LeadTimeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DurationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 323dd575-920f-4be4-ac08-cf2697708f63
+		summarizeBy: none
+		sourceColumn: DurationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 91c29578-b684-494f-8d87-bd4c9d15a109
+		summarizeBy: none
+		sourceColumn: AgeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MedicalScoreId
+		dataType: int64
+		formatString: 0
+		lineageTag: cffa38c4-0d45-4d08-af90-7d27a758cd75
+		summarizeBy: none
+		sourceColumn: MedicalScoreId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalEnquiry
+		dataType: int64
+		formatString: 0
+		lineageTag: 97c8b0f1-54fc-4cf2-80f2-1e05644a568b
+		summarizeBy: sum
+		sourceColumn: TotalEnquiry
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalQuote
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d8bcfc5-1e36-417f-a29d-25c0ff991099
+		summarizeBy: sum
+		sourceColumn: TotalQuote
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuoteToEnquiryRate
+		dataType: double
+		lineageTag: 319cd702-35f4-44b2-bb3d-61a8bfd27718
+		summarizeBy: sum
+		sourceColumn: QuoteToEnquiryRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesToEnquiryRate
+		dataType: double
+		lineageTag: 5d086185-e081-4ef9-81b1-dcf7d61a04d7
+		summarizeBy: sum
+		sourceColumn: SalesToEnquiryRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesToQuoteRate
+		dataType: double
+		lineageTag: 9712a840-2994-43e0-9e92-477948cbf2f0
+		summarizeBy: sum
+		sourceColumn: SalesToQuoteRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactSalesAndQuotes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactSalesAndQuotes = Source{[Schema="dbo",Item="FactSalesAndQuotes"]}[Data]
+				in
+				    dbo_FactSalesAndQuotes
+

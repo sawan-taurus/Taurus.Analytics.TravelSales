@@ -1,0 +1,41 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["DimDate","DimSchemeHeaders","DimTravelBrand","DimLeadTimeGroup","DimDuration","DimPolicyType","DimChannel","DimDestination","DimFamilyGroup","DimAgeGroup","DimCountry","DimOption","DimMedicalScore","FactSales","FactEnquiryQuotes","DimMarketingChannel","FactSalesAndQuotes","DimCampaign","DimAgent","FactForecastByChannel","FactEnquiries","FactForecastByBrand","DimSubChannel"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","WebModelingEdit"]
+
+ref table DimDate
+ref table DimSchemeHeaders
+ref table DimTravelBrand
+ref table DimLeadTimeGroup
+ref table DimDuration
+ref table DimPolicyType
+ref table DimChannel
+ref table DimDestination
+ref table DimFamilyGroup
+ref table DimAgeGroup
+ref table DimCountry
+ref table DimOption
+ref table DimMedicalScore
+ref table FactSales
+ref table FactEnquiryQuotes
+ref table DimMarketingChannel
+ref table FactSalesAndQuotes
+ref table DimCampaign
+ref table DimAgent
+ref table FactForecastByChannel
+ref table FactEnquiries
+ref table FactForecastVsSalesByBrand
+ref table FactForecastByBrand
+ref table DimSubChannel
+
+ref cultureInfo en-US
+

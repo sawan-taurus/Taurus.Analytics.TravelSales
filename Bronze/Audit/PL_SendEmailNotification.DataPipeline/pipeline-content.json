@@ -1,0 +1,81 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "ACT_ITRC_IF_checkSucessOrFailure",
+        "description": "Success notification will be invoked if success flag is passed else failure notification is sent.",
+        "type": "IfCondition",
+        "dependsOn": [],
+        "typeProperties": {
+          "expression": {
+            "value": "@pipeline().parameters.par_successflag",
+            "type": "Expression"
+          },
+          "ifFalseActivities": [
+            {
+              "name": "ACT_GEN_WEB_sendFailureNotification",
+              "description": "This activity is used to send failure notifications to users.",
+              "type": "Office365Outlook",
+              "dependsOn": [],
+              "typeProperties": {
+                "inputs": {
+                  "method": "post",
+                  "path": "/v2/Mail",
+                  "body": {
+                    "To": "@pipeline().parameters.par_emailRecipients",
+                    "Subject": "PIPELINE FAILED",
+                    "Body": "<p>This file is failed</p>",
+                    "Sensitivity": "",
+                    "Importance": "Normal"
+                  }
+                }
+              }
+            }
+          ],
+          "ifTrueActivities": [
+            {
+              "name": "ACT_GEN_WEB_sendSuccessNotificatio",
+              "description": "This activity is used to send success notifications to users.",
+              "type": "Office365Outlook",
+              "dependsOn": [],
+              "typeProperties": {
+                "inputs": {
+                  "method": "post",
+                  "path": "/v2/Mail",
+                  "body": {
+                    "To": "@pipeline().parameters.par_emailRecipients",
+                    "Subject": "PIPELINE SUCCEEDED",
+                    "Body": "<p><u><strong>Pipeline Run Succeeded</strong></u></p>\n<p><span style=\"font-size: 24px\"><strong>The pipeline has been executed successfully</strong></span></p>\n<p>Please refer to below items for more details.&nbsp;</p>\n<p>Pipeline Name: @{pipeline().Pipeline}</p>\n<p>Pipeline Run Id: @{string(pipeline().TriggeredByPipelineRunId)}</p>\n<p>Pipeline Start Time: @{formatDateTime(pipeline().TriggerTime, 'dd-MMM-yyyy hh:mm:ss:tt')}</p>\n<p>Questions? Contact team Travel at: sawan@taurus.gi</p>",
+                    "Sensitivity": "",
+                    "Importance": "Normal"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "parameters": {
+      "par_successflag": {
+        "type": "bool"
+      },
+      "par_error_details": {
+        "type": "string"
+      },
+      "par_emailRecipients": {
+        "type": "string",
+        "defaultValue": "sawan@taurus.gi; memblin@taurus.gi"
+      }
+    },
+    "logicAppsConnectionPayload": {
+      "id": "/subscriptions/bd35c8c7-483f-4fc5-889e-0c759e5cd67a/resourceGroups/connections-9c958852-649b-48e2-ac6a-f03167ff64dc/providers/Microsoft.Web/connections/1_3a3565a2-2a52-4119-a214-0193dd3f556f_b9c416fa-9872-4c57-86df-61eeef33693d",
+      "properties": {
+        "api": {
+          "name": "office365",
+          "id": "/subscriptions/bd35c8c7-483f-4fc5-889e-0c759e5cd67a/providers/Microsoft.Web/locations/northeurope/managedApis/office365"
+        }
+      }
+    }
+  }
+}

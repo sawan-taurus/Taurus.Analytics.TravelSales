@@ -1,0 +1,1369 @@
+table FactSalesAnalysis
+	lineageTag: 9c3652cd-033f-4c85-a97c-3d8c428e5d4a
+
+	measure ForecastVolume = ```
+			
+			IF(
+			    HASONEVALUE(DimLeadTimeGroup[LeadTimeGroup]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[RecordCount]),
+			            REMOVEFILTERS(DimLeadTimeGroup),
+			            DimLeadTimeGroup[LeadTimeGroup] IN { "0 to 3", "4 to 8", "16 to 30", "31 to 60", "61+", "9 to 15"}
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimLeadTimeGroup[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimLeadTimeGroup[LeadTimeGroup]),
+			        VAR LeadTimeGroupValue = [LeadTimeGroup]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimLeadTimeGroup[SingleTrip],
+			                DimLeadTimeGroup[LeadTimeGroup], LeadTimeGroupValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[RecordCount]),
+			                REMOVEFILTERS(DimLeadTimeGroup),
+			                DimLeadTimeGroup[LeadTimeGroup] IN { "0 to 3", "4 to 8", "16 to 30", "31 to 60", "61+", "9 to 15"}
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 08edfa45-3610-4c8c-9d57-2227c89019e3
+
+	measure ForecastGross = ```
+			
+			IF(
+			    HASONEVALUE(DimLeadTimeGroup[LeadTimeGroup]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			            REMOVEFILTERS(DimLeadTimeGroup),
+			            DimLeadTimeGroup[LeadTimeGroup] IN { "0 to 3", "4 to 8", "16 to 30", "31 to 60", "61+", "9 to 15"}
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimLeadTimeGroup[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimLeadTimeGroup[LeadTimeGroup]),
+			        VAR LeadTimeGroupValue = [LeadTimeGroup]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimLeadTimeGroup[SingleTrip],
+			                DimLeadTimeGroup[LeadTimeGroup], LeadTimeGroupValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			                REMOVEFILTERS(DimLeadTimeGroup),
+			                DimLeadTimeGroup[LeadTimeGroup] IN { "0 to 3", "4 to 8", "16 to 30", "31 to 60", "61+", "9 to 15"}
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			
+			```
+		lineageTag: be98db3b-2b28-496b-840e-91be36032de6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure VolumeStatus = ```
+			
+			VAR Difference = [VariancePer]
+			VAR ThresholdAmber = -0.4 * SUM(FactSalesAnalysis[RecordCount])
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Difference > 0, "Up",
+			        Difference <= 0 && Difference >= ThresholdAmber, "Amber",
+			        Difference < ThresholdAmber, "Down"
+			    )
+			
+			```
+		lineageTag: 730b02a8-77ff-4c32-b496-2abd92ac802a
+
+	measure VolumeTrendIconOnly = ```
+			
+			VAR Difference = [VariancePer]
+			VAR ThresholdAmber = -0.4 * SUM(FactSalesAnalysis[RecordCount])
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Difference > 0, "🟢 ▲",         // Green circle + up arrow
+			        Difference <= 0 && Difference >= ThresholdAmber, "🟠 ▼",  // Amber circle + down arrow
+			        Difference < ThresholdAmber, "🔴 ▼"         // Red circle + down arrow
+			    )
+			
+			```
+		lineageTag: 238bfcae-90a7-4292-8ec8-c86143d25c2a
+
+	measure GrossDifferences =
+			
+			VAR GrossDiff = SUM(FactSalesAnalysis[TotalGrossExcIPT]) - [ForecastGross]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ABS(GrossDiff) >= 1000000000, FORMAT(GrossDiff / 1000000000, "0.00") & "B",
+			    ABS(GrossDiff) >= 1000000, FORMAT(GrossDiff / 1000000, "0.00") & "M",
+			    ABS(GrossDiff) >= 1000, FORMAT(GrossDiff / 1000, "0") & "K",
+			    FORMAT(GrossDiff, "0")
+			)
+		lineageTag: cc9c3ef2-b9d5-4ae8-b39d-05b5ae4e74bb
+
+	measure MedicalScoreForecastVolume = ```
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[RecordCount]),
+			            REMOVEFILTERS(DimMedicalScore),
+			            DimMedicalScore[MedicalScore] IN { 
+			                "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimMedicalScore[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimMedicalScore[MedicalScore]),
+			        VAR MedicalScoreValue = [MedicalScore]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimMedicalScore[SingleTrip],
+			                DimMedicalScore[MedicalScore], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[RecordCount]),
+			                REMOVEFILTERS(DimMedicalScore),
+			                DimMedicalScore[MedicalScore] IN { 
+			                    "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                    "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 185496e4-cf75-4db7-8f96-2fa8f130e31d
+
+	measure MedicalScoreForecastGross = ```
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			            REMOVEFILTERS(DimMedicalScore),
+			            DimMedicalScore[MedicalScore] IN { 
+			                "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimMedicalScore[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimMedicalScore[MedicalScore]),
+			        VAR MedicalScoreValue = [MedicalScore]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimMedicalScore[SingleTrip],
+			                DimMedicalScore[MedicalScore], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			                REMOVEFILTERS(DimMedicalScore),
+			                DimMedicalScore[MedicalScore] IN { 
+			                    "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                    "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: 63ff31ab-ba20-43dc-aec1-aa93e07e8faa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreVolumeDifferences =
+			
+			DIVIDE(
+			    SUM(FactSalesAnalysis[RecordCount]) - [MedicalScoreForecastVolume],
+			    [ForecastVolume],
+			    0
+			)
+		lineageTag: 58a47ba3-2c3e-481d-b5ae-88d66906aa5d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreVolumeTrendIconOnly = ```
+			
+			VAR ForecastVolume = [MedicalScoreForecastVolume]
+			VAR ActualVolume = SUM(FactSalesAnalysis[RecordCount])
+			VAR Difference = ActualVolume - ForecastVolume
+			VAR ThresholdAmber = -0.4 * ActualVolume
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Difference > 0, "🟢 ▲",         
+			        Difference <= 0 && Difference >= ThresholdAmber, "🟠 ▼",  
+			        Difference < ThresholdAmber, "🔴 ▼"         
+			    )
+			
+			```
+		lineageTag: 511f7435-9210-4291-8a09-2f08a98996aa
+
+	measure MedicalScroeGrossDifferences =
+			
+			VAR GrossDiff = SUM(FactSalesAnalysis[TotalGrossExcIPT]) - [MedicalScoreForecastGross]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ABS(GrossDiff) >= 1000000000, FORMAT(GrossDiff / 1000000000, "0.00") & "B",
+			    ABS(GrossDiff) >= 1000000, FORMAT(GrossDiff / 1000000, "0.00") & "M",
+			    ABS(GrossDiff) >= 1000, FORMAT(GrossDiff / 1000, "0") & "K",
+			    FORMAT(GrossDiff, "0")
+			)
+		lineageTag: 3ea71856-fc43-4b17-b68c-0fd97c6fc026
+
+	measure MedicalScoreAMTForecastVolume = ```
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[RecordCount]),
+			            REMOVEFILTERS(DimMedicalScore),
+			            DimMedicalScore[MedicalScore] IN { 
+			                "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimMedicalScore[AMT])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimMedicalScore[MedicalScore]),
+			        VAR MedicalScoreValue = [MedicalScore]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimMedicalScore[AMT],
+			                DimMedicalScore[MedicalScore], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[RecordCount]),
+			                REMOVEFILTERS(DimMedicalScore),
+			                DimMedicalScore[MedicalScore] IN { 
+			                    "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                    "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: b85cd5f6-04c9-44bd-af82-b653fc01f356
+
+	measure MedicalScoreAMTForecastGross = ```
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			            REMOVEFILTERS(DimMedicalScore),
+			            DimMedicalScore[MedicalScore] IN { 
+			                "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimMedicalScore[AMT])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimMedicalScore[MedicalScore]),
+			        VAR MedicalScoreValue = [MedicalScore]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimMedicalScore[AMT],
+			                DimMedicalScore[MedicalScore], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			                REMOVEFILTERS(DimMedicalScore),
+			                DimMedicalScore[MedicalScore] IN { 
+			                    "0 to 0.99", "1.00", "1.01 to 1.5", 
+			                    "1.51 to 2.5", "2.51 to 6.0", "6.01 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: fd9711f2-b715-41ac-a235-06df56fd5590
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreAMTVolumeDifferences =
+			
+			DIVIDE(
+			    SUM(FactSalesAnalysis[RecordCount]) - [MedicalScoreAMTForecastVolume],
+			    [MedicalScoreAMTForecastVolume],
+			    0
+			)
+		lineageTag: b6e5215b-d235-405d-af23-6cf4c5190e0f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreAMTVolumeTrendIconOnly = ```
+			
+			VAR ForecastVolume = [MedicalScoreAMTForecastVolume]
+			VAR ActualVolume = SUM(FactSalesAnalysis[RecordCount])
+			VAR Difference = ActualVolume - ForecastVolume
+			VAR ThresholdAmber = -0.4 * ActualVolume
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Difference > 0, "🟢 ▲",         
+			        Difference <= 0 && Difference >= ThresholdAmber, "🟠 ▼",  
+			        Difference < ThresholdAmber, "🔴 ▼"         
+			    )
+			
+			```
+		lineageTag: cf252d61-1ba9-4e1c-bb75-693eda223f7b
+
+	measure MedicalScroeAMTGrossDifferences =
+			
+			VAR GrossDiff = SUM(FactSalesAnalysis[TotalGrossExcIPT]) - [MedicalScoreAMTForecastGross]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ABS(GrossDiff) >= 1000000000, FORMAT(GrossDiff / 1000000000, "0.00") & "B",
+			    ABS(GrossDiff) >= 1000000, FORMAT(GrossDiff / 1000000, "0.00") & "M",
+			    ABS(GrossDiff) >= 1000, FORMAT(GrossDiff / 1000, "0") & "K",
+			    FORMAT(GrossDiff, "0")
+			)
+		lineageTag: 71973f96-50d2-4abc-b361-2d55b8226559
+
+	measure DurationForecastVolume = ```
+			
+			IF(
+			    HASONEVALUE(DimDuration[Duration]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[RecordCount]),
+			            REMOVEFILTERS(DimDuration),
+			            DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimDuration[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimDuration[Duration]),
+			        VAR LeadTimeGroupValue = [Duration]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimDuration[SingleTrip],
+			                DimDuration[Duration], LeadTimeGroupValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[RecordCount]),
+			                REMOVEFILTERS(DimLeadTimeGroup),
+			                DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 84afdbd4-e2fb-4ce7-8501-5cc074ff30be
+
+	measure DurationForecastGross = ```
+			
+			IF(
+			    HASONEVALUE(DimDuration[Duration]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			            REMOVEFILTERS(DimDuration),
+			            DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimDuration[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimDuration[Duration]),
+			        VAR LeadTimeGroupValue = [Duration]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimDuration[SingleTrip],
+			                DimDuration[Duration], LeadTimeGroupValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			                REMOVEFILTERS(DimDuration),
+			                DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: dc100ccb-0408-4595-a0e5-ef95f5e567c6
+
+	measure DurationVolumeDifferences =
+			
+			DIVIDE(
+			    SUM(FactSalesAnalysis[RecordCount]) - [DurationForecastVolume],
+			    [DurationForecastVolume],
+			    0
+			)
+		lineageTag: 0649c114-aae7-4126-af34-06dcd1655d24
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DurationVolumeTrendIconOnly = ```
+			
+			VAR Difference = [DurationVolumeDifferences]
+			VAR ThresholdAmber = -0.4 * SUM(FactSalesAnalysis[RecordCount])
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Difference > 0, "🟢 ▲",         // Green circle + up arrow
+			        Difference <= 0 && Difference >= ThresholdAmber, "🟠 ▼",  // Amber circle + down arrow
+			        Difference < ThresholdAmber, "🔴 ▼"         // Red circle + down arrow
+			    )
+			
+			```
+		lineageTag: 84936837-788a-4e9c-9715-e685cdad42a2
+
+	measure DurationGrossDifferences =
+			
+			VAR GrossDiff = SUM(FactSalesAnalysis[TotalGrossExcIPT]) - [DurationForecastGross]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ABS(GrossDiff) >= 1000000000, FORMAT(GrossDiff / 1000000000, "0.00") & "B",
+			    ABS(GrossDiff) >= 1000000, FORMAT(GrossDiff / 1000000, "0.00") & "M",
+			    ABS(GrossDiff) >= 1000, FORMAT(GrossDiff / 1000, "0") & "K",
+			    FORMAT(GrossDiff, "0")
+			)
+		lineageTag: 761376b7-cf9c-432a-b623-0f9c95e7bec3
+
+	measure AgeGroupForecastVolume = ```
+			
+			IF(
+			    HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[RecordCount]),
+			            REMOVEFILTERS(DimAgeGroup),
+			            DimAgeGroup[AgeGroup] IN { 
+			                "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimAgeGroup[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimAgeGroup[AgeGroup]),
+			        VAR MedicalScoreValue = [AgeGroup]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimAgeGroup[SingleTrip],
+			                DimAgeGroup[AgeGroup], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[RecordCount]),
+			                REMOVEFILTERS(DimAgeGroup),
+			                DimAgeGroup[AgeGroup] IN { 
+			                    "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 490019b8-e50b-41ac-9977-09ba77a37d10
+
+	measure AgeGroupForecastGross = ```
+			
+			IF(
+			    HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			            REMOVEFILTERS(DimAgeGroup),
+			            DimAgeGroup[AgeGroup] IN { 
+			                "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimAgeGroup[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimAgeGroup[AgeGroup]),
+			        VAR MedicalScoreValue = [AgeGroup]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimAgeGroup[SingleTrip],
+			                DimAgeGroup[AgeGroup], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			                REMOVEFILTERS(DimAgeGroup),
+			                DimAgeGroup[AgeGroup] IN { 
+			                    "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: 40a7cf4f-f2a7-4dd2-8279-7ca7749c10dd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupVolumeDifferences =
+			
+			DIVIDE(
+			    SUM(FactSalesAnalysis[RecordCount]) - [AgeGroupForecastVolume],
+			    [AgeGroupForecastVolume],
+			    0
+			)
+		lineageTag: 987dc280-a594-4eb1-b381-077b34eeee95
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupVolumeTrendIconOnly = ```
+			
+			VAR ForecastVolume = [AgeGroupForecastVolume]
+			VAR ActualVolume = SUM(FactSalesAnalysis[RecordCount])
+			VAR Difference = ActualVolume - ForecastVolume
+			VAR ThresholdAmber = -0.4 * ActualVolume
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Difference > 0, "🟢 ▲",         
+			        Difference <= 0 && Difference >= ThresholdAmber, "🟠 ▼",  
+			        Difference < ThresholdAmber, "🔴 ▼"         
+			    )
+			
+			```
+		lineageTag: c315bb0d-1fa6-4b49-9459-da39134fc26d
+
+	measure AgeGroupGrossDifferences =
+			
+			VAR GrossDiff = SUM(FactSalesAnalysis[TotalGrossExcIPT]) - [AgeGroupForecastVolume]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ABS(GrossDiff) >= 1000000000, FORMAT(GrossDiff / 1000000000, "0.00") & "B",
+			    ABS(GrossDiff) >= 1000000, FORMAT(GrossDiff / 1000000, "0.00") & "M",
+			    ABS(GrossDiff) >= 1000, FORMAT(GrossDiff / 1000, "0") & "K",
+			    FORMAT(GrossDiff, "0")
+			)
+		lineageTag: 1f65aa24-4fad-417d-9fd6-086b999f2b4e
+
+	measure AgeGroupAMTForecastVolume = ```
+			
+			IF(
+			    HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[RecordCount]),
+			            REMOVEFILTERS(DimAgeGroup),
+			            DimAgeGroup[AgeGroup] IN { 
+			                "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimAgeGroup[AMT])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimAgeGroup[AgeGroup]),
+			        VAR MedicalScoreValue = [AgeGroup]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimAgeGroup[AMT],
+			                DimAgeGroup[AgeGroup], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[RecordCount]),
+			                REMOVEFILTERS(DimAgeGroup),
+			                DimAgeGroup[AgeGroup] IN { 
+			                    "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 65c331f8-7f9e-4ecd-8313-191a151ee669
+
+	measure AgeGroupAMTForecastGross = ```
+			
+			IF(
+			    HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			            REMOVEFILTERS(DimAgeGroup),
+			            DimAgeGroup[AgeGroup] IN { 
+			                "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			            }
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimAgeGroup[AMT])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimAgeGroup[AgeGroup]),
+			        VAR MedicalScoreValue = [AgeGroup]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimAgeGroup[AMT],
+			                DimAgeGroup[AgeGroup], MedicalScoreValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactSalesAnalysis[TotalGrossExcIPT]),
+			                REMOVEFILTERS(DimAgeGroup),
+			                DimAgeGroup[AgeGroup] IN { 
+			                    "0 to 20", "21 to 30", "31 to 40", 
+			                "41 to 50", "51 to 65", "66 to 75", "76 +", BLANK()
+			                }
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: e58cd66d-3cac-4873-b13b-257058d0767f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupAMTGrossDifferences =
+			
+			VAR GrossDiff = SUM(FactSalesAnalysis[TotalGrossExcIPT]) - [AgeGroupAMTForecastGross]
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ABS(GrossDiff) >= 1000000000, FORMAT(GrossDiff / 1000000000, "0.00") & "B",
+			    ABS(GrossDiff) >= 1000000, FORMAT(GrossDiff / 1000000, "0.00") & "M",
+			    ABS(GrossDiff) >= 1000, FORMAT(GrossDiff / 1000, "0") & "K",
+			    FORMAT(GrossDiff, "0")
+			)
+		lineageTag: cb8e4afe-cbef-44de-b72c-8711ef7c5ef5
+
+	measure AgeGroupAMTVolumeDifferences =
+			
+			DIVIDE(
+			    SUM(FactSalesAnalysis[RecordCount]) - [AgeGroupAMTForecastVolume],
+			    [AgeGroupAMTForecastVolume],
+			    0
+			)
+		lineageTag: 1f2e419a-b273-4024-92d9-f74103943dec
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupAMTVolumeTrendIconOnly = ```
+			
+			VAR ForecastVolume = [AgeGroupAMTForecastVolume]
+			VAR ActualVolume = SUM(FactSalesAnalysis[RecordCount])
+			VAR Difference = ActualVolume - ForecastVolume
+			VAR ThresholdAmber = -0.4 * ActualVolume
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Difference > 0, "🟢 ▲",         
+			        Difference <= 0 && Difference >= ThresholdAmber, "🟠 ▼",  
+			        Difference < ThresholdAmber, "🔴 ▼"         
+			    )
+			
+			```
+		lineageTag: 3407336c-55a1-4969-9c76-76931509a555
+
+	measure ActualPercentage = ```
+			
+			    IF(HASONEVALUE(DimLeadTimeGroup[LeadTimeGroup])
+			        ,DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			        CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			        REMOVEFILTERS(DimLeadTimeGroup))
+			    ,0)
+			    *100
+			    ,100)
+			```
+		lineageTag: 9880c25c-179f-4ecf-9772-4bc639c7d49f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ActualPercentagePer = ```
+			
+			    IF(HASONEVALUE(DimLeadTimeGroup[LeadTimeGroup]),
+			    FORMAT(DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			    CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			    REMOVEFILTERS(DimLeadTimeGroup)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			
+			```
+		lineageTag: f7b7c407-ec72-41b1-8401-633afbb6e254
+
+	measure VariancePer = ```
+			
+			    IF(HASONEVALUE(DimLeadTimeGroup[LeadTimeGroup]),
+			    FORMAT([ActualPercentage]-VALUES(DimLeadTimeGroup[SingleTrip]),
+			    "0.00")& "%",BLANK()
+			)
+			```
+		lineageTag: 0bc981ce-cfe2-4b72-849c-3ec299894151
+
+	measure VolumeTrendArrowOnly =
+			VAR Diff = FORMAT([VariancePer], "0.00")
+			RETURN
+			IF(Diff > 0, "▲", "▼")
+		formatString: 0
+		lineageTag: 783cc746-1ff4-4ff5-abf3-d97de16f3a9f
+
+	measure Variance = ```
+			
+			IF(
+			    HASONEVALUE(DimLeadTimeGroup[LeadTimeGroup]),
+			    [ActualPercentage] - VALUES(DimLeadTimeGroup[SingleTrip]),
+			    BLANK()
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 2d6512f2-523b-4993-aea9-8b4498d423bb
+
+	measure VarianceDiff = ```
+			
+			VAR Difference = [Variance]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimLeadTimeGroup[LeadTimeGroup]),
+			        IF(Difference > 0, "▲", "▼"),
+			        BLANK()
+			    )
+			
+			```
+		lineageTag: d228747a-0458-441e-a4e0-9810e6e7e9f5
+
+	measure MedicalScoreActualPercentage = ```
+			
+			    IF(HASONEVALUE(DimMedicalScore[MedicalScore])
+			        ,DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			        CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			        REMOVEFILTERS(DimMedicalScore))
+			    ,0)
+			    *100
+			    ,100)
+			```
+		lineageTag: e590a3b5-f7ae-4c40-8978-f02c7793ff59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreActualPercentagePer = ```
+			
+			    IF(HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    FORMAT(DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			    CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			    REMOVEFILTERS(DimMedicalScore)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			
+			```
+		lineageTag: b53a3034-f664-4514-b600-e79fee8af941
+
+	measure MedicalScoreAMTActualPercentage = ```
+			
+			    IF(HASONEVALUE(DimMedicalScore[MedicalScore])
+			        ,DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			        CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			        REMOVEFILTERS(DimMedicalScore))
+			    ,0)
+			    *100
+			    ,100)
+			```
+		lineageTag: f6c8de34-5c96-4cde-9c72-91d3008d5caa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreAMTActualPercentagePer = ```
+			
+			    IF(HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    FORMAT(DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			    CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			    REMOVEFILTERS(DimMedicalScore)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			
+			```
+		lineageTag: 768e90f4-cd03-4b5b-b2f6-fc4643b18038
+
+	measure DurationActualPercentage = ```
+			
+			    IF(HASONEVALUE(DimDuration[Duration])
+			        ,DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			        CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			        REMOVEFILTERS(DimDuration))
+			    ,0)
+			    *100
+			    ,100)
+			```
+		lineageTag: 38dd4844-6f29-4c50-b6f1-be730282f943
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DurationActualPercentagePer = ```
+			
+			    IF(HASONEVALUE(DimDuration[Duration]),
+			    FORMAT(DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			    CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			    REMOVEFILTERS(DimDuration)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			
+			```
+		lineageTag: 83caeed6-e3b3-4958-9ca2-9e935b8bd68a
+
+	measure AgeGroupActualPercentage = ```
+			
+			    IF(HASONEVALUE(DimAgeGroup[AgeGroup])
+			        ,DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			        CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			        REMOVEFILTERS(DimAgeGroup))
+			    ,0)
+			    *100
+			    ,100)
+			```
+		lineageTag: 08946c7d-c81c-4b5c-88c9-e2fda25bb6d8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupActualPercentagePer = ```
+			
+			    IF(HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    FORMAT(DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			    CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			    REMOVEFILTERS(DimAgeGroup)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			
+			```
+		lineageTag: a7ea207e-1760-451d-a837-51a11665bb6a
+
+	measure AgeGroupAMTActualPercentage = ```
+			
+			    IF(HASONEVALUE(DimAgeGroup[AgeGroup])
+			        ,DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			        CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			        REMOVEFILTERS(DimAgeGroup))
+			    ,0)
+			    *100
+			    ,100)
+			```
+		lineageTag: 083112ba-05b9-4023-9ae1-29ddc95cc4d6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupAMTActualPercentagePer = ```
+			
+			    IF(HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    FORMAT(DIVIDE(SUM(FactSalesAnalysis[RecordCount]),
+			    CALCULATE(SUM(FactSalesAnalysis[RecordCount]),
+			    REMOVEFILTERS(DimAgeGroup)),0)
+			*100,"0.00")
+			& "%","100.00%")
+			
+			```
+		lineageTag: 08543b1f-d795-4924-9987-57d9cb441cb9
+
+	measure MedicalScoreVariance =
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    [MedicalScoreActualPercentage] - VALUES(DimMedicalScore[SingleTrip]),
+			    BLANK()
+			)
+		lineageTag: 0744c6f8-2a7b-4414-8af7-8e225bf82968
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreVarianceDiff =
+			
+			VAR Difference = [MedicalScoreVariance]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimMedicalScore[MedicalScore]),
+			        IF(Difference > 0, "▲", "▼"),
+			        BLANK()
+			    )
+		lineageTag: b8881988-13c1-4720-9ac1-68d65900f26e
+
+	measure MedicalScoreVariancePer = ```
+			
+			    IF(HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    FORMAT([MedicalScoreActualPercentage]-VALUES(DimMedicalScore[SingleTrip]),
+			    "0.00")& "%",BLANK()
+			)
+			```
+		lineageTag: fdc11bf8-a292-4add-939a-e9b031d9770a
+
+	measure MedicalScoreAMTVariance = ```
+			
+			IF(
+			    HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    [MedicalScoreAMTActualPercentage] - VALUES(DimMedicalScore[AMT]),
+			    BLANK()
+			)
+			
+			```
+		lineageTag: 9aadf63e-4408-4d5a-a740-81ce8242a41f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MedicalScoreAMTVarianceDiff = ```
+			
+			VAR Difference = [MedicalScoreAMTVariance]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimMedicalScore[MedicalScore]),
+			        IF(Difference > 0, "▲", "▼"),
+			        BLANK()
+			    )
+			
+			```
+		lineageTag: ed8225f3-073d-4bb1-bdcb-0402e1b0a756
+
+	measure MedicalScoreAMTVariancePer = ```
+			
+			    IF(HASONEVALUE(DimMedicalScore[MedicalScore]),
+			    FORMAT([MedicalScoreAMTActualPercentage]-VALUES(DimMedicalScore[AMT]),
+			    "0.00")& "%",BLANK()
+			)
+			```
+		lineageTag: 1ca3339c-1e82-45f1-b462-73fa47c854b3
+
+	measure DurationVariance = ```
+			
+			IF(
+			    HASONEVALUE(DimDuration[Duration]),
+			    [DurationActualPercentage] - VALUES(DimDuration[SingleTrip]),
+			    BLANK()
+			)
+			
+			```
+		lineageTag: d8e521b9-22e6-40a8-ac84-040a39ab1847
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DurationVarianceDiff = ```
+			
+			VAR Difference = [DurationVariance]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimDuration[Duration]),
+			        IF(Difference > 0, "▲", "▼"),
+			        BLANK()
+			    )
+			
+			```
+		lineageTag: d056c54d-322b-4708-b556-d6c27c36b71d
+
+	measure DurationVariancePer = ```
+			
+			    IF(HASONEVALUE(DimDuration[Duration]),
+			    FORMAT([DurationActualPercentage]-VALUES(DimDuration[SingleTrip]),
+			    "0.00")& "%",BLANK()
+			)
+			```
+		lineageTag: 6bf93dcd-7259-479b-8f6e-e9af7419630f
+
+	measure AgeGroupVariance = ```
+			
+			IF(
+			    HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    [AgeGroupActualPercentage] - VALUES(DimAgeGroup[SingleTrip]),
+			    BLANK()
+			)
+			
+			```
+		lineageTag: 0ce44730-ad6f-4b5e-b092-84e0d0da29ad
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupVarianceDiff =
+			
+			VAR Difference = [AgeGroupVariance]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimAgeGroup[AgeGroup]),
+			        IF(Difference > 0, "▲", "▼"),
+			        BLANK()
+			    )
+		lineageTag: c4be9703-cc84-48f0-b6ac-c5b3d318f886
+
+	measure AgeGroupVariancePer = ```
+			
+			    IF(HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    FORMAT([AgeGroupActualPercentage]-VALUES(DimAgeGroup[SingleTrip]),
+			    "0.00")& "%",BLANK()
+			)
+			```
+		lineageTag: 316cf447-b1ab-4f1e-8c0f-438cc505476d
+
+	measure AgeGroupAMTVariance =
+			
+			IF(
+			    HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    [AgeGroupAMTActualPercentage] - VALUES(DimAgeGroup[AMT]),
+			    BLANK()
+			)
+		lineageTag: e6bae986-9051-493b-a675-160c4651d1e2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AgeGroupAMTVarianceDiff =
+			
+			VAR Difference = [AgeGroupAMTVariance]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimAgeGroup[AgeGroup]),
+			        IF(Difference > 0, "▲", "▼"),
+			        BLANK()
+			    )
+		lineageTag: 7c959113-7fb8-4800-a950-0fbcb16f5a06
+
+	measure AgeGroupAMTVariancePer = ```
+			
+			    IF(HASONEVALUE(DimAgeGroup[AgeGroup]),
+			    FORMAT([AgeGroupAMTActualPercentage]-VALUES(DimAgeGroup[AMT]),
+			    "0.00")& "%",BLANK()
+			)
+			```
+		lineageTag: 06fa5d73-5cf1-48ed-b774-6c5e9a12b3ef
+
+	column PolicyNumber
+		dataType: string
+		lineageTag: 47ea4fbe-119e-4f6f-8790-d709a77285aa
+		summarizeBy: none
+		sourceColumn: PolicyNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column DimSchemeHeaderId
+		dataType: int64
+		formatString: 0
+		lineageTag: f377f0cc-f228-469d-82f1-883016368386
+		summarizeBy: none
+		sourceColumn: DimSchemeHeaderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravelBrandId
+		dataType: int64
+		formatString: 0
+		lineageTag: d58d5aeb-f803-4006-8912-1ec874ae2d70
+		summarizeBy: none
+		sourceColumn: TravelBrandId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DurationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 27b031ba-a3a5-47f2-9dd1-b5a47b8a0a61
+		summarizeBy: none
+		sourceColumn: DurationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b8e2219-b59c-4833-b350-db7912c069e1
+		summarizeBy: none
+		sourceColumn: PolicyTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: b456cc08-6149-4d7f-aaea-bb8cc0661cef
+		summarizeBy: none
+		sourceColumn: ChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OptionId
+		dataType: int64
+		formatString: 0
+		lineageTag: 2517fd53-fa99-4616-9040-9f4496f18f9e
+		summarizeBy: none
+		sourceColumn: OptionId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DestinationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b4a3da8-5980-4eb5-9c5d-c2e76d7ad00d
+		summarizeBy: none
+		sourceColumn: DestinationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3fc43719-8b84-445c-bca1-dcda16d266be
+		summarizeBy: none
+		sourceColumn: FamilyGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: fd25726b-f7f0-4196-a00e-1ae80cd301ac
+		summarizeBy: none
+		sourceColumn: AgeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FinalCountryId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ce67d04-89a1-464c-aafb-2ffe64bfa90f
+		summarizeBy: none
+		sourceColumn: FinalCountryId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c52b5bc-ba6c-471c-b005-4327cfe2ae78
+		summarizeBy: none
+		sourceColumn: DateID
+
+		annotation SummarizationSetBy = Automatic
+
+	column MedicalScoreId
+		dataType: int64
+		formatString: 0
+		lineageTag: 0981f79f-b078-4b0d-aa70-982a62919e48
+		summarizeBy: none
+		sourceColumn: MedicalScoreId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTimeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 81762b37-f8f4-487d-a1ab-6d7e115878c5
+		summarizeBy: none
+		sourceColumn: LeadTimeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalGrossIncIPT
+		dataType: double
+		lineageTag: d435786e-6a8b-4b5d-9f74-7953f7983362
+		summarizeBy: sum
+		sourceColumn: TotalGrossIncIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalGrossExcIPT
+		dataType: double
+		lineageTag: 67792caa-69d0-42e3-bd71-774841e24e8a
+		summarizeBy: sum
+		sourceColumn: TotalGrossExcIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalNetToUnderwriter
+		dataType: double
+		lineageTag: dca50ef8-ea15-4bd6-9065-c90475fd2c03
+		summarizeBy: sum
+		sourceColumn: TotalNetToUnderwriter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RecordCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 7fb5536c-b2bd-47de-b04b-1639aed9fff6
+		summarizeBy: sum
+		sourceColumn: RecordCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceType
+		dataType: string
+		lineageTag: dd949838-542e-42be-8a98-afb5877072a2
+		summarizeBy: none
+		sourceColumn: SourceType
+
+		annotation SummarizationSetBy = Automatic
+
+	column MarketingChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: ecfa3db9-d5cf-4d83-b2ed-4203cc75ce83
+		summarizeBy: none
+		sourceColumn: MarketingChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column NetMargin = ```
+			
+			('FactSalesAnalysis'[TotalGrossExcIPT] - 'FactSalesAnalysis'[TotalNetToUnderwriter]) 
+			- ('FactSalesAnalysis'[TotalGrossExcIPT] * RELATED(DimMarketingChannel[TotalCost]) / 100)
+			
+			```
+		lineageTag: 7adc9c3a-1d1b-474d-8d7c-9210e42ed6f4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VolumeDifferencesFormatted = ```
+			
+			"£" & FORMAT([VariancePer], "##,##0")
+			
+			```
+		lineageTag: f360bebc-bd5a-4c40-be75-695cb0b0a6ac
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column OasisAtozNetMargin = ```
+			
+			VAR NetToUnderwriter = 'FactSalesAnalysis'[TotalNetToUnderwriter]
+			VAR AggCommPct = RELATED('DimMarketingChannel'[AggComm]) / 100
+			RETURN
+			(NetToUnderwriter / (1 + AggCommPct)) * AggCommPct
+			
+			```
+		lineageTag: 24afbb2c-354e-48a0-99d7-cd6b2b950eaf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AgentId
+		dataType: int64
+		formatString: 0
+		lineageTag: d566e468-0659-4bb8-a809-58e937ac8262
+		summarizeBy: none
+		sourceColumn: AgentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignId
+		dataType: int64
+		formatString: 0
+		lineageTag: cb6aadf1-a3a7-4b3f-ad6d-7f158ea1f146
+		summarizeBy: none
+		sourceColumn: CampaignId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactSalesAnalysis = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactSalesAnalysis = Source{[Schema="dbo",Item="FactSalesAnalysis"]}[Data]
+				in
+				    dbo_FactSalesAnalysis
+
+	annotation PBI_ResultType = Table
+

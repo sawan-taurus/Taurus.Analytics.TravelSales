@@ -1,0 +1,107 @@
+table FactDailyRenewal
+	lineageTag: a56671fc-9b76-41a4-bcc3-81a1507ff2ae
+	sourceLineageTag: [dbo].[FactDailyRenewal]
+
+	column TravelBrandID
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 439bce64-e25e-46bf-a212-cf918f67c70d
+		sourceLineageTag: TravelBrandID
+		summarizeBy: count
+		sourceColumn: TravelBrandID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 520b35cd-10f9-4113-aed6-5542928b5d33
+		sourceLineageTag: DateId
+		summarizeBy: count
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		sourceProviderType: float
+		lineageTag: fb3cb6cc-489f-47e0-b1d5-632aeb40a4c3
+		sourceLineageTag: Volume
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GWPincIPTDay
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 7222d93d-0244-48f9-aa60-108d1c2234ef
+		sourceLineageTag: GWPincIPTDay
+		summarizeBy: sum
+		sourceColumn: GWPincIPTDay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GWPExIPTDay
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 23225931-a73d-48ec-9cec-7cd934e4535e
+		sourceLineageTag: GWPExIPTDay
+		summarizeBy: sum
+		sourceColumn: GWPExIPTDay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VolumeMonth
+		dataType: double
+		sourceProviderType: float
+		lineageTag: a302cf8e-6103-4f6f-9a72-a8bbe93b60dc
+		sourceLineageTag: VolumeMonth
+		summarizeBy: sum
+		sourceColumn: VolumeMonth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalGrossIncIPTMonth
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 5ccd1b03-99c5-4d4c-bb33-37f84ccb2529
+		sourceLineageTag: TotalGrossIncIPTMonth
+		summarizeBy: sum
+		sourceColumn: TotalGrossIncIPTMonth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalGrossExcIPTMonth
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 1a445031-d358-445d-8eaf-422bc3a22b02
+		sourceLineageTag: TotalGrossExcIPTMonth
+		summarizeBy: sum
+		sourceColumn: TotalGrossExcIPTMonth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactDailyRenewal = entity
+		mode: directLake
+		source
+			entityName: FactDailyRenewal
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,10 @@
+relationship b8616e5b-1e11-d888-bf37-0af7c2a46d8e
+	relyOnReferentialIntegrity
+	fromColumn: FactDailyReport.DateId
+	toColumn: DimDate.DateId
+
+relationship d07428b2-8b6d-8f1b-7a09-d7698f8adb9d
+	relyOnReferentialIntegrity
+	fromColumn: FactDailyReport.SchemeSubsetId
+	toColumn: DimSchemeSubSet.SchemeSubsetId
+

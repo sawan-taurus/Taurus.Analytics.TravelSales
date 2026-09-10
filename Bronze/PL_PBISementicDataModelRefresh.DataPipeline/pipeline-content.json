@@ -1,0 +1,55 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Semantic model refresh1",
+        "type": "PBISemanticModelRefresh",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "method": "POST",
+          "operationType": "SemanticModelRefresh",
+          "groupId": "9c958852-649b-48e2-ac6a-f03167ff64dc",
+          "datasetId": "0d478370-c36f-49f9-af41-906986fbee8d",
+          "objects": [
+            {
+              "table": "FactDailyReport"
+            },
+            {
+              "table": "DimDate"
+            },
+            {
+              "table": "DateTableTemplate_a33bca5f-5c15-4e31-9627-1ab6efe1b749"
+            },
+            {
+              "table": "LocalDateTable_83c20beb-a333-4cfe-b715-34d3e8add953"
+            },
+            {
+              "table": "FactDailySalesReport"
+            },
+            {
+              "table": "FactDailyForecastReport"
+            },
+            {
+              "table": "DimSubSet"
+            },
+            {
+              "table": "DimSchemeSubSet"
+            }
+          ],
+          "waitOnCompletion": true,
+          "commitMode": "Transactional"
+        },
+        "externalReferences": {
+          "connection": "1258bc17-6a91-4bd8-8725-8d3a997b6bb7"
+        }
+      }
+    ]
+  }
+}

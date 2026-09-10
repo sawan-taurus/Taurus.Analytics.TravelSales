@@ -1,0 +1,2721 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/dataAgent/definition/dataSource/1.0.0/schema.json",
+  "artifactId": "ec051152-ec8d-a567-459b-39f93e392e3d",
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "dataSourceInstructions": null,
+  "displayName": "Sales_and_Quote_Report - Oct",
+  "type": "semantic_model",
+  "userDescription": null,
+  "metadata": {},
+  "elements": [
+    {
+      "id": "408499bb-c2c5-4cbb-95a6-63c336178fc1",
+      "is_selected": true,
+      "display_name": "DimAgeGroup",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "c69cda00-dc5e-4f9f-8eca-6e1d67d8830a",
+          "is_selected": true,
+          "display_name": "AgeGroup",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "90241fa4-7b2a-4b48-bb36-e443c63eb34d",
+          "is_selected": true,
+          "display_name": "AgeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d7f80c17-d0b1-4b63-8754-8b85c0224023",
+          "is_selected": true,
+          "display_name": "AMT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d2dd1966-8cb9-46ca-87c2-7ccea0a78235",
+          "is_selected": true,
+          "display_name": "AMTAgeGroupPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7f5e0283-c7be-45a2-850f-65c64e82f508",
+          "is_selected": true,
+          "display_name": "SingleTrip",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d4d5ca37-69a4-4519-a863-42b174bb0c3f",
+          "is_selected": true,
+          "display_name": "SingleTripAgeGroupPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "749d2b76-3129-4ce6-ae54-629c63b8a64d",
+      "is_selected": true,
+      "display_name": "DimAgent",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "fab1811a-866d-4b9d-979c-a656f3aab059",
+          "is_selected": true,
+          "display_name": "AgentId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "47e0e188-9c0e-42ce-9e8e-2f3d7b4ddbbc",
+          "is_selected": true,
+          "display_name": "AgentName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "0690d90b-4338-4092-9d4a-b1c1623b5826",
+      "is_selected": true,
+      "display_name": "DimCampaign",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "06044fb7-6f2c-4188-99cb-f13e3794c8c8",
+          "is_selected": true,
+          "display_name": "CampaignId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7972c08d-1890-4985-b9cf-0cfeff10becc",
+          "is_selected": true,
+          "display_name": "CampaignName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "1c85eebf-b28d-4650-96ba-5426ad88d799",
+      "is_selected": true,
+      "display_name": "DimChannel",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "782af586-5a51-413d-8c9b-3ca8d5b15239",
+          "is_selected": true,
+          "display_name": "Channel",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "612d8801-b92c-430f-8fe4-792c74943357",
+          "is_selected": true,
+          "display_name": "ChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a41ee6a2-ba92-42f8-b558-483b049e0592",
+          "is_selected": true,
+          "display_name": "GenericCoverLevel",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "33c515de-5750-4ef3-859a-4e2852fba521",
+          "is_selected": true,
+          "display_name": "SchemeName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0c2b6174-cfae-4cbb-ba2d-b7602bbf1c6a",
+          "is_selected": true,
+          "display_name": "SubChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "939d3ad7-a9bd-4382-bad0-b76da6b603aa",
+      "is_selected": true,
+      "display_name": "DimCountry",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "3c1bc4a6-787a-4d3e-b9dc-370cb99bab12",
+          "is_selected": true,
+          "display_name": "CountryID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "9a27caac-a5eb-4c07-bd2b-e41cc7121e6e",
+          "is_selected": true,
+          "display_name": "StandardName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fac2121c-9471-4e08-86bd-dbde8562f6be",
+          "is_selected": true,
+          "display_name": "VariantName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "42c45f82-9107-425e-9641-4e1353ecc605",
+      "is_selected": true,
+      "display_name": "DimDate",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "cc560dce-43d4-4076-9747-891f14733406",
+          "is_selected": true,
+          "display_name": "Date",
+          "type": "semantic_model.column",
+          "data_type": "DateTime",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d0fb4f81-79cc-43d9-9484-4086df406f34",
+          "is_selected": true,
+          "display_name": "DateFormated",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "404dc5fb-1b75-4162-b6db-74ecc4049156",
+          "is_selected": true,
+          "display_name": "DateId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "9aad9552-044e-443e-b3da-e77b5e6a2dc5",
+          "is_selected": true,
+          "display_name": "DayOfMonth",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2694c6c5-76a6-428c-877e-e7bb301dc9ae",
+          "is_selected": true,
+          "display_name": "DayOfWeek",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "eb7c3d7c-e51b-4196-bcf2-a8e848be4c6f",
+          "is_selected": true,
+          "display_name": "FilteredYears",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "151fd4f8-7206-46f6-ad37-ad4f94d03656",
+          "is_selected": true,
+          "display_name": "FormattedDate",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "941ba990-69be-4bcf-bc9c-a5b9d562f0fb",
+          "is_selected": true,
+          "display_name": "Month",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "87b4edcb-4024-4219-9410-41f712728183",
+          "is_selected": true,
+          "display_name": "MonthName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "4e49de5e-8ad8-4263-aa03-058197352fe1",
+          "is_selected": true,
+          "display_name": "Quarter",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "239d9fb7-66df-48eb-9093-15b88d50894b",
+          "is_selected": true,
+          "display_name": "Year",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "333108fb-bf90-4ddd-86ec-bd362e8d01ba",
+      "is_selected": true,
+      "display_name": "DimDestination",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "87f57f54-020d-4e26-aee9-1a6ce9f9c2ff",
+          "is_selected": true,
+          "display_name": "AMT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d7d25c9d-ee0d-4b8c-85f6-e5fe1a756ddd",
+          "is_selected": true,
+          "display_name": "Destination",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "136bf966-06b5-4f21-8c87-bd2aac23ac03",
+          "is_selected": true,
+          "display_name": "DestinationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1397c90e-eb66-4217-9da8-86c6013e3ff0",
+          "is_selected": true,
+          "display_name": "Region",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1a829aa4-3ce9-45a0-b11d-acc548709304",
+          "is_selected": true,
+          "display_name": "SingleTrip",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "7dfab308-cf5a-40b1-a610-717f804467e0",
+      "is_selected": true,
+      "display_name": "DimDuration",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "de799299-e961-4e4b-89dd-643ce9053db7",
+          "is_selected": true,
+          "display_name": "AMT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a9a680d2-5ecc-430f-a983-0f50037dbb69",
+          "is_selected": true,
+          "display_name": "Duration",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7c9ed19f-527d-4ba6-89e4-b51b7b283d64",
+          "is_selected": true,
+          "display_name": "DurationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "8e5e19cf-4508-4043-ae6b-87ae45f99339",
+          "is_selected": true,
+          "display_name": "SingleTrip",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e6041757-181e-46fc-8385-eeaaf3f7cac1",
+          "is_selected": true,
+          "display_name": "SingleTripDurationPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "464c1cee-ae5d-4dfe-9d31-f1b137c3ac39",
+          "is_selected": true,
+          "display_name": "SortOrder",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "6e1222ae-1597-4d24-9466-9ffe7faad345",
+      "is_selected": true,
+      "display_name": "DimFamilyGroup",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "e7170a40-5b84-424f-8d70-12b43b97edb7",
+          "is_selected": true,
+          "display_name": "AMT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ca0ca1e8-1d49-456b-ad97-dc933a63bd3b",
+          "is_selected": true,
+          "display_name": "FamilyGroup",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "adc88a66-1272-486f-b600-96e435f359a9",
+          "is_selected": true,
+          "display_name": "FamilyGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f4d5a540-b9f9-49ed-9a6c-d0258392eddb",
+          "is_selected": true,
+          "display_name": "SingleTrip",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "eda06ba6-bf58-46a7-b461-6e84a99a0001",
+      "is_selected": true,
+      "display_name": "DimLeadTimeGroup",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "466167f3-282f-4df8-9b0a-d303a4d5cd6b",
+          "is_selected": true,
+          "display_name": "AMT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a944f340-06a7-4364-917d-9cfe28734d69",
+          "is_selected": true,
+          "display_name": "AMTPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d9dcb94f-a754-4766-9faa-ceeca832ff61",
+          "is_selected": true,
+          "display_name": "LeadTimeGroup",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "8264c4b9-f8d2-4f83-a394-6f859fc36b3f",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c1c559e6-8f8d-4d25-89f4-0f31f91bd3ce",
+          "is_selected": true,
+          "display_name": "SingleTrip",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "292f896c-c166-4130-86a6-5b134b519ab8",
+          "is_selected": true,
+          "display_name": "SingleTripPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "65b89a0e-e831-413a-a65a-67e4a4a60f3e",
+      "is_selected": true,
+      "display_name": "DimMarketingChannel",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "4c799d92-2d7d-407d-9f61-85cbc96e71d8",
+          "is_selected": true,
+          "display_name": "AggComm",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "4f770b68-0d63-4c33-8725-ffa317df6486",
+          "is_selected": true,
+          "display_name": "Brand",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "8b43caac-a521-4cf3-8ca8-d93eab486d8b",
+          "is_selected": true,
+          "display_name": "MarketingChannel",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "dfb27f8d-b1ac-400c-b155-d7a4184c46c7",
+          "is_selected": true,
+          "display_name": "MarketingChannelID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f5afe427-e020-4f78-bfbd-ec82e8a06e04",
+          "is_selected": true,
+          "display_name": "Payment",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "428efd6a-44a6-414f-bebb-06dade862126",
+          "is_selected": true,
+          "display_name": "System",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "90288ca5-9f85-47bc-a13f-e9fe323d87da",
+          "is_selected": true,
+          "display_name": "TotalCost",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "5281519a-4dae-42f6-81ec-ab60dda7f1d8",
+          "is_selected": true,
+          "display_name": "Verisk",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "3bc42ee9-75a0-4921-b51a-1f93d2fd7d61",
+      "is_selected": true,
+      "display_name": "DimMedicalScore",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "a71a8dcf-bc1f-4e53-be45-b037152b1310",
+          "is_selected": true,
+          "display_name": "AMT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ab3f8faa-809c-402f-b8b3-0ae66a9088f3",
+          "is_selected": true,
+          "display_name": "AMTMSPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1a961586-6ed0-4ced-a81b-5377592a6894",
+          "is_selected": true,
+          "display_name": "MedicalScore",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f5aa98d3-be7b-4dee-bc9b-5ac26a6009fc",
+          "is_selected": true,
+          "display_name": "MedicalScoreId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "17c83a6b-d9b8-4932-b089-58db76ab7719",
+          "is_selected": true,
+          "display_name": "SingleTrip",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1c5c6c0d-f2b7-4b87-aa22-15099954cb17",
+          "is_selected": true,
+          "display_name": "SingleTripMSPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "b209fa03-4fba-4c1a-bb51-ad72069d8319",
+      "is_selected": true,
+      "display_name": "DimOption",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "146981e5-9919-40e9-a4b3-908ae22d4a71",
+          "is_selected": true,
+          "display_name": "OptionCategory",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c5cce684-bf67-452f-9698-d27b4deb5917",
+          "is_selected": true,
+          "display_name": "OptionId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "085d4dc5-8ca4-40ed-9e97-7e3ddc57f7ba",
+          "is_selected": true,
+          "display_name": "OptionName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "55b2c664-5c2d-4c41-916c-b9db42bd2378",
+      "is_selected": true,
+      "display_name": "DimPolicyType",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "3c05a4be-2ab4-4243-b87b-68845548ae59",
+          "is_selected": true,
+          "display_name": "PolicyType",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fada175f-ed3b-47a7-81bf-c1a0e6eab9eb",
+          "is_selected": true,
+          "display_name": "PolicyTypeId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "aa613a60-9195-42ec-9186-82f7132feb41",
+      "is_selected": true,
+      "display_name": "DimSchemeHeaders",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "81a5df99-d4db-4737-b1e1-bbecd426a5b3",
+          "is_selected": true,
+          "display_name": "FriendlyName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7f168321-0d2f-45a8-a2b7-df1c1d47d233",
+          "is_selected": true,
+          "display_name": "SchemeHeaderId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "0b2c00f7-d222-458f-883c-29f44b6b267c",
+      "is_selected": true,
+      "display_name": "DimSubChannel",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "9e0a3766-27f6-4af1-b8db-e79f26b5d0a6",
+          "is_selected": true,
+          "display_name": "SubChannel",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "769ca9ec-9cae-49f1-8ad3-d81331a7e84f",
+          "is_selected": true,
+          "display_name": "SubChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "6809c075-e03e-4a55-99aa-2c5363edebf0",
+      "is_selected": true,
+      "display_name": "DimTravelBrand",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "75ce57dd-b768-4596-8b83-0d788bd4e77a",
+          "is_selected": true,
+          "display_name": "Brand",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ce4a5d44-ba01-46a9-874d-3666287bff46",
+          "is_selected": true,
+          "display_name": "FilteredBrands",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a16d402e-9589-4e8a-a6e6-69eb9e286530",
+          "is_selected": true,
+          "display_name": "TravelBrand",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "38aacbd3-d472-441a-9027-3f89ad6c72d5",
+          "is_selected": true,
+          "display_name": "TravelBrandID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "cb3a0169-2694-4cde-acbe-46542f42446e",
+      "is_selected": true,
+      "display_name": "FactEnquiries",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "c4e119ec-817b-4a26-aeac-f1c82c169a77",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTConversionRate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1983e445-3d3f-462c-8aed-4c6873e0fbda",
+          "is_selected": true,
+          "display_name": "AgeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d7ef11e9-6c19-4164-a206-02720b00c159",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleConversionRate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "6cb17830-eb1d-4f51-9ed6-6f48f6c27910",
+          "is_selected": true,
+          "display_name": "AgentID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c5609c03-6efd-48d8-8c00-5cd2ab217c58",
+          "is_selected": true,
+          "display_name": "AvgQuotesPerEnquiry",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1d5e072d-7f02-404c-850c-31e2e0cbcb3a",
+          "is_selected": true,
+          "display_name": "ChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "4b6a934f-2072-413a-a545-1dcfb27df96d",
+          "is_selected": true,
+          "display_name": "DateID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cf08b525-cc64-4a61-ae20-67adceaa3fe5",
+          "is_selected": true,
+          "display_name": "DestinationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2baf48e2-bc3e-4cae-af73-422e708e6d82",
+          "is_selected": true,
+          "display_name": "DurationConversionRate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "692028ea-985e-4ad3-bd8b-a2ef65b96402",
+          "is_selected": true,
+          "display_name": "DurationEnquiries",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "9d8ac4ff-0c3f-443f-925b-0426382ee27b",
+          "is_selected": true,
+          "display_name": "DurationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ad8968ae-756f-4d29-8569-efdefb7c9084",
+          "is_selected": true,
+          "display_name": "EnquiriesConversionRate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "bd052cc9-6e62-4998-bebf-31ae85f96ff8",
+          "is_selected": true,
+          "display_name": "FamilyGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "125a31bc-e687-4877-9a37-a9dfce5da6e0",
+          "is_selected": true,
+          "display_name": "IsQuoted",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f60fa4ac-efe1-4827-8bc3-0e0b46c93812",
+          "is_selected": true,
+          "display_name": "IsSold",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a38fb947-6699-4379-9d89-cc92bc2dca83",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupConversionRate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b76da233-e407-4715-8e48-9028809474ca",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "89c56769-f6ee-41f9-9feb-0e6b80cb452a",
+          "is_selected": true,
+          "display_name": "MarketingChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "483087d7-da94-4711-867d-5fc9f5e4e065",
+          "is_selected": true,
+          "display_name": "MedicalScoreConversionRate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "6e584edf-3fc1-4f08-ac8c-7cf070b509f3",
+          "is_selected": true,
+          "display_name": "MedicalScoreId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1e3b4d5f-0973-4761-af75-2cad2b540f28",
+          "is_selected": true,
+          "display_name": "NoOfQuotes",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "129aec73-9e89-4392-ae2e-fdb3aed56b71",
+          "is_selected": true,
+          "display_name": "PolicyTypeId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b8cf9b7b-8c67-402f-a9ec-2925571c934d",
+          "is_selected": true,
+          "display_name": "TotalTravellers",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b5cf8fbb-20fd-495b-8d25-1e49c2a892ef",
+          "is_selected": true,
+          "display_name": "TravelBrandId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "834e40fa-87c6-47ec-b85e-af3ce148972e",
+          "is_selected": true,
+          "display_name": "TravelEnquiryCount",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "8032d50b-15e7-4c1c-ad43-2ed67a1c3bd7",
+          "is_selected": true,
+          "display_name": "TravelEnquiryID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "3dfd9543-ba32-4774-b75c-7325c5bd3b31",
+      "is_selected": true,
+      "display_name": "FactEnquiryQuotes",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "93c44c88-86f3-4d9a-8c41-dfaa3bb207ab",
+          "is_selected": true,
+          "display_name": "AgeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1a422cba-4975-4b0e-a05d-a1e2af317201",
+          "is_selected": true,
+          "display_name": "ChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ba9178f3-3caf-4fea-ae08-65949fe612a2",
+          "is_selected": true,
+          "display_name": "DateID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "92ff5ec3-30d6-465a-aecd-3bf30e03c8f4",
+          "is_selected": true,
+          "display_name": "DestinationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "5cd0832c-0fcb-4c79-9261-27328f90493b",
+          "is_selected": true,
+          "display_name": "DurationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fd664853-ff12-4497-9c43-0cae4bd80ba4",
+          "is_selected": true,
+          "display_name": "FamilyGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fb15fa4c-89ec-4f89-bf78-b18045a740d0",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "46d444b2-e478-41d9-b798-5b0362321ab3",
+          "is_selected": true,
+          "display_name": "MarketingChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0a142d22-0c55-41a6-ae12-09f18be965b3",
+          "is_selected": true,
+          "display_name": "MedicalScoreId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "5120c3fd-17c4-4e85-8c80-e294b9b12d8b",
+          "is_selected": true,
+          "display_name": "OptionId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "413113ca-5c7c-494f-b0e0-b11fda1b49ab",
+          "is_selected": true,
+          "display_name": "PolicyTypeId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c4cf0ece-7339-4bbb-8729-1f87264343d6",
+          "is_selected": true,
+          "display_name": "RecordCountDividedBy3",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "db2cfb38-7b75-4c2b-a5c2-b7305720bb7b",
+          "is_selected": true,
+          "display_name": "TotalEnquiryQuotesVolume",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3d36c94d-4bc4-416b-8abb-34fc363840db",
+          "is_selected": true,
+          "display_name": "TotalGrossExcIPT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "58bc5679-4685-4c8a-8b35-ccaaeefd166c",
+          "is_selected": true,
+          "display_name": "TotalGrossIncIPT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e3ae9312-57c5-4826-9dea-2ddaecd8eda0",
+          "is_selected": true,
+          "display_name": "TravelBrandId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1f5e4129-dd09-4ee4-927c-3a4d4cebb1df",
+          "is_selected": true,
+          "display_name": "TravelEnquiryID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "f7d8c2b6-860a-4e32-b05a-61daeb39823f",
+      "is_selected": true,
+      "display_name": "FactForecastByBrand",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "a7a3560b-586f-486a-9625-e39d7ff92d40",
+          "is_selected": true,
+          "display_name": "BrandId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2a8791d1-b074-4e1b-a427-9987c8506089",
+          "is_selected": true,
+          "display_name": "DateId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7907674b-5e71-4c24-9f6d-7965b9a54a8f",
+          "is_selected": true,
+          "display_name": "DurationForecastVolByBrand",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "534415da-fa93-4f82-a400-9b102add5aac",
+          "is_selected": true,
+          "display_name": "DurationTrendByBrand",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "91314779-4a58-41bd-876f-9734a058bc71",
+          "is_selected": true,
+          "display_name": "DurationVarianceByBrand",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "6565f396-8880-4944-a676-582f01f3fe15",
+          "is_selected": true,
+          "display_name": "ForecastVolume",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3836e0c9-0dc2-433f-a1c1-65d16815f772",
+          "is_selected": true,
+          "display_name": "SubChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "13dc8b91-72ab-473a-a292-f981c2c78cd9",
+      "is_selected": true,
+      "display_name": "FactForecastByChannel",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "e4e2597f-a357-470f-a69c-59592d554dd3",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f405c079-af28-458c-95bd-a9d68d61046a",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTTrend",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b9b57e60-d033-4acc-ae2f-55b6d695df34",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTVarianceByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "128f7608-9243-4f95-a053-babd047e9103",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "04a1a34d-eb0a-4554-af2f-3b03cb13263b",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleTrend",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "9298f310-ee9b-45a7-8514-084d7db8ad66",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleVarianceByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e514e63c-e388-45a3-b42e-4d63863f80b8",
+          "is_selected": true,
+          "display_name": "AgeGroupTotalForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "eb08ecb1-7760-4e91-b54c-fae140c8410e",
+          "is_selected": true,
+          "display_name": "BrandCode",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "5727f667-d87d-4393-8ab8-614dca6c0078",
+          "is_selected": true,
+          "display_name": "DateId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "5054094b-e550-48e2-ab44-180e1725e132",
+          "is_selected": true,
+          "display_name": "DurationForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3e6716d2-05e5-4adc-84b1-6796d8c20d5b",
+          "is_selected": true,
+          "display_name": "DurationTrend",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "896a8185-3001-49d5-b91d-6f4455fdb058",
+          "is_selected": true,
+          "display_name": "DurationVarianceByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2942c142-5c6d-4ba7-ab2b-abc29dccb6d2",
+          "is_selected": true,
+          "display_name": "ForecastVolume",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e955bbaa-339a-4b87-9050-07e71f87b003",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "11bf5f8b-1df9-4b7f-8e48-854c0e5a1983",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupTrend",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "94dc3428-ba53-423f-a3b2-919924d1e037",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupVarianceByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cfa6a0cc-ee31-4d9e-baad-f44ca8d7f6c1",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "046f54fb-2ee8-43c4-993f-eb6a9e64448a",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTTrend",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "466ae228-ff8f-451a-bd0d-dd4af2bf1488",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTVarianceByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c653561b-494a-4c6d-a0da-3bf784cb75e1",
+          "is_selected": true,
+          "display_name": "MedicalScoreSingleForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "506e78e2-6b9b-4738-b2a0-3741ce1c2514",
+          "is_selected": true,
+          "display_name": "MedicalScoreSingleTrend",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c8958316-13f8-42f0-9426-5064c64d84f4",
+          "is_selected": true,
+          "display_name": "MedicalScoreSingleVarianceByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "32578b96-c6d7-458f-b146-c9f31c34c411",
+          "is_selected": true,
+          "display_name": "MedicalScoreTotalForecastVolByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "75734723-b943-4fd1-91ac-19e4740eb1f1",
+          "is_selected": true,
+          "display_name": "TotalMedicalScoreAMTDiffByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "bfaace5e-aeb2-4c4a-9082-cfd06ce06cfe",
+          "is_selected": true,
+          "display_name": "TotalMedicalScoreSingleDiffByChannel",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "920f77fc-8358-4222-b18b-beffd725b8a2",
+          "is_selected": true,
+          "display_name": "TravelBrand",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3ad2d1bb-c31b-410f-a8f9-3d4be39b7ac7",
+          "is_selected": true,
+          "display_name": "TravelBrandId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "409648d6-1ab4-4fc5-b3e7-6c1afd13cfe6",
+      "is_selected": true,
+      "display_name": "FactForecastVsSalesByBrand",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "a399db5f-b87a-43f7-95b1-f73fb197cf64",
+          "is_selected": true,
+          "display_name": "BrandName",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "77a0e528-e18a-46ff-a11b-cbaaa35adc59",
+          "is_selected": true,
+          "display_name": "TotalForecastVolByBrand",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3b9cfb92-0c3f-4877-b42b-8251b13c4634",
+          "is_selected": true,
+          "display_name": "TotalSalesVolByBrand",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "9c3652cd-033f-4c85-a97c-3d8c428e5d4a",
+      "is_selected": true,
+      "display_name": "FactSales",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "9880c25c-179f-4ecf-9772-4bc639c7d49f",
+          "is_selected": true,
+          "display_name": "ActualPercentage",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f7b7c407-ec72-41b1-8401-633afbb6e254",
+          "is_selected": true,
+          "display_name": "ActualPercentagePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "083112ba-05b9-4023-9ae1-29ddc95cc4d6",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTActualPercentage",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "08543b1f-d795-4924-9987-57d9cb441cb9",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTActualPercentagePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e58cd66d-3cac-4873-b13b-257058d0767f",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTForecastGross",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "65c331f8-7f9e-4ecd-8313-191a151ee669",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTForecastVolume",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cb8e4afe-cbef-44de-b72c-8711ef7c5ef5",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTGrossDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e6bae986-9051-493b-a675-160c4651d1e2",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTVariance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7c959113-7fb8-4800-a950-0fbcb16f5a06",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTVarianceDiff",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "06fa5d73-5cf1-48ed-b774-6c5e9a12b3ef",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTVariancePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1f2e419a-b273-4024-92d9-f74103943dec",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTVolumeDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3407336c-55a1-4969-9c76-76931509a555",
+          "is_selected": true,
+          "display_name": "AgeGroupAMTVolumeTrendIconOnly",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fd25726b-f7f0-4196-a00e-1ae80cd301ac",
+          "is_selected": true,
+          "display_name": "AgeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "08946c7d-c81c-4b5c-88c9-e2fda25bb6d8",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleActualPercentage",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a7ea207e-1760-451d-a837-51a11665bb6a",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleActualPercentagePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "40a7cf4f-f2a7-4dd2-8279-7ca7749c10dd",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleForecastGross",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "490019b8-e50b-41ac-9977-09ba77a37d10",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleForecastVolume",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1f65aa24-4fad-417d-9fd6-086b999f2b4e",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleGrossDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0ce44730-ad6f-4b5e-b092-84e0d0da29ad",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleVariance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c4be9703-cc84-48f0-b6ac-c5b3d318f886",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleVarianceDiff",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "316cf447-b1ab-4f1e-8c0f-438cc505476d",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleVariancePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "987dc280-a594-4eb1-b381-077b34eeee95",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleVolumeDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c315bb0d-1fa6-4b49-9459-da39134fc26d",
+          "is_selected": true,
+          "display_name": "AgeGroupSingleVolumeTrendIconOnly",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d566e468-0659-4bb8-a809-58e937ac8262",
+          "is_selected": true,
+          "display_name": "AgentId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cb6aadf1-a3a7-4b3f-ad6d-7f158ea1f146",
+          "is_selected": true,
+          "display_name": "CampaignId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b456cc08-6149-4d7f-aaea-bb8cc0661cef",
+          "is_selected": true,
+          "display_name": "ChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "8c52b5bc-ba6c-471c-b005-4327cfe2ae78",
+          "is_selected": true,
+          "display_name": "DateID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7b4a3da8-5980-4eb5-9c5d-c2e76d7ad00d",
+          "is_selected": true,
+          "display_name": "DestinationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f377f0cc-f228-469d-82f1-883016368386",
+          "is_selected": true,
+          "display_name": "DimSchemeHeaderId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "38dd4844-6f29-4c50-b6f1-be730282f943",
+          "is_selected": true,
+          "display_name": "DurationActualPercentage",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "83caeed6-e3b3-4958-9ca2-9e935b8bd68a",
+          "is_selected": true,
+          "display_name": "DurationActualPercentagePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "dc100ccb-0408-4595-a0e5-ef95f5e567c6",
+          "is_selected": true,
+          "display_name": "DurationForecastGross",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "84afdbd4-e2fb-4ce7-8501-5cc074ff30be",
+          "is_selected": true,
+          "display_name": "DurationForecastVolume",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "761376b7-cf9c-432a-b623-0f9c95e7bec3",
+          "is_selected": true,
+          "display_name": "DurationGrossDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "27b031ba-a3a5-47f2-9dd1-b5a47b8a0a61",
+          "is_selected": true,
+          "display_name": "DurationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d8e521b9-22e6-40a8-ac84-040a39ab1847",
+          "is_selected": true,
+          "display_name": "DurationVariance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d056c54d-322b-4708-b556-d6c27c36b71d",
+          "is_selected": true,
+          "display_name": "DurationVarianceDiff",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "6bf93dcd-7259-479b-8f6e-e9af7419630f",
+          "is_selected": true,
+          "display_name": "DurationVariancePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0649c114-aae7-4126-af34-06dcd1655d24",
+          "is_selected": true,
+          "display_name": "DurationVolumeDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "84936837-788a-4e9c-9715-e685cdad42a2",
+          "is_selected": true,
+          "display_name": "DurationVolumeTrendIconOnly",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3fc43719-8b84-445c-bca1-dcda16d266be",
+          "is_selected": true,
+          "display_name": "FamilyGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3ce67d04-89a1-464c-aafb-2ffe64bfa90f",
+          "is_selected": true,
+          "display_name": "FinalCountryId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b5c14697-8dbd-457c-9a70-a8cfcd7dc48a",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupActualPercentage",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7e462cc0-d4f9-4a28-a9e9-532cf6e85980",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupActualPercentagePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "be98db3b-2b28-496b-840e-91be36032de6",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupForecastGross",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "08edfa45-3610-4c8c-9d57-2227c89019e3",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupForecastVolume",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cc9c3ef2-b9d5-4ae8-b39d-05b5ae4e74bb",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupGrossDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "81762b37-f8f4-487d-a1ab-6d7e115878c5",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2bb4cd95-63c7-448e-baff-4b1539342639",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupVariance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "a35b4f04-f968-4992-ba82-054ca98402b7",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupVarianceDiff",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7366536e-610b-4861-9007-d02d6336ce40",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupVariancePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ecfa3db9-d5cf-4d83-b2ed-4203cc75ce83",
+          "is_selected": true,
+          "display_name": "MarketingChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "e590a3b5-f7ae-4c40-8978-f02c7793ff59",
+          "is_selected": true,
+          "display_name": "MedicalScoreActualPercentage",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b53a3034-f664-4514-b600-e79fee8af941",
+          "is_selected": true,
+          "display_name": "MedicalScoreActualPercentagePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f6c8de34-5c96-4cde-9c72-91d3008d5caa",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTActualPercentage",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "768e90f4-cd03-4b5b-b2f6-fc4643b18038",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTActualPercentagePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fd9711f2-b715-41ac-a235-06df56fd5590",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTForecastGross",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b85cd5f6-04c9-44bd-af82-b653fc01f356",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTForecastVolume",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "9aadf63e-4408-4d5a-a740-81ce8242a41f",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTVariance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ed8225f3-073d-4bb1-bdcb-0402e1b0a756",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTVarianceDiff",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "1ca3339c-1e82-45f1-b462-73fa47c854b3",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTVariancePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b6e5215b-d235-405d-af23-6cf4c5190e0f",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTVolumeDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cf252d61-1ba9-4e1c-bb75-693eda223f7b",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTVolumeTrendIconOnly",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "63ff31ab-ba20-43dc-aec1-aa93e07e8faa",
+          "is_selected": true,
+          "display_name": "MedicalScoreForecastGross",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "185496e4-cf75-4db7-8f96-2fa8f130e31d",
+          "is_selected": true,
+          "display_name": "MedicalScoreForecastVolume",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0981f79f-b078-4b0d-aa70-982a62919e48",
+          "is_selected": true,
+          "display_name": "MedicalScoreId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0744c6f8-2a7b-4414-8af7-8e225bf82968",
+          "is_selected": true,
+          "display_name": "MedicalScoreVariance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b8881988-13c1-4720-9ac1-68d65900f26e",
+          "is_selected": true,
+          "display_name": "MedicalScoreVarianceDiff",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "fdc11bf8-a292-4add-939a-e9b031d9770a",
+          "is_selected": true,
+          "display_name": "MedicalScoreVariancePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "58a47ba3-2c3e-481d-b5ae-88d66906aa5d",
+          "is_selected": true,
+          "display_name": "MedicalScoreVolumeDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "511f7435-9210-4291-8a09-2f08a98996aa",
+          "is_selected": true,
+          "display_name": "MedicalScoreVolumeTrendIconOnly",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "71973f96-50d2-4abc-b361-2d55b8226559",
+          "is_selected": true,
+          "display_name": "MedicalScroeAMTGrossDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3ea71856-fc43-4b17-b68c-0fd97c6fc026",
+          "is_selected": true,
+          "display_name": "MedicalScroeGrossDifferences",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7adc9c3a-1d1b-474d-8d7c-9210e42ed6f4",
+          "is_selected": true,
+          "display_name": "NetMargin",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "24afbb2c-354e-48a0-99d7-cd6b2b950eaf",
+          "is_selected": true,
+          "display_name": "OasisAtozNetMargin",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2517fd53-fa99-4616-9040-9f4496f18f9e",
+          "is_selected": true,
+          "display_name": "OptionId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "47ea4fbe-119e-4f6f-8790-d709a77285aa",
+          "is_selected": true,
+          "display_name": "PolicyNumber",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "aab1edca-5a5d-4501-8cb2-e4c2ccc68b97",
+          "is_selected": true,
+          "display_name": "PolicyStatus",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0b8e2219-b59c-4833-b350-db7912c069e1",
+          "is_selected": true,
+          "display_name": "PolicyTypeId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "dd949838-542e-42be-8a98-afb5877072a2",
+          "is_selected": true,
+          "display_name": "SourceType",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "67792caa-69d0-42e3-bd71-774841e24e8a",
+          "is_selected": true,
+          "display_name": "TotalGrossExcIPT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d435786e-6a8b-4b5d-9f74-7953f7983362",
+          "is_selected": true,
+          "display_name": "TotalGrossIncIPT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "dca50ef8-ea15-4bd6-9065-c90475fd2c03",
+          "is_selected": true,
+          "display_name": "TotalNetToUnderwriter",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7fb5536c-b2bd-47de-b04b-1639aed9fff6",
+          "is_selected": true,
+          "display_name": "TotalSaleVolume",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c6cbd566-12b4-4025-9bdc-814c91c45c79",
+          "is_selected": true,
+          "display_name": "TransactionType",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d58d5aeb-f803-4006-8912-1ec874ae2d70",
+          "is_selected": true,
+          "display_name": "TravelBrandId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "b25a64b1-2a5b-4f44-b8f3-6dbba64504a5",
+          "is_selected": true,
+          "display_name": "TravelSalesTransactionId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2d6512f2-523b-4993-aea9-8b4498d423bb",
+          "is_selected": true,
+          "display_name": "Variance",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "d228747a-0458-441e-a4e0-9810e6e7e9f5",
+          "is_selected": true,
+          "display_name": "VarianceDiff",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "0bc981ce-cfe2-4b72-849c-3ec299894151",
+          "is_selected": true,
+          "display_name": "VariancePer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f360bebc-bd5a-4c40-be75-695cb0b0a6ac",
+          "is_selected": true,
+          "display_name": "VolumeDifferencesFormatted",
+          "type": "semantic_model.column",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "730b02a8-77ff-4c32-b496-2abd92ac802a",
+          "is_selected": true,
+          "display_name": "VolumeStatus",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "783cc746-1ff4-4ff5-abf3-d97de16f3a9f",
+          "is_selected": true,
+          "display_name": "VolumeTrendArrowOnly",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "238bfcae-90a7-4292-8ec8-c86143d25c2a",
+          "is_selected": true,
+          "display_name": "VolumeTrendIconOnly",
+          "type": "semantic_model.measure",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "fbc36611-9bff-4698-a113-9ee38cada386",
+      "is_selected": true,
+      "display_name": "FactSalesAndQuotes",
+      "type": "semantic_model.table",
+      "description": null,
+      "children": [
+        {
+          "id": "91c29578-b684-494f-8d87-bd4c9d15a109",
+          "is_selected": true,
+          "display_name": "AgeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "9c7ed027-e803-426d-a404-84136b5d9e32",
+          "is_selected": true,
+          "display_name": "AgentId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "66591dfc-111b-4b32-98ca-ba94a6e70af6",
+          "is_selected": true,
+          "display_name": "CampaignId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "dfad0b2f-0be6-40eb-9661-b49cd9d47631",
+          "is_selected": true,
+          "display_name": "ChannelId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "f1db754c-ab57-4a2b-880f-bb5463747d30",
+          "is_selected": true,
+          "display_name": "ConversionRate",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "68d7ef1b-f954-44f5-8afe-7050d0aee4fb",
+          "is_selected": true,
+          "display_name": "DateID",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "4476452c-1302-4fbd-a461-13cdd68ac164",
+          "is_selected": true,
+          "display_name": "DurationActualPerPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "c2091295-5f9b-450b-9fbc-244bf78bceca",
+          "is_selected": true,
+          "display_name": "DurationForecastVol",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "323dd575-920f-4be4-ac08-cf2697708f63",
+          "is_selected": true,
+          "display_name": "DurationId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "77074338-b0d2-4099-b3eb-2668bcc3b907",
+          "is_selected": true,
+          "display_name": "DurationVarianceSQ",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "ee6c4837-b27a-4c2b-9f71-c987fe26e585",
+          "is_selected": true,
+          "display_name": "DurationVolumeDiff",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "27d806d6-9f1e-4352-9658-fde905be6f51",
+          "is_selected": true,
+          "display_name": "LeadTimeGroupId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3f266902-c590-49cb-84a1-d4c11ae16ff7",
+          "is_selected": true,
+          "display_name": "MedicalScoreActualPerPer",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "8325f7cf-d252-4195-9624-5c75bf019e09",
+          "is_selected": true,
+          "display_name": "MedicalScoreAMTForecastVol",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "cffa38c4-0d45-4d08-af90-7d27a758cd75",
+          "is_selected": true,
+          "display_name": "MedicalScoreId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "dcdc1b1f-3d57-42a5-b6d7-34ad4909de3b",
+          "is_selected": true,
+          "display_name": "MedicalScoreSingleForecastVol",
+          "type": "semantic_model.measure",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "319cd702-35f4-44b2-bb3d-61a8bfd27718",
+          "is_selected": true,
+          "display_name": "QuoteToEnquiryRate",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "5d086185-e081-4ef9-81b1-dcf7d61a04d7",
+          "is_selected": true,
+          "display_name": "SalesToEnquiryRate",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "9712a840-2994-43e0-9e92-477948cbf2f0",
+          "is_selected": true,
+          "display_name": "SalesToQuoteRate",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "773fe310-58e3-4756-9c64-f37d62431217",
+          "is_selected": true,
+          "display_name": "SchemeHeaderId",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "97c8b0f1-54fc-4cf2-80f2-1e05644a568b",
+          "is_selected": true,
+          "display_name": "TotalEnquiry",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "90ac748d-0804-4342-b941-bd1995a3912c",
+          "is_selected": true,
+          "display_name": "TotalGrossIncIPT",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "3e34858c-8885-47e4-ac36-f5bbada4b307",
+          "is_selected": true,
+          "display_name": "TotalNetToUnderwriter",
+          "type": "semantic_model.column",
+          "data_type": "Double",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2d8bcfc5-1e36-417f-a29d-25c0ff991099",
+          "is_selected": true,
+          "display_name": "TotalQuote",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "2ea3aaa8-a3af-46e4-a6a3-d0a8a45a2c51",
+          "is_selected": true,
+          "display_name": "TotalSales",
+          "type": "semantic_model.column",
+          "data_type": "Int64",
+          "description": null,
+          "children": []
+        },
+        {
+          "id": "7d8d5036-b253-4bf7-9192-7855c2eddf33",
+          "is_selected": true,
+          "display_name": "TotalSalesFormatted",
+          "type": "semantic_model.measure",
+          "data_type": "String",
+          "description": null,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

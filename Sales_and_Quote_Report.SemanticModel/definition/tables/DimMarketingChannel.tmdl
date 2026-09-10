@@ -1,0 +1,87 @@
+table DimMarketingChannel
+	lineageTag: 65b89a0e-e831-413a-a65a-67e4a4a60f3e
+
+	column MarketingChannelID
+		dataType: int64
+		formatString: 0
+		lineageTag: dfb27f8d-b1ac-400c-b155-d7a4184c46c7
+		summarizeBy: none
+		sourceColumn: MarketingChannelID
+
+		annotation SummarizationSetBy = Automatic
+
+	column MarketingChannel
+		dataType: string
+		lineageTag: 8b43caac-a521-4cf3-8ca8-d93eab486d8b
+		summarizeBy: none
+		sourceColumn: MarketingChannel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand
+		dataType: string
+		lineageTag: 4f770b68-0d63-4c33-8725-ffa317df6486
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column AggComm
+		dataType: double
+		lineageTag: 4c799d92-2d7d-407d-9f61-85cbc96e71d8
+		summarizeBy: sum
+		sourceColumn: AggComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Payment
+		dataType: double
+		lineageTag: f5afe427-e020-4f78-bfbd-ec82e8a06e04
+		summarizeBy: sum
+		sourceColumn: Payment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Verisk
+		dataType: double
+		lineageTag: 5281519a-4dae-42f6-81ec-ab60dda7f1d8
+		summarizeBy: sum
+		sourceColumn: Verisk
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column System
+		dataType: double
+		lineageTag: 428efd6a-44a6-414f-bebb-06dade862126
+		summarizeBy: sum
+		sourceColumn: System
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalCost
+		dataType: double
+		lineageTag: 90288ca5-9f85-47bc-a13f-e9fe323d87da
+		summarizeBy: sum
+		sourceColumn: TotalCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimMarketingChannel = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimMarketingChannel = Source{[Schema="dbo",Item="DimMarketingChannel"]}[Data]
+				in
+				    dbo_DimMarketingChannel
+

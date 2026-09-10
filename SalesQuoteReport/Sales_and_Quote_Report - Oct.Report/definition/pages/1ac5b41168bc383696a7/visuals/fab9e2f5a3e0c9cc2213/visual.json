@@ -1,0 +1,77 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "fab9e2f5a3e0c9cc2213",
+  "position": {
+    "x": 0,
+    "y": 67.359116022099442,
+    "z": 14000,
+    "height": 65.237569060773481,
+    "width": 164.41988950276243,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimDuration"
+                    }
+                  },
+                  "Property": "Duration"
+                }
+              },
+              "queryRef": "DimDuration.Duration",
+              "nativeQueryRef": "Duration",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "20890ba16aceee0df7c1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimDuration"
+              }
+            },
+            "Property": "Duration"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

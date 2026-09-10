@@ -1,0 +1,71 @@
+table UnderwritingYearSelector
+	lineageTag: 09b09c18-36b5-41f5-a2cb-902327fdc295
+
+	/// Cutoff date = last day of selected month, or 31 Dec if only a year is selected (or nothing selected, defaults to latest year).
+	measure _AsAtDate = MAX(UnderwritingYearSelector[EndOfMonthDate])
+		formatString: dd/mm/yyyy
+		isHidden
+		lineageTag: a9f58b4f-7b62-408a-8556-4229273668fe
+
+	/// 1 Jan of the underwriting year implied by the current selection.
+	measure _YearStart = DATE(YEAR([_AsAtDate]), 1, 1)
+		formatString: dd/mm/yyyy
+		isHidden
+		lineageTag: 1010f8e4-5cc2-4b13-b400-7c4f496b8a77
+
+	/// Cohort start = 1st of the earliest month selected in the Year,Month hierarchy.
+	measure _CohortStart = MINX(UnderwritingYearSelector, DATE(UnderwritingYearSelector[Year], UnderwritingYearSelector[MonthNumber], 1))
+		isHidden
+		lineageTag: e511ed9b-d28b-4139-bbe3-ff57a6bb3ef5
+
+	/// Cohort end = last day of the latest month selected in the Year,Month hierarchy.
+	measure _CohortEnd = MAX(UnderwritingYearSelector[EndOfMonthDate])
+		isHidden
+		lineageTag: 2e0213b4-5905-437d-9e10-407d3129b07e
+
+	column Year
+		lineageTag: 5947b21d-7e30-4d08-8c09-8547e22541de
+		isNameInferred
+		sourceColumn: [Year]
+
+	column MonthNumber
+		lineageTag: abd5092d-17dc-417b-bb99-75516cfc403d
+		isNameInferred
+		sourceColumn: [MonthNumber]
+
+	column MonthName
+		lineageTag: f82665a3-cada-4653-a66c-080bcb5c327b
+		isNameInferred
+		sourceColumn: [MonthName]
+		sortByColumn: MonthNumber
+
+	column EndOfMonthDate
+		lineageTag: 4a957deb-cdb0-4362-9974-47a91f08fc88
+		isNameInferred
+		sourceColumn: [EndOfMonthDate]
+
+	hierarchy 'Underwriting Year'
+		lineageTag: 9e10a08e-c66c-4132-96c2-0f3ab3abc1a2
+
+		level Year
+			lineageTag: a121193b-de81-4629-8bc6-afae85956337
+			column: Year
+
+		level Month
+			lineageTag: 17e78f43-2f85-4309-94f1-83423efd906f
+			column: MonthName
+
+	partition UnderwritingYearSelector = calculated
+		mode: import
+		source =
+				VAR _cal = ADDCOLUMNS(CALENDAR(DATE(2025,1,1), DATE(2026,12,31)), "Yr", YEAR([Date]), "Mo", MONTH([Date]))
+				VAR _months = SUMMARIZE(_cal, [Yr], [Mo])
+				RETURN
+				SELECTCOLUMNS(
+				    _months,
+				    "Year", [Yr],
+				    "MonthNumber", [Mo],
+				    "MonthName", FORMAT(DATE(2000,[Mo],1),"mmm"),
+				    "EndOfMonthDate", EOMONTH(DATE([Yr],[Mo],1),0)
+				)
+

@@ -1,0 +1,29 @@
+table DimCampaign
+	lineageTag: 0690d90b-4338-4092-9d4a-b1c1623b5826
+
+	column CampaignId
+		dataType: int64
+		formatString: 0
+		lineageTag: 06044fb7-6f2c-4188-99cb-f13e3794c8c8
+		summarizeBy: none
+		sourceColumn: CampaignId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignName
+		dataType: string
+		lineageTag: 7972c08d-1890-4985-b9cf-0cfeff10becc
+		summarizeBy: none
+		sourceColumn: CampaignName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCampaign = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimCampaign = Source{[Schema="dbo",Item="DimCampaign"]}[Data]
+				in
+				    dbo_DimCampaign
+

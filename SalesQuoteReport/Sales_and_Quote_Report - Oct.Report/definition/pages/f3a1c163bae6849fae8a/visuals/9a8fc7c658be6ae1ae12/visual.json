@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "9a8fc7c658be6ae1ae12",
+  "position": {
+    "x": 376.53645789711771,
+    "y": 67.513086483860747,
+    "z": 16000,
+    "height": 67.238647213521162,
+    "width": 175.64381312919815,
+    "tabOrder": 16000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimLeadTimeGroup"
+                    }
+                  },
+                  "Property": "LeadTimeGroup"
+                }
+              },
+              "queryRef": "DimLeadTimeGroup.LeadTimeGroup",
+              "nativeQueryRef": "LeadTimeGroup",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8641382c4588ce0c8370",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimLeadTimeGroup"
+              }
+            },
+            "Property": "LeadTimeGroup"
+          }
+        },
+        "type": "Categorical"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

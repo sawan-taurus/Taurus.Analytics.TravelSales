@@ -1,0 +1,34 @@
+table DimTravelBrand
+	lineageTag: cad04c69-f4a4-4150-b989-aee821bff7e9
+	sourceLineageTag: [dbo].[DimTravelBrand]
+
+	column TravelBrandID
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: cb75f062-d382-4a97-aa29-f56382e21b3b
+		sourceLineageTag: TravelBrandID
+		summarizeBy: count
+		sourceColumn: TravelBrandID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravelBrand
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 23e82023-8193-4455-8cfb-1017f2a48ecc
+		sourceLineageTag: TravelBrand
+		summarizeBy: none
+		sourceColumn: TravelBrand
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimTravelBrand = entity
+		mode: directLake
+		source
+			entityName: DimTravelBrand
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

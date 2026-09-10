@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "ForecastSummaryLoad"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f18851c8-e9cb-9371-451e-aafb30fd4e75"
+  }
+}

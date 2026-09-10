@@ -1,0 +1,107 @@
+table FactDailyAtoz
+	lineageTag: d4c483b2-5cf1-4696-9d52-68a2d0928b38
+	sourceLineageTag: [dbo].[FactDailyAtoz]
+
+	column TravelBrandID
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 4686a891-a2e4-452b-a70b-86c39bf9ecd0
+		sourceLineageTag: TravelBrandID
+		summarizeBy: count
+		sourceColumn: TravelBrandID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 05d01db0-8552-4a33-b3cc-e8179991668f
+		sourceLineageTag: DateId
+		summarizeBy: count
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 6c7a6a83-fade-4fe6-bf7d-e01d5e9c8d23
+		sourceLineageTag: Volume
+		summarizeBy: sum
+		sourceColumn: Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GWPincIPTDay
+		dataType: double
+		sourceProviderType: float
+		lineageTag: ec2a7cb6-ba4e-45f9-b5cd-30ab118c88e9
+		sourceLineageTag: GWPincIPTDay
+		summarizeBy: sum
+		sourceColumn: GWPincIPTDay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GWPExIPTDay
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 7d0d11a8-f929-4801-ad21-cfe1f5404147
+		sourceLineageTag: GWPExIPTDay
+		summarizeBy: sum
+		sourceColumn: GWPExIPTDay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column VolumeMonth
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 70d87fdb-2661-4e9a-b321-9c6d5760692a
+		sourceLineageTag: VolumeMonth
+		summarizeBy: sum
+		sourceColumn: VolumeMonth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalGrossIncIPTMonth
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 23e239ab-6b23-4a44-9808-006a0d23bba2
+		sourceLineageTag: TotalGrossIncIPTMonth
+		summarizeBy: sum
+		sourceColumn: TotalGrossIncIPTMonth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalGrossExcIPTMonth
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 710b00f5-7c4f-4c31-9503-a87a56994ea5
+		sourceLineageTag: TotalGrossExcIPTMonth
+		summarizeBy: sum
+		sourceColumn: TotalGrossExcIPTMonth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactDailyAtoz = entity
+		mode: directLake
+		source
+			entityName: FactDailyAtoz
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

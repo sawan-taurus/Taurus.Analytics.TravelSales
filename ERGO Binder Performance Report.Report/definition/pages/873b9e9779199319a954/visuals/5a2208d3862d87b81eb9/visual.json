@@ -1,0 +1,1235 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "5a2208d3862d87b81eb9",
+  "position": {
+    "x": 2.6600985221674875,
+    "y": 155.61576354679804,
+    "z": 0,
+    "height": 889.80295566502457,
+    "width": 383.05418719211821,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy2"
+                    }
+                  },
+                  "Property": "Policy3"
+                }
+              },
+              "queryRef": "DimPolicy2.Policy3",
+              "nativeQueryRef": "Policy3",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Policies (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Policies (Cumulative)",
+              "nativeQueryRef": "Policies",
+              "displayName": "Policies"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Policies Earned"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.PoliciesEarned",
+              "nativeQueryRef": "Policies Earned"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "GWP (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.GWP (Cumulative)",
+              "nativeQueryRef": "GWP ex IPT",
+              "displayName": "GWP ex IPT"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NWP (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NWP (Cumulative)",
+              "nativeQueryRef": "NWP",
+              "displayName": "NWP"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NEP (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NEP (Cumulative)",
+              "nativeQueryRef": "NEP",
+              "displayName": "NEP"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Avg GWP (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Avg GWP (Cumulative)",
+              "nativeQueryRef": "Avg GWP",
+              "displayName": "Avg GWP"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "% Earned (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.% Earned (Cumulative)",
+              "nativeQueryRef": "% Earned",
+              "displayName": "% Earned"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NELR (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NELR (Cumulative)",
+              "nativeQueryRef": "NELR",
+              "displayName": "NELR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NELR Ex LL (Cumulative)"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NELR Ex LL (Cumulative)",
+              "nativeQueryRef": "NELR Ex LL",
+              "displayName": "NELR Ex LL"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Total Incurred Ex LL (Cumulative)"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Total Incurred Ex LL (Cumulative)",
+              "nativeQueryRef": "Total Incurred Ex LL",
+              "displayName": "Total Incurred Ex LL"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Total Incurred (Cumulative)"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Total Incurred (Cumulative)",
+              "nativeQueryRef": "Total Incurred",
+              "displayName": "Total Incurred"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Total Paid"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Total Paid",
+              "nativeQueryRef": "Total Paid1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Total Reserved"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Total Reserved",
+              "nativeQueryRef": "Total Reserved1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Claims Count (Cumulative)"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Claims Count (Cumulative)",
+              "nativeQueryRef": "Claims Count",
+              "displayName": "Claims Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Open Claims Count"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Open Claims Count",
+              "nativeQueryRef": "Open Count",
+              "displayName": "Open Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Open Incurred Claims"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Open Incurred Claims",
+              "nativeQueryRef": "Open Incurred",
+              "displayName": "Open Incurred"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Av Cost Per Claim"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Av Cost Per Claim",
+              "nativeQueryRef": "Av Cost Per Open",
+              "displayName": "Av Cost Per Open"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Settled Count"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Settled Count",
+              "nativeQueryRef": "Settled Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Settled Incurred"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Settled Incurred",
+              "nativeQueryRef": "Settled Incurred"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Av Cost Per Settled"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Av Cost Per Settled",
+              "nativeQueryRef": "Av Cost Per Settled"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Other Count"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Other Status Count",
+              "nativeQueryRef": "Other Status Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Other Incurred"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Other Incurred",
+              "nativeQueryRef": "Other Incurred"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Av Cost Per Other"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Av Cost Per Other",
+              "nativeQueryRef": "Av Cost Per Other"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Incident Rate"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Incident Rate",
+              "nativeQueryRef": "Incident Rate"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "Declined Count"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Declined Count",
+              "nativeQueryRef": "Declined Count"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "% Declined"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.% Declined",
+              "nativeQueryRef": "% Declined"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByTypeCancellation"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.Cancellation Count",
+              "nativeQueryRef": "Cancellation",
+              "displayName": "Cancellation"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByTypeMedical"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.ClaimByTypeMedical",
+              "nativeQueryRef": "Medical",
+              "displayName": "Medical"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByTypeBaggage"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.ClaimByTypeBaggage",
+              "nativeQueryRef": "Baggage",
+              "displayName": "Baggage"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByTypeOther"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.ClaimByTypeOther",
+              "nativeQueryRef": "Other",
+              "displayName": "Other"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByCostCancellation"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.ClaimByCostCancellation",
+              "nativeQueryRef": "Cancellation (Cost)",
+              "displayName": "Cancellation (Cost)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByCostMedical"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.ClaimByCostBaggage",
+              "nativeQueryRef": "Medical (Cost)",
+              "displayName": "Medical (Cost)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByCostBaggage"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.ClaimByCostBaggage1",
+              "nativeQueryRef": "Baggage (Cost)",
+              "displayName": "Baggage (Cost)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_claims_switched_on"
+                    }
+                  },
+                  "Property": "ClaimByCostOther"
+                }
+              },
+              "queryRef": "fact_claims_switched_on.ClaimByCostOther",
+              "nativeQueryRef": "Other (Cost)",
+              "displayName": "Other (Cost)"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "valuesOnRow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "7D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "11D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "rowHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "steppedLayoutIndentation": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "gridHorizontal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "layout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Outline'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "45.98936779505933D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_master_bdx_switched_on.PoliciesEarned"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "49.58129851035601D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_master_bdx_switched_on.Incident Rate"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "53.737950517866004D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_claims_switched_on.Declined Count"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "52.217292613444066D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_claims_switched_on.% Declined"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "44.88888892984109D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sum(gold fact_master_bdx_switched_on.Policy)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "69.79612975673791D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_claims_switched_on.Cancellation Count"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "50.98631452273929D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "fact_claims_switched_on.ClaimByTypeMedical"
+          }
+        }
+      ],
+      "blankRows": [
+        {
+          "properties": {
+            "showBlankRows": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {}
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "f9c3f590b3b01201a922",
+        "ordinal": 0,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "Percentage Earned"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "a5a1cc67d010631c3712",
+        "ordinal": 1,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "Avg GWP"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "f11eb4ce6b0c6c894c93",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "Channel"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "g",
+              "Entity": "fact_master_bdx_switched_on",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "g"
+                          }
+                        },
+                        "Property": "Channel"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'DIRECT'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "9af6808a87e4d998eb21",
+        "ordinal": 3,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "Channel"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "fact_claims_switched_on",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "f"
+                          }
+                        },
+                        "Property": "Channel"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'DIRECT'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "05e374d110b42d528899",
+        "ordinal": 4,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "Policy2"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "b946be6b0ce0de570860",
+        "ordinal": 5,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "Total GWP ex"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "6f953b65db4ea148e73e",
+        "ordinal": 6,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimPolicy2"
+              }
+            },
+            "Property": "Policy3"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "9a5e3650ac9493aac636",
+        "ordinal": 7,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "Policies Earned"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2217a1fe09d42c008eb2",
+        "ordinal": 8,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "Total Paid"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0e1135db6e05e519d600",
+        "ordinal": 9,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "Total Reserved"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f4bb6ff50a905002925e",
+        "ordinal": 10,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "Incident Rate"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "74f2c4aa4c95040ceb3d",
+        "ordinal": 11,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "Declined Count"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "689d99683100a009b5cd",
+        "ordinal": 12,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "% Declined"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "708fff3543b50a32a705",
+        "ordinal": 13,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByTypeCancellation"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e06c96bf59e482641051",
+        "ordinal": 14,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByTypeMedical"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ee25ea929130408be5a9",
+        "ordinal": 15,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByTypeBaggage"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d60fb73384eecda0a999",
+        "ordinal": 16,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByTypeOther"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7fec39002c106b1e92eb",
+        "ordinal": 17,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByCostCancellation"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "edc7a0c7d720a00e7ce5",
+        "ordinal": 18,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByCostMedical"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e01b95a49053806206ac",
+        "ordinal": 19,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByCostBaggage"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5dc9283936562b9409ac",
+        "ordinal": 20,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_claims_switched_on"
+              }
+            },
+            "Property": "ClaimByCostOther"
+          }
+        },
+        "type": "Advanced"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

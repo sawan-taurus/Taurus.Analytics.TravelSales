@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "54307977c4e60e71b4ed",
+  "position": {
+    "x": 164.66607480862328,
+    "y": 67.238647213521162,
+    "z": 15000,
+    "height": 67.238647213521162,
+    "width": 207.20481080085094,
+    "tabOrder": 14000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimFamilyGroup"
+                    }
+                  },
+                  "Property": "FamilyGroup"
+                }
+              },
+              "queryRef": "DimFamilyGroup.FamilyGroup",
+              "nativeQueryRef": "FamilyGroup",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "18a6806a84f3d93867d2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimFamilyGroup"
+              }
+            },
+            "Property": "FamilyGroup"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

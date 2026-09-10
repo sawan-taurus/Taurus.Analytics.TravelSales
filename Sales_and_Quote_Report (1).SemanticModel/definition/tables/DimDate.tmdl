@@ -1,0 +1,124 @@
+table DimDate
+	lineageTag: 42c45f82-9107-425e-9641-4e1353ecc605
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cc560dce-43d4-4076-9747-891f14733406
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 9d38711f-7e90-4678-8a6a-6d267b9ce076
+			defaultHierarchy: LocalDateTable_a6b11c58-870f-4891-b42a-d8ae726014d7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 239d9fb7-66df-48eb-9093-15b88d50894b
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e49de5e-8ad8-4263-aa03-058197352fe1
+		summarizeBy: sum
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 941ba990-69be-4bcf-bc9c-a5b9d562f0fb
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: 2694c6c5-76a6-428c-877e-e7bb301dc9ae
+		summarizeBy: sum
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 9aad9552-044e-443e-b3da-e77b5e6a2dc5
+		summarizeBy: sum
+		sourceColumn: DayOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 404dc5fb-1b75-4162-b6db-74ecc4049156
+		summarizeBy: none
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName = ```
+			FORMAT(DATE(2025, [Month], 1), "mmm")
+			
+			```
+		lineageTag: 87b4edcb-4024-4219-9410-41f712728183
+		summarizeBy: none
+		sortByColumn: Month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column FilteredYears = ```
+			
+			FILTER(
+			    CALCULATETABLE(
+			        VALUES(DimDate[Year]),
+			        DimDate[DateId] IN VALUES(FactSalesAnalysis[DateId])
+			    ),
+			    NOT(ISBLANK(DimDate[Year])) && NOT(ISERROR(DimDate[Year]))
+			)
+			
+			
+			```
+		formatString: 0
+		lineageTag: eb7c3d7c-e51b-4196-bcf2-a8e848be4c6f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column FormattedDate = ```
+			FORMAT('DimDate'[Date], "dd/mm/yyyy")
+			
+			
+			```
+		lineageTag: 151fd4f8-7206-46f6-ad37-ad4f94d03656
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimDate = Source{[Schema="dbo",Item="DimDate"]}[Data]
+				in
+				    dbo_DimDate
+
+	annotation PBI_ResultType = Table
+

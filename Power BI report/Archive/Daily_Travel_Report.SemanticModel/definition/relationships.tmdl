@@ -1,0 +1,8 @@
+relationship be3ba19d-7648-ea67-8b62-4087f03ba45e
+	fromColumn: FactDailyReport.SchemeSubsetId
+	toColumn: DimSchemeSubSet.SchemeSubsetId
+
+relationship e5aa5f35-e48b-6be2-4de2-f9ae1bd73888
+	fromColumn: FactDailyReport.DateId
+	toColumn: DimDate.DateId
+

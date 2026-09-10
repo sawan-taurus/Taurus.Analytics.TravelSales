@@ -1,0 +1,29 @@
+table DimPolicy2
+	lineageTag: df65aa04-7aff-42c4-bee7-80e9b93a94a9
+
+	column Policy3
+		lineageTag: 97ceebc3-9904-47a3-8231-5f64c4e531a2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: fact_claims_switched_on[Policy3]
+		sortByColumn: PolicyTypeSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyTypeSortOrder = RELATED('PolicyTypeOrder'[SortOrder])
+		dataType: int64
+		lineageTag: 98ab4b8b-6891-4038-83aa-8b7602130849
+
+	partition DimPolicy2 = calculated
+		mode: import
+		source =
+				
+				DISTINCT(
+				    UNION(
+				        VALUES('fact_claims_switched_on'[Policy3]),
+				        VALUES('fact_master_bdx_switched_on'[Policy2])
+				    )
+				)
+
+	annotation PBI_Id = 6b8169e6536a4231bb3fdba31838c6f1
+

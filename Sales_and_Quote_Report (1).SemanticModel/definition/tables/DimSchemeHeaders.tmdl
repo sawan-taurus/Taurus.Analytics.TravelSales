@@ -1,0 +1,31 @@
+table DimSchemeHeaders
+	lineageTag: aa613a60-9195-42ec-9186-82f7132feb41
+
+	column SchemeHeaderId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f168321-0d2f-45a8-a2b7-df1c1d47d233
+		summarizeBy: none
+		sourceColumn: SchemeHeaderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FriendlyName
+		dataType: string
+		lineageTag: 81a5df99-d4db-4737-b1e1-bbecd426a5b3
+		summarizeBy: none
+		sourceColumn: FriendlyName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSchemeHeaders = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimSchemeHeaders = Source{[Schema="dbo",Item="DimSchemeHeaders"]}[Data]
+				in
+				    dbo_DimSchemeHeaders
+
+	annotation PBI_ResultType = Table
+

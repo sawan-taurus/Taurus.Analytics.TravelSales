@@ -1,0 +1,56 @@
+table DimSchemeSubSet
+	lineageTag: 8c562321-9a7b-4675-80b2-edeb7245e2b3
+	sourceLineageTag: [dbo].[DimSchemeSubSet]
+
+	column SchemeSubset
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 6f7c6ca9-3b59-4fd2-83f4-aaca2e7e34e1
+		sourceLineageTag: SchemeSubset
+		summarizeBy: none
+		sourceColumn: SchemeSubset
+		sortByColumn: Sort
+
+		changedProperty = IsHidden
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeSubsetId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f37d86d9-bd28-4cdb-ba61-774e6308d9f1
+		sourceLineageTag: SchemeSubsetId
+		summarizeBy: none
+		sourceColumn: SchemeSubsetId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 08359404-06fb-4cba-b0ae-0336e6fbf583
+		sourceLineageTag: Sort
+		summarizeBy: none
+		sourceColumn: Sort
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSchemeSubSet = entity
+		mode: directLake
+		source
+			entityName: DimSchemeSubSet
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+

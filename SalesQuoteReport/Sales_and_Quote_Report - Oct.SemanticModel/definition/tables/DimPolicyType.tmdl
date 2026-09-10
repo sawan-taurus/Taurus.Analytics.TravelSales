@@ -1,0 +1,31 @@
+table DimPolicyType
+	lineageTag: 55b2c664-5c2d-4c41-916c-b9db42bd2378
+
+	column PolicyTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: fada175f-ed3b-47a7-81bf-c1a0e6eab9eb
+		summarizeBy: none
+		sourceColumn: PolicyTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyType
+		dataType: string
+		lineageTag: 3c05a4be-2ab4-4243-b87b-68845548ae59
+		summarizeBy: none
+		sourceColumn: PolicyType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimPolicyType = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimPolicyType = Source{[Schema="dbo",Item="DimPolicyType"]}[Data]
+				in
+				    dbo_DimPolicyType
+
+	annotation PBI_ResultType = Table
+

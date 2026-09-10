@@ -1,0 +1,40 @@
+table DimSchemeSubSet
+	lineageTag: 539a060f-42e5-42b0-8d48-2470cbb760b1
+
+	column SchemeSubset
+		dataType: string
+		lineageTag: 62c57e5e-5975-41d0-bdf0-0bcc330045ae
+		summarizeBy: none
+		sourceColumn: SchemeSubset
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeSubsetId
+		dataType: int64
+		formatString: 0
+		lineageTag: ce221117-2116-4fb5-8bef-19cbc075e77c
+		summarizeBy: none
+		sourceColumn: SchemeSubsetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: cba21ca7-43ea-4852-9c3b-ca45f77f6770
+		summarizeBy: none
+		sourceColumn: Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSchemeSubSet = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimSchemeSubSet = Source{[Schema="dbo",Item="DimSchemeSubSet"]}[Data]
+				in
+				    dbo_DimSchemeSubSet
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,55 @@
+table DimSubSet
+	lineageTag: 6c6c2c5b-4c78-4981-9784-f0dc80ad5c60
+
+	column Channel
+		dataType: string
+		lineageTag: fa2b08c4-0180-4485-b337-c76ad7308a11
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalSubSetId
+		dataType: int64
+		formatString: 0
+		lineageTag: 5743e5e4-7674-4a24-a871-fa81311c4577
+		summarizeBy: none
+		sourceColumn: TotalSubSetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder = ```
+			SWITCH(
+			    DimSubSet[Channel],
+			    "Atoz", 1,
+			    "SOI", 2,
+			    "Oasis", 3,
+			    "Viva", 4,
+			    "Trusted", 5,
+			    "TotalSubSet", 6,
+			    99
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 72f1cd68-53d7-40f0-b2dd-e91134851d98
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalChannel = IF(DimSubSet[Channel] = "TotalSubSet", "Total", DimSubSet[Channel])
+		lineageTag: dd4a6c63-3d35-4805-a81f-ed18b27ba540
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSubSet = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimSubSet = Source{[Schema="dbo",Item="DimSubSet"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dbo_DimSubSet,{{"TotalSubSet", "Channel"}})
+				in
+				    #"Renamed Columns"
+

@@ -1,0 +1,49 @@
+table OverallEarningPattern
+	lineageTag: 66aa2ba2-598a-4180-8f0f-9a54c5217f2f
+
+	column Overall
+		dataType: string
+		lineageTag: 4c3b472d-06e2-426a-991d-9fb783814ca7
+		sourceColumn: Overall
+
+	column Channel
+		dataType: string
+		lineageTag: 84b01719-47cb-43c0-add7-96057de29568
+		sourceColumn: Channel
+
+	column LeadTimeBanding
+		dataType: int64
+		lineageTag: 1892fdce-e9f8-40c2-9e0d-329444755644
+		sourceColumn: LeadTimeBanding
+
+	column LeadTimeEpText
+		dataType: string
+		lineageTag: 9c8f0742-6a21-499c-81e6-8f09055d8414
+		sourceColumn: LeadTimeEpText
+
+	column DurationEpText
+		dataType: string
+		lineageTag: 96f27d5f-56a8-49b8-9e91-628fcfebca27
+		sourceColumn: DurationEpText
+
+	column LeadTimeEpValue = IFERROR(VALUE(SUBSTITUTE(OverallEarningPattern[LeadTimeEpText], "%", "")) / 100, 0)
+		dataType: double
+		formatString: 0.00%
+		lineageTag: e2ec5954-ce0f-48bc-861c-1afe74d0ddcc
+
+	column DurationEpValue = IFERROR(VALUE(SUBSTITUTE(OverallEarningPattern[DurationEpText], "%", "")) / 100, 0)
+		dataType: double
+		formatString: 0.00%
+		lineageTag: ba63b418-2631-4627-91c4-d7608e6d8268
+
+	partition OverallEarningPattern = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-mcybvrzqd3tufdttrjbjhzokdi.datawarehouse.fabric.microsoft.com", "taurus_lakehouse"),
+				    Data = Source{[Schema="bronze",Item="overall_st_earning_pattern"]}[Data],
+				    Renamed = Table.RenameColumns(Data, {{"overall","Overall"},{"direct","Channel"},{"lead_time","LeadTimeBanding"},{"leadtime_ep","LeadTimeEpText"},{"duration_ep","DurationEpText"}}),
+				    Typed = Table.TransformColumnTypes(Renamed, {{"Overall", type text}, {"Channel", type text}, {"LeadTimeBanding", Int64.Type}, {"LeadTimeEpText", type text}, {"DurationEpText", type text}})
+				in
+				    Typed
+

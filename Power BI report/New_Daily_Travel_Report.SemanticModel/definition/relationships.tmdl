@@ -1,0 +1,33 @@
+relationship b59bbcc8-f740-4c67-a458-5795accf27d9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Date
+	toColumn: LocalDateTable_83c20beb-a333-4cfe-b715-34d3e8add953.Date
+
+relationship AutoDetected_3402b3c5-3478-47a2-adbe-14b316a1017d
+	fromColumn: FactDailySalesReport.DateId
+	toColumn: DimDate.DateId
+
+relationship AutoDetected_0aa406da-c3f3-4fd1-913d-1afa0e543f85
+	fromColumn: FactDailyForecastReport.DateId
+	toColumn: DimDate.DateId
+
+relationship cba9caa2-d838-31be-7cef-ebf818679c5e
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactDailySalesReport.TotalSubSetId
+	toColumn: DimSubSet.TotalSubSetId
+
+relationship 0e4915ef-e971-8da9-b07d-a974ff82cfdb
+	fromColumn: FactDailyForecastReport.TotalSubSetId
+	toColumn: DimSubSet.TotalSubSetId
+
+relationship 459d3bec-7aa4-1367-5db2-4b24b1948f6d
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactDailyForecastReport.SchemeSubsetId
+	toColumn: DimSchemeSubSet.SchemeSubsetId
+
+relationship 8a23714b-4bb1-f1c9-0e0b-661ec8c59edf
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactDailySalesReport.SchemeSubsetId
+	toColumn: DimSchemeSubSet.SchemeSubsetId
+

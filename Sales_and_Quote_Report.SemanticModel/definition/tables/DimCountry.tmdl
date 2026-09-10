@@ -1,0 +1,39 @@
+table DimCountry
+	lineageTag: 939d3ad7-a9bd-4382-bad0-b76da6b603aa
+
+	column CountryID
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c1bc4a6-787a-4d3e-b9dc-370cb99bab12
+		summarizeBy: none
+		sourceColumn: CountryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VariantName
+		dataType: string
+		lineageTag: fac2121c-9471-4e08-86bd-dbde8562f6be
+		summarizeBy: none
+		sourceColumn: VariantName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StandardName
+		dataType: string
+		lineageTag: 9a27caac-a5eb-4c07-bd2b-e41cc7121e6e
+		summarizeBy: none
+		sourceColumn: StandardName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCountry = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimCountry = Source{[Schema="dbo",Item="DimCountry"]}[Data]
+				in
+				    dbo_DimCountry
+
+	annotation PBI_ResultType = Table
+

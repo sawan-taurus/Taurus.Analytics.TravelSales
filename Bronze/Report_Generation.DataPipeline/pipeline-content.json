@@ -1,0 +1,63 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "52f85c92-9d66-8900-4998-5c6718ced4ed",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "report_date": {
+              "value": {
+                "value": "@pipeline().parameters.process_date",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "NewReportQuery",
+        "dependsOn": []
+      },
+      {
+        "type": "Office365Outlook",
+        "typeProperties": {
+          "inputs": {
+            "body": {
+              "To": "sawan@taurus.gi; memblin@taurus.gi",
+              "Subject": "Daily report",
+              "Body": "<p>@{base64ToString(activity('NewReportQuery').output.result.exitValue)}</p>",
+              "Sensitivity": "",
+              "Importance": "Normal"
+            },
+            "method": "post",
+            "path": "/v2/Mail"
+          }
+        },
+        "name": "Office 365 Outlook1",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "NewReportQuery",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "process_date": {
+        "type": "string"
+      }
+    }
+  }
+}

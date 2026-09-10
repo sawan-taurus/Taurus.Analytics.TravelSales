@@ -1,0 +1,225 @@
+relationship AutoDetected_be8fb6e7-38b5-40d5-b4bd-de7d6f64242c
+	fromColumn: FactSales.DateID
+	toColumn: DimDate.DateId
+
+relationship AutoDetected_98c15fa0-4864-4878-9570-9a9cbdf578a3
+	fromColumn: FactSales.LeadTimeGroupId
+	toColumn: DimLeadTimeGroup.LeadTimeGroupId
+
+relationship AutoDetected_90e88924-9eff-4a17-bd6f-8ece829c7b27
+	fromColumn: FactSales.DurationId
+	toColumn: DimDuration.DurationId
+
+relationship AutoDetected_aac25643-d61d-4a5d-8998-2fc904305459
+	fromColumn: FactSales.PolicyTypeId
+	toColumn: DimPolicyType.PolicyTypeId
+
+relationship AutoDetected_ed860c27-c10c-40e0-8b41-aeb2e7e1092f
+	fromColumn: FactSales.ChannelId
+	toColumn: DimChannel.ChannelId
+
+relationship AutoDetected_e1054c63-6159-43c9-b199-bbc5e6ed030b
+	fromColumn: FactSales.DestinationId
+	toColumn: DimDestination.DestinationId
+
+relationship AutoDetected_6cb40963-97d2-4744-9128-c8cf390469a3
+	fromColumn: FactSales.FamilyGroupId
+	toColumn: DimFamilyGroup.FamilyGroupId
+
+relationship AutoDetected_94014487-250b-4397-be07-626ede97e9a9
+	fromColumn: FactSales.AgeGroupId
+	toColumn: DimAgeGroup.AgeGroupId
+
+relationship AutoDetected_2bf735e3-89b2-4ef4-bc35-de0e16209a97
+	fromColumn: FactSales.OptionId
+	toColumn: DimOption.OptionId
+
+relationship AutoDetected_e9e241d9-223d-413e-a079-79b9295af87d
+	fromColumn: FactSales.MedicalScoreId
+	toColumn: DimMedicalScore.MedicalScoreId
+
+relationship 5d47b06f-56c4-79c0-dc53-9931a05c9f5c
+	fromColumn: FactSales.FinalCountryId
+	toColumn: DimCountry.CountryID
+
+relationship 179e5338-9a76-c2c6-7831-910839ec9224
+	fromColumn: FactSales.DimSchemeHeaderId
+	toColumn: DimSchemeHeaders.SchemeHeaderId
+
+relationship 4baf7334-81be-d9ec-a569-13287bf08ec6
+	fromColumn: FactSales.TravelBrandId
+	toColumn: DimTravelBrand.TravelBrandID
+
+relationship AutoDetected_f664d37a-c956-4572-a68f-1a710e4675ab
+	fromColumn: FactEnquiryQuotes.TravelBrandId
+	toColumn: DimTravelBrand.TravelBrandID
+
+relationship AutoDetected_9ae9c1bb-5ef9-40a6-b4c4-096635b40562
+	fromColumn: FactEnquiryQuotes.LeadTimeGroupId
+	toColumn: DimLeadTimeGroup.LeadTimeGroupId
+
+relationship AutoDetected_8645aac0-c0ec-44d2-9f4f-35cda1802af1
+	fromColumn: FactEnquiryQuotes.DurationId
+	toColumn: DimDuration.DurationId
+
+relationship AutoDetected_2f850bea-d95e-4cc6-bbea-71f5079f1c33
+	fromColumn: FactEnquiryQuotes.PolicyTypeId
+	toColumn: DimPolicyType.PolicyTypeId
+
+relationship AutoDetected_8ec2321a-8a2d-46a4-8148-061adf6aee34
+	fromColumn: FactEnquiryQuotes.ChannelId
+	toColumn: DimChannel.ChannelId
+
+relationship AutoDetected_b2b7d3ee-8da2-40b2-9663-5e4b343e9c4f
+	fromColumn: FactEnquiryQuotes.DestinationId
+	toColumn: DimDestination.DestinationId
+
+relationship AutoDetected_86d764b9-1156-4fa7-a867-e7608f6ef4f4
+	fromColumn: FactEnquiryQuotes.FamilyGroupId
+	toColumn: DimFamilyGroup.FamilyGroupId
+
+relationship AutoDetected_82f0f5f3-c957-4806-a176-d9316607d216
+	fromColumn: FactEnquiryQuotes.AgeGroupId
+	toColumn: DimAgeGroup.AgeGroupId
+
+relationship AutoDetected_b014d725-8e0a-47cb-827f-c3a742b69723
+	fromColumn: FactEnquiryQuotes.OptionId
+	toColumn: DimOption.OptionId
+
+relationship AutoDetected_1666b671-9c5f-4ce9-a7aa-1ad3495fee34
+	fromColumn: FactEnquiryQuotes.MedicalScoreId
+	toColumn: DimMedicalScore.MedicalScoreId
+
+relationship AutoDetected_5b0711ab-6d6a-4c89-af35-519d9938a5d4
+	fromColumn: FactSales.MarketingChannelId
+	toColumn: DimMarketingChannel.MarketingChannelID
+
+relationship AutoDetected_521a3465-28ee-4a02-9db6-2ab2def9969a
+	fromColumn: FactEnquiryQuotes.MarketingChannelId
+	toColumn: DimMarketingChannel.MarketingChannelID
+
+relationship AutoDetected_fca6c642-be20-44a6-ac85-28157c9c0863
+	fromColumn: FactSalesAndQuotes.DateID
+	toColumn: DimDate.DateId
+
+relationship AutoDetected_d05729a7-57c7-419a-b38e-8c977e117852
+	fromColumn: FactSalesAndQuotes.SchemeHeaderId
+	toColumn: DimSchemeHeaders.SchemeHeaderId
+
+relationship AutoDetected_2f5ce2e3-9a7b-4e0f-89a8-4e58f1375101
+	fromColumn: FactSalesAndQuotes.ChannelId
+	toColumn: DimChannel.ChannelId
+
+relationship AutoDetected_271dfff5-e63a-499f-97d4-d511116c5c0b
+	fromColumn: FactSales.AgentId
+	toColumn: DimAgent.AgentId
+
+relationship AutoDetected_48056310-789c-46bf-8023-1f4ff68979fd
+	fromColumn: FactSalesAndQuotes.AgentId
+	toColumn: DimAgent.AgentId
+
+relationship AutoDetected_a107f6c5-8b31-4004-a0ca-175ce348619b
+	fromColumn: FactSales.CampaignId
+	toColumn: DimCampaign.CampaignId
+
+relationship AutoDetected_4763f32b-a2f1-4b38-adbe-265bb6edc479
+	fromColumn: FactSalesAndQuotes.CampaignId
+	toColumn: DimCampaign.CampaignId
+
+relationship AutoDetected_27c5e9fa-ab17-470b-abec-678d6d939c52
+	fromColumn: FactSalesAndQuotes.LeadTimeGroupId
+	toColumn: DimLeadTimeGroup.LeadTimeGroupId
+
+relationship AutoDetected_8de49ca8-8429-4a72-9879-0e79d53bab27
+	fromColumn: FactSalesAndQuotes.DurationId
+	toColumn: DimDuration.DurationId
+
+relationship AutoDetected_6f202bb7-a62c-41a1-b76f-c26f664890ba
+	fromColumn: FactSalesAndQuotes.AgeGroupId
+	toColumn: DimAgeGroup.AgeGroupId
+
+relationship AutoDetected_f11a5d63-590f-431c-8e6d-1c21df11acfb
+	fromColumn: FactSalesAndQuotes.MedicalScoreId
+	toColumn: DimMedicalScore.MedicalScoreId
+
+relationship AutoDetected_9762f986-4c44-4505-9503-7602b8a8c5bd
+	fromColumn: FactForecastByChannel.DateId
+	toColumn: DimDate.DateId
+
+relationship AutoDetected_97556c5b-3f72-4c56-bd96-314ce23f37e4
+	fromColumn: FactEnquiries.DateID
+	toColumn: DimDate.DateId
+
+relationship AutoDetected_d6375dde-bc7e-402f-bde9-bbb1a5740ec7
+	fromColumn: FactEnquiries.TravelBrandId
+	toColumn: DimTravelBrand.TravelBrandID
+
+relationship AutoDetected_766b0e9c-34ff-43ac-b5a0-0d28765b9043
+	fromColumn: FactEnquiries.DurationId
+	toColumn: DimDuration.DurationId
+
+relationship AutoDetected_d0f7f953-0240-42b5-aeb2-02b033f2a58c
+	fromColumn: FactEnquiries.PolicyTypeId
+	toColumn: DimPolicyType.PolicyTypeId
+
+relationship AutoDetected_2b2e6f41-ea69-461d-bb39-627be73ea04d
+	fromColumn: FactEnquiries.DestinationId
+	toColumn: DimDestination.DestinationId
+
+relationship AutoDetected_6ca9b4a8-9416-4d03-81ca-9087954b30dd
+	fromColumn: FactEnquiries.FamilyGroupId
+	toColumn: DimFamilyGroup.FamilyGroupId
+
+relationship AutoDetected_252def0f-402a-4ccf-aef4-76745abb57f4
+	fromColumn: FactEnquiries.MarketingChannelId
+	toColumn: DimMarketingChannel.MarketingChannelID
+
+relationship dc3e0770-912e-0ba5-122b-20034c1c9c25
+	isActive: false
+	fromColumn: FactForecastByChannel.TravelBrand
+	toColumn: DimTravelBrand.TravelBrand
+
+relationship 7975fb62-3c13-75b4-f53a-c4d329345a14
+	fromColumn: FactForecastByChannel.TravelBrandId
+	toColumn: DimTravelBrand.TravelBrandID
+
+relationship AutoDetected_ba2fa85a-7551-4dcd-b7cb-0b32e2ad15c5
+	fromColumn: FactEnquiries.AgentID
+	toColumn: DimAgent.AgentId
+
+relationship AutoDetected_602d1735-0572-4023-944e-6cd7b2626a53
+	fromColumn: FactForecastByBrand.DateId
+	toColumn: DimDate.DateId
+
+relationship a93b3157-5cb0-6f40-f4a5-f77196f38c92
+	fromColumn: FactForecastByBrand.BrandId
+	toColumn: DimTravelBrand.TravelBrandID
+
+relationship AutoDetected_1ccf22d6-686a-4fb9-bdd4-24974ef79bd0
+	fromColumn: DimChannel.SubChannelId
+	toColumn: DimSubChannel.SubChannelId
+
+relationship AutoDetected_bf39e853-aca6-4f7e-bac2-144e03383ab5
+	fromColumn: FactForecastByBrand.SubChannelId
+	toColumn: DimSubChannel.SubChannelId
+
+relationship bb6c82be-aa16-48fb-13ba-b8ecc322f809
+	fromColumn: FactEnquiries.LeadTimeGroupId
+	toColumn: DimLeadTimeGroup.LeadTimeGroupId
+
+relationship 06ef10d2-b09e-3347-3662-33ff334c6c34
+	fromColumn: FactEnquiries.MedicalScoreId
+	toColumn: DimMedicalScore.MedicalScoreId
+
+relationship be345e31-ed37-a252-ea6b-dbeb084cecfc
+	fromColumn: FactEnquiries.AgeGroupId
+	toColumn: DimAgeGroup.AgeGroupId
+
+relationship 92cb0da9-f4dd-9f09-208e-9adb185736af
+	fromColumn: FactEnquiries.ChannelId
+	toColumn: DimSubChannel.SubChannelId
+
+relationship 43eacb46-729c-1ad0-9582-04c51ab95306
+	fromColumn: FactEnquiryQuotes.AgentId
+	toColumn: DimAgent.AgentId
+

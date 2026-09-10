@@ -1,0 +1,29 @@
+table DimSubChannel
+	lineageTag: 0b2c00f7-d222-458f-883c-29f44b6b267c
+
+	column SubChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: 769ca9ec-9cae-49f1-8ad3-d81331a7e84f
+		summarizeBy: none
+		sourceColumn: SubChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubChannel
+		dataType: string
+		lineageTag: 9e0a3766-27f6-4af1-b8db-e79f26b5d0a6
+		summarizeBy: none
+		sourceColumn: SubChannel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSubChannel = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimSubChannel = Source{[Schema="dbo",Item="DimSubChannel"]}[Data]
+				in
+				    dbo_DimSubChannel
+

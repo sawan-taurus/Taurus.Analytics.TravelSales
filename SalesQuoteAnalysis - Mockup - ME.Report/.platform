@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "SalesQuoteAnalysis - Mockup - ME"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "148d33ab-721d-9f30-4933-16d07bf0d852"
+  }
+}

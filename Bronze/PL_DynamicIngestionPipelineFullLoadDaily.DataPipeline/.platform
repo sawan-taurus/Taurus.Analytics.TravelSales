@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "PL_DynamicIngestionPipelineFullLoadDaily"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ce939f9f-881f-8026-4a56-1086df18094b"
+  }
+}

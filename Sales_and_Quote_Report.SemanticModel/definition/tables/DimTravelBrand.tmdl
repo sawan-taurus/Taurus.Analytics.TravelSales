@@ -1,0 +1,64 @@
+table DimTravelBrand
+	lineageTag: 6809c075-e03e-4a55-99aa-2c5363edebf0
+
+	column TravelBrandID
+		dataType: int64
+		formatString: 0
+		lineageTag: 38aacbd3-d472-441a-9027-3f89ad6c72d5
+		summarizeBy: none
+		sourceColumn: TravelBrandID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravelBrand
+		dataType: string
+		lineageTag: a16d402e-9589-4e8a-a6e6-69eb9e286530
+		summarizeBy: none
+		sourceColumn: TravelBrand
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand = ```
+			
+			SWITCH(
+			    TRUE(),
+			    CONTAINSSTRING([TravelBrand], "oasis_travel"), "Oasis",
+			    CONTAINSSTRING([TravelBrand], "sale_travel"), "Sales",
+			    CONTAINSSTRING([TravelBrand], "atoz_travel"), "Atoz",
+			    CONTAINSSTRING([TravelBrand], "start_travel"), "Start",
+			    CONTAINSSTRING([TravelBrand], "trusted_ins"), "Trusted",
+			    CONTAINSSTRING([TravelBrand], "switched_on"), "SOI",
+			    CONTAINSSTRING([TravelBrand], "viva_ins"), "Viva",
+			    [TravelBrand]
+			)
+			
+			```
+		lineageTag: 0893f31e-dc17-477e-985f-62f577d707a7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column FilteredBrands = ```
+			
+			CALCULATETABLE(
+			    VALUES(DimTravelBrand[Brand]),
+			    DimTravelBrand[TravelBrandID] IN VALUES(FactSalesAnalysis[TravelBrandID])
+			)
+			
+			```
+		lineageTag: ce4a5d44-ba01-46a9-874d-3666287bff46
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimTravelBrand = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimTravelBrand = Source{[Schema="dbo",Item="DimTravelBrand"]}[Data]
+				in
+				    dbo_DimTravelBrand
+
+	annotation PBI_ResultType = Table
+

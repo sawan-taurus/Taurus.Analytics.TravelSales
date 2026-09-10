@@ -1,0 +1,166 @@
+table FactEnquiryQuotes
+	lineageTag: 3dfd9543-ba32-4774-b75c-7325c5bd3b31
+
+	column TravelBrandId
+		dataType: int64
+		formatString: 0
+		lineageTag: e3ae9312-57c5-4826-9dea-2ddaecd8eda0
+		summarizeBy: none
+		sourceColumn: TravelBrandId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DurationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 5cd0832c-0fcb-4c79-9261-27328f90493b
+		summarizeBy: none
+		sourceColumn: DurationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 413113ca-5c7c-494f-b0e0-b11fda1b49ab
+		summarizeBy: none
+		sourceColumn: PolicyTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a422cba-4975-4b0e-a05d-a1e2af317201
+		summarizeBy: none
+		sourceColumn: ChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OptionId
+		dataType: int64
+		formatString: 0
+		lineageTag: 5120c3fd-17c4-4e85-8c80-e294b9b12d8b
+		summarizeBy: none
+		sourceColumn: OptionId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DestinationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 92ff5ec3-30d6-465a-aecd-3bf30e03c8f4
+		summarizeBy: none
+		sourceColumn: DestinationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: fd664853-ff12-4497-9c43-0cae4bd80ba4
+		summarizeBy: none
+		sourceColumn: FamilyGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 93c44c88-86f3-4d9a-8c41-dfaa3bb207ab
+		summarizeBy: none
+		sourceColumn: AgeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MedicalScoreId
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a142d22-0c55-41a6-ae12-09f18be965b3
+		summarizeBy: none
+		sourceColumn: MedicalScoreId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTimeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: fb15fa4c-89ec-4f89-bf78-b18045a740d0
+		summarizeBy: none
+		sourceColumn: LeadTimeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalGrossIncIPT
+		dataType: double
+		lineageTag: 58bc5679-4685-4c8a-8b35-ccaaeefd166c
+		summarizeBy: sum
+		sourceColumn: TotalGrossIncIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalGrossExcIPT
+		dataType: double
+		lineageTag: 3d36c94d-4bc4-416b-8abb-34fc363840db
+		summarizeBy: sum
+		sourceColumn: TotalGrossExcIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalEnquiryQuotesVolume
+		dataType: int64
+		formatString: 0
+		lineageTag: db2cfb38-7b75-4c2b-a5c2-b7305720bb7b
+		summarizeBy: sum
+		sourceColumn: TotalEnquiryQuotesVolume
+
+		annotation SummarizationSetBy = Automatic
+
+	column MarketingChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: 46d444b2-e478-41d9-b798-5b0362321ab3
+		summarizeBy: none
+		sourceColumn: MarketingChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column RecordCountDividedBy3 = FactEnquiryQuotes[TotalEnquiryQuotesVolume] / 3
+		formatString: 0
+		lineageTag: c4cf0ece-7339-4bbb-8729-1f87264343d6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		lineageTag: bd00e8d4-397e-4987-9f60-76f0429b6ef0
+		summarizeBy: count
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgentId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fd969cb-7d9a-4157-87f2-2f8b168a8686
+		summarizeBy: none
+		sourceColumn: AgentId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactEnquiryQuotes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactQuoteAnalysis = Source{[Schema="dbo",Item="FactQuoteAnalysis"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dbo_FactQuoteAnalysis,{{"RecordCount", "TotalEnquiryQuotesVolume"}})
+				in
+				    #"Renamed Columns"
+

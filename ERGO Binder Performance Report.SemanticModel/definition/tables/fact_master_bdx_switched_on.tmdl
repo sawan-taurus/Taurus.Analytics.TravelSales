@@ -1,0 +1,2741 @@
+table fact_master_bdx_switched_on
+	lineageTag: 0e6e4d35-f13e-4e33-9e9c-aad38448f24a
+
+	measure '% Total Policies2' =
+			
+			DIVIDE(
+			    [Total Policies (Cumulative)],
+			    CALCULATE(
+			        [Total Policies (Cumulative)],
+			        ALL('fact_master_bdx_switched_on')
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: d57f444f-3862-425d-bfe6-4a47124950f7
+
+	measure '% Total Retail2' =
+			
+			DIVIDE(
+			    [Total Retail (Cumulative)],
+			    CALCULATE(
+			        [Total Retail (Cumulative)],
+			        ALL('fact_master_bdx_switched_on')
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 274960af-6d30-4dc8-9b82-ce6bcf019a4c
+
+	measure '% Total PoliciesRegion2' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomRegion2 = [TotalPoliciesRegion2]
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Region 2]), DenomRegion2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomRegion2
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: b70f3482-7b12-4977-8786-1fdf26bf5256
+
+	measure TotalPoliciesRegion2 =
+			
+			CALCULATE(
+			    [Total Policies (Cumulative)],
+			    REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2])
+			)
+		lineageTag: 7c84628e-0531-44dc-98af-065a6f3d6d18
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalRetailRegion2 =
+			
+			CALCULATE(
+			    [Total Retail (Cumulative)],
+			    REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2])
+			)
+		lineageTag: 688ffe5f-b12b-4534-841f-61ec0e489d94
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Retail3' =
+			
+			DIVIDE(
+			    [Total Retail (Cumulative)],
+			    [TotalRetailRegion2]
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 15cd24ec-c995-4dc0-93bc-57d97d1d57ea
+
+	measure NELR =
+			
+			DIVIDE(
+			    SUM('fact_master_bdx_switched_on'[Incurred]),
+			    SUM('fact_master_bdx_switched_on'[Earned NWP]),
+			    0
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 8410acf2-d3ca-4933-8a52-c7be822c82a9
+
+	measure 'NELR Ex LL' =
+			
+			DIVIDE(
+			    SUM('fact_master_bdx_switched_on'[Ex Large Losses]),
+			    SUM('fact_master_bdx_switched_on'[Earned NWP]),
+			    0
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 97c73a1a-1f27-4916-90c9-8e9362b81101
+
+	measure '% Total PoliciesRegion' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomRegion2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Region 2]), DenomRegion2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomRegion2
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 1c294ac1-52cc-4a9f-b231-a2d96640af76
+
+	measure '% Total RetailRegion' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomRegion2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Region 2]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Region 2]), DenomRegion2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomRegion2
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: b14999b3-31f2-4aa6-afc4-9f630ec5a2eb
+
+	measure 'Avg Retail2' =
+			
+			DIVIDE(
+			    [Total Retail (Cumulative)],
+			    [Total Policies (Cumulative)]
+			)
+		lineageTag: 91d159df-7d15-4b12-915a-82a361440de7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total PoliciesScheme2' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomScheme2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Scheme 2]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Scheme 2]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Scheme 2]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Scheme 2]), DenomScheme2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomScheme2
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: ec406207-982f-48f8-a839-108053e2a308
+
+	measure '% Total RetailScheme2' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomScheme2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Scheme 2]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Scheme 2]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Scheme 2]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Scheme 2]), DenomScheme2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomScheme2
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 563bbe7f-ded0-4f42-9af5-269e3a6ce5b5
+
+	measure '% Total PoliciesAgeBand' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Age Band]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Age Band]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Age Band]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Age Band]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: c06472df-af5f-4131-a049-0f326daa6036
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total RetailAgeBand' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Age Band]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Age Band]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Age Band]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Age Band]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 0dc0aabe-ac6e-4f23-9376-e8d55830290b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total PoliciesMedBanding' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Med Banding]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Med Banding]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Med Banding]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Med Banding]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 9eddc795-6873-462e-973f-95d153058b8a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total RetailMedBanding' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Med Banding]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Med Banding]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Med Banding]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Med Banding]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: f5acdf6b-86c2-4cc0-9d92-daf323b294eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total PoliciesTravelType' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomTravelType = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[TravellerType]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[TravellerType]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[TravellerType]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[TravellerType]), DenomTravelType,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomTravelType
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 63e10cb0-3ce4-4aed-bff0-9145de057ecd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total RetailTravelType' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomTravelType = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[TravellerType]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[TravellerType]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[TravellerType]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[TravellerType]), DenomTravelType,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomTravelType
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 417f9f96-9d39-48da-915b-2e613783cde2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total PoliciesWinterSports' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomWinterSports = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[WinterSports]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[WinterSports]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[WinterSports]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[WinterSports]), DenomWinterSports,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomWinterSports
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 2b563f97-e700-4a37-9280-be8775a78555
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total RetailWinterSports' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomWinterSports = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[WinterSports]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[WinterSports]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[WinterSports]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[WinterSports]), DenomWinterSports,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomWinterSports
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 3ea16f27-e55b-4916-b19c-7f547f9fadcf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total PoliciesLB' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Lead Time Banding]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Lead Time Banding]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Lead Time Banding]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Lead Time Banding]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 83a61881-358a-4b3c-af64-2f77ef76c902
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total RetailLeadTimeBanding' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Lead Time Banding]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Lead Time Banding]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Lead Time Banding]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Lead Time Banding]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 8fb30228-cc83-4442-8ee5-f17eb59c13e5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total PoliciesDurBand' =
+			
+			VAR CurrentPolicies = [Total Policies (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Dur Band]))
+			VAR DenomPolicy2 = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Dur Band]))
+			VAR DenomChannel = CALCULATE([Total Policies (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Dur Band]))
+			RETURN
+			DIVIDE(
+			    CurrentPolicies,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Dur Band]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: a3901589-aa6e-44f6-a3a9-7191968e1ede
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total RetailDurBand' =
+			
+			VAR CurrentRetail = [Total Retail (Cumulative)]
+			VAR DenomLeaf = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Dur Band]))
+			VAR DenomPolicy2 = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Dur Band]))
+			VAR DenomChannel = CALCULATE([Total Retail (Cumulative)], REMOVEFILTERS('fact_master_bdx_switched_on'[Channel]), REMOVEFILTERS('fact_master_bdx_switched_on'[Policy2]), REMOVEFILTERS('DimPolicy2'[Policy3]), REMOVEFILTERS('fact_master_bdx_switched_on'[Dur Band]))
+			RETURN
+			DIVIDE(
+			    CurrentRetail,
+			    SWITCH(
+			        TRUE(),
+			        ISINSCOPE('fact_master_bdx_switched_on'[Dur Band]), DenomLeaf,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Policy2]) || ISINSCOPE('DimPolicy2'[Policy3]), DenomPolicy2,
+			        ISINSCOPE('fact_master_bdx_switched_on'[Channel]), DenomChannel,
+			        DenomLeaf
+			    )
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 50996983-f548-434d-8923-3e76d255539b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Earned' =
+			
+			DIVIDE(
+			    SUM('fact_master_bdx_switched_on'[Earned NWP]),
+			    SUM('fact_master_bdx_switched_on'[Total NWP]),
+			    0
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 6eca8ad0-65cd-47fb-868f-f4e5c57c533b
+
+	/// Policies (Cumulative) x % Earned (Cumulative) per Policy3 category (AMT/Single Trip/BP), summed — matches Rowan's Excel formula so the Total column equals the sum of the category columns. Updated to use the Cumulative variants of both Policies and % Earned, consistent with the rest of the Development Month cumulative logic.
+	measure 'Policies Earned' =
+			SUMX(
+			    VALUES(DimPolicy2[Policy3]),
+			    CALCULATE([Policies (Cumulative)]) * CALCULATE([% Earned (Cumulative)])
+			)
+		formatString: #,##0
+		lineageTag: 8bc47c26-6e16-4b76-a48d-85db3435a0e2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'New Total GWP ex' = ```
+			
+			SUMX(
+			    'fact_master_bdx_switched_on',
+			    'fact_master_bdx_switched_on'[ERV BaseGrossExc] 
+			    + 'fact_master_bdx_switched_on'[ERV OptionGrossExc] 
+			    + 'fact_master_bdx_switched_on'[ERV MedicalGrossExc]
+			)
+			```
+		lineageTag: bb10aa6c-95e3-4413-8329-a86c51075778
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg GWP New' =
+			
+			DIVIDE(
+			    [New Total GWP ex],
+			    SUM([Policy]),
+			    0
+			)
+		lineageTag: b28e10c8-160f-42d1-955c-53106d183154
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Incident Rate' =
+			DIVIDE(
+			    [Claims Count (Cumulative)],
+			    [Policies Earned],
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 220c95b9-9122-4a3c-b34e-485a3e4c7a96
+
+	/// Net policy count = SUM of (+1 for PolicyStatus in Active/Endorsed/Renewal, -1 otherwise), cumulative up to and including the selected Development Month (via MonthSortKey, avoiding the time-of-day truncation bug that the old IssueDate<=cutoff date comparison had), within the UW Year cohort window. Verified: Jan-26 = 9,838.
+	measure 'Policies (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			RETURN
+			CALCULATE(
+			    SUMX(
+			        fact_master_bdx_switched_on,
+			        IF(fact_master_bdx_switched_on[PolicyStatus] IN {"Active", "Endorsed", "Renewal"}, 1, -1)
+			    ),
+			    ALL(fact_master_bdx_switched_on[Month]),
+			    fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			    fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			    IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			)
+		formatString: #,##0
+		displayFolder: Cumulative (UW Year)
+		lineageTag: d17c9298-b25b-4e75-a57c-4329c93fe6cd
+
+	/// As-at/cutoff date driven by the Development Month filter, whichever table's Month field the slicer actually filters (fact_master_bdx_switched_on[Month] or fact_claims_switched_on[Month]). Defaults to a far-future date (no restriction) if nothing selected.
+	measure _DevelopmentAsAtDate =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    DATE(9999,12,31),
+			    EOMONTH(DATEVALUE("01-" & SelMonth), 0)
+			)
+		isHidden
+		lineageTag: 59b8569e-6271-4f22-a108-4a0f3d165ffb
+
+	/// Cumulative GWP (ex IPT), base field ERV TotalGrossExc, for policies incepted within the UW Year cohort, cumulative up to and including the selected Development Month (via MonthSortKey, avoiding the time-of-day truncation bug the old IssueDate<=cutoff-date comparison had).
+	measure 'GWP (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			RETURN
+			CALCULATE(
+			    SUM(fact_master_bdx_switched_on[ERV TotalGrossExc]),
+			    ALL(fact_master_bdx_switched_on[Month]),
+			    fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			    fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			    IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			)
+		formatString: #,##0
+		lineageTag: 719c9c0b-7033-44ff-9740-bbdf531d2e6e
+
+	/// Cumulative NWP, base field ERV TotalNetToUw, for policies incepted within the UW Year cohort, cumulative up to and including the selected Development Month (via MonthSortKey, avoiding the time-of-day truncation bug the old IssueDate<=cutoff-date comparison had).
+	measure 'NWP (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			RETURN
+			CALCULATE(
+			    SUM(fact_master_bdx_switched_on[ERV TotalNetToUw]),
+			    ALL(fact_master_bdx_switched_on[Month]),
+			    fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			    fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			    IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			)
+		formatString: #,##0
+		lineageTag: df01e04f-31d8-4ef3-ad9b-122d3be55107
+
+	/// Cumulative NEP, base field Earned NWP for the current Development Month row, and (Earning % x ERV TotalNetToUw) for prior-month rows recalculated to the selected cutoff — for policies incepted within the UW Year cohort. FIXED 2026-08-26: the prior-month recalculation previously multiplied the earning % by fact_master_bdx_switched_on[Total NWP], a larger premium figure than the ERV TotalNetToUw basis used by [NWP (Cumulative)]; for Single Trip/AMT policies (where Total NWP can run 17%-95% higher than ERV TotalNetToUw) this pushed % Earned (Cumulative) above 100%, which in turn made [Policies Earned] exceed [Policies (Cumulative)] (reported for ERGO Binder AGGS/Single Trip). RTotalNWP now sources ERV TotalNetToUw so NEP and NWP share the same premium basis.
+	measure 'NEP (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR SelCutoff = IF(NOT ISBLANK(SelMonth), EOMONTH(DATEVALUE("01-" & SelMonth), 0))
+			VAR LtPatternNorm =
+			    ADDCOLUMNS(
+			        ALL(LeadTimeEarningPattern),
+			        "NormCh", IF(UPPER(TRIM(LeadTimeEarningPattern[Channel])) IN {"AGG","AGGS"}, "AGGS", UPPER(TRIM(LeadTimeEarningPattern[Channel])))
+			    )
+			VAR DurPatternNorm =
+			    ADDCOLUMNS(
+			        ALL(DurationEarningPattern),
+			        "NormCh", IF(UPPER(TRIM(DurationEarningPattern[Channel])) IN {"AGG","AGGS"}, "AGGS", UPPER(TRIM(DurationEarningPattern[Channel])))
+			    )
+			VAR OverallPatternNorm =
+			    ADDCOLUMNS(
+			        ALL(OverallEarningPattern),
+			        "NormCh", IF(UPPER(TRIM(OverallEarningPattern[Channel])) IN {"AGG","AGGS"}, "AGGS", UPPER(TRIM(OverallEarningPattern[Channel])))
+			    )
+			VAR AmtPatternNorm =
+			    ADDCOLUMNS(
+			        ALL(AmtEarningPattern),
+			        "IsDirect", UPPER(TRIM(AmtEarningPattern[Channel])) = "DIRECT"
+			    )
+			VAR MasterRows =
+			    CALCULATETABLE(
+			        SELECTCOLUMNS(
+			            fact_master_bdx_switched_on,
+			            "RMonth", fact_master_bdx_switched_on[Month],
+			            "RPolicyID", fact_master_bdx_switched_on[PolicyID],
+			            "RChannel", fact_master_bdx_switched_on[Channel],
+			            "RIssueDate", fact_master_bdx_switched_on[IssueDate],
+			            "RStart", fact_master_bdx_switched_on[Start],
+			            "REnd", fact_master_bdx_switched_on[End],
+			            "RLeadTimeBanding", fact_master_bdx_switched_on[Lead Time Banding],
+			            "RInitialPolicy", fact_master_bdx_switched_on[initial_policy],
+			            "RTotalNWP", fact_master_bdx_switched_on[ERV TotalNetToUw],
+			            "RPolicy", fact_master_bdx_switched_on[Policy],
+			            "RStoredEarnedNWP", fact_master_bdx_switched_on[Earned NWP]
+			        ),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			IF(
+			    ISBLANK(SelCutoff),
+			    SUMX(MasterRows, [RStoredEarnedNWP]),
+			    SUMX(
+			        MasterRows,
+			        VAR RowMonth = [RMonth]
+			        VAR RowPolicyID = [RPolicyID]
+			        RETURN
+			        IF(
+			            RowMonth = SelMonth,
+			            [RStoredEarnedNWP],
+			            VAR RowChannelU = UPPER(TRIM([RChannel]))
+			            VAR NormChannel = IF(RowChannelU IN {"AGG","AGGS"}, "AGGS", RowChannelU)
+			            VAR IssueDt = [RIssueDate]
+			            VAR StartDt = [RStart]
+			            VAR EndDt = [REnd]
+			            VAR DenomLTR = DATEDIFF(IssueDt, StartDt, DAY)
+			            VAR LTR_new =
+			                IF(
+			                    SelCutoff >= StartDt,
+			                    1.0,
+			                    IF(OR(DenomLTR = 0, ISBLANK(DenomLTR)), BLANK(), DATEDIFF(IssueDt, SelCutoff, DAY) / DenomLTR)
+			                )
+			            VAR DenomDR = DATEDIFF(StartDt, EndDt, DAY) + 1
+			            VAR DR_new =
+			                IF(
+			                    LTR_new < 1, 0,
+			                    IF(
+			                        SelCutoff > EndDt, 1,
+			                        IF(OR(DenomDR = 0, ISBLANK(DenomDR)), BLANK(), DATEDIFF(StartDt, SelCutoff, DAY) / DenomDR)
+			                    )
+			                )
+			            VAR LTR_UB_new = MIN(1, MAX(0.05, ROUNDUP(LTR_new * 20, 0) / 20))
+			            VAR DR_UB_new = MIN(1, MAX(0.05, ROUNDUP(DR_new * 20, 0) / 20))
+			            VAR LtBand = [RLeadTimeBanding]
+			            VAR LtMatches =
+			                FILTER(
+			                    LtPatternNorm,
+			                    [NormCh] = NormChannel && LeadTimeEarningPattern[LeadTimeBanding] = LtBand && LeadTimeEarningPattern[UB] <= LTR_UB_new
+			                )
+			            VAR MatchedLtUb = MAXX(LtMatches, LeadTimeEarningPattern[UB])
+			            VAR LtPctValue =
+			                MAXX(
+			                    FILTER(LtMatches, LeadTimeEarningPattern[UB] = MatchedLtUb),
+			                    LeadTimeEarningPattern[PctValue]
+			                )
+			            VAR EP_LT_new = IF(LTR_new <= 0, 0, COALESCE(LtPctValue, 0))
+			            VAR DurMatches =
+			                FILTER(
+			                    DurPatternNorm,
+			                    [NormCh] = NormChannel && ROUND(DurationEarningPattern[UB], 4) = ROUND(DR_UB_new, 4)
+			                )
+			            VAR DurPctValue = MAXX(DurMatches, DurationEarningPattern[EarningPctValue])
+			            VAR EP_D_new = IF(DR_new <= 0, 0, COALESCE(DurPctValue, 0))
+			            VAR OverallMatches =
+			                FILTER(
+			                    OverallPatternNorm,
+			                    [NormCh] = NormChannel && OverallEarningPattern[LeadTimeBanding] = LtBand
+			                )
+			            VAR LtEpNumeric = COALESCE(MAXX(OverallMatches, OverallEarningPattern[LeadTimeEpValue]), 0)
+			            VAR DurEpNumeric = COALESCE(MAXX(OverallMatches, OverallEarningPattern[DurationEpValue]), 0)
+			            VAR EP_ST_new = EP_LT_new * LtEpNumeric + EP_D_new * DurEpNumeric
+			            VAR AmtEpPeriod_new = MIN(366, MAX(1, DATEDIFF(StartDt, SelCutoff, DAY)))
+			            VAR AmtMatches =
+			                FILTER(
+			                    AmtPatternNorm,
+			                    IF(NormChannel = "DIRECT", [IsDirect], NOT [IsDirect])
+			                        && AmtEarningPattern[DevelopmentDays] = AmtEpPeriod_new
+			                )
+			            VAR AmtEpValue = MAXX(AmtMatches, AmtEarningPattern[EpValue])
+			            VAR EP_AMT_new = COALESCE(AmtEpValue, 0)
+			            VAR EarnedSales_new = IF([RInitialPolicy] = "AMT", EP_AMT_new, EP_ST_new)
+			            VAR PolicyPolicySum =
+			                CALCULATE(
+			                    SUM(fact_master_bdx_switched_on[Policy]),
+			                    ALL(fact_master_bdx_switched_on),
+			                    fact_master_bdx_switched_on[PolicyID] = RowPolicyID,
+			                    fact_master_bdx_switched_on[Month] = RowMonth
+			                )
+			            VAR EarnedNWP_new = IF(PolicyPolicySum = 0, [RTotalNWP], EarnedSales_new * [RTotalNWP])
+			            RETURN
+			                EarnedNWP_new
+			        )
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 5efbe15a-9a3a-455a-b684-824344778ddd
+
+	/// Cumulative average GWP per policy, built the same way as [Avg GWP New] (ERV BaseGrossExc + ERV OptionGrossExc + ERV MedicalGrossExc, i.e. New Total GWP ex, divided by SUM(Policy)) but accumulated up to and including the selected Development Month via MonthSortKey (avoids the time-of-day truncation bug), within the UW Year cohort.
+	measure 'Avg GWP (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR CumNewGWP =
+			    CALCULATE(
+			        SUMX(fact_master_bdx_switched_on, fact_master_bdx_switched_on[ERV BaseGrossExc] + fact_master_bdx_switched_on[ERV OptionGrossExc] + fact_master_bdx_switched_on[ERV MedicalGrossExc]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			VAR CumPolicy =
+			    CALCULATE(
+			        SUM(fact_master_bdx_switched_on[Policy]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			DIVIDE(CumNewGWP, CumPolicy, 0)
+		formatString: 0.00
+		lineageTag: 66cd7800-c373-47fa-92df-ae0069c9195b
+
+	/// Cumulative % Earned = NEP / NWP.
+	measure '% Earned (Cumulative)' = DIVIDE([NEP (Cumulative)], [NWP (Cumulative)])
+		formatString: 0%
+		lineageTag: 49be8a82-9c56-4327-b247-7121abb35483
+
+	/// Cumulative Net Earned Loss Ratio = Total Incurred (Cumulative) / NEP (Cumulative), up to and including the selected Development Month. Corrected from an earlier version that wrongly divided by [Incurred (Cumulative)] (a stale fact_master_bdx_switched_on-based figure) instead of the claims-based [Total Incurred (Cumulative)].
+	measure 'NELR (Cumulative)' = DIVIDE([Total Incurred (Cumulative)], [NEP (Cumulative)], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Cumulative (UW Year)
+		lineageTag: d83f1adb-7c0d-42f0-8bbe-deeef8e91d1b
+
+	/// Cumulative Net Earned Loss Ratio excluding large losses = Total Incurred Ex LL (Cumulative) / NEP (Cumulative), up to and including the selected Development Month, within the UW Year cohort.
+	measure 'NELR Ex LL (Cumulative)' = DIVIDE([Total Incurred Ex LL (Cumulative)], [NEP (Cumulative)], 0)
+		formatString: 0%;-0%;0%
+		displayFolder: Cumulative (UW Year)
+		lineageTag: fc5a668b-4240-47ff-b4ca-2b792b101003
+
+	/// Cumulative Incurred (fact_master_bdx_switched_on[Incurred]), for policies incepted within the UW Year cohort, cumulative up to and including the selected Development Month via MonthSortKey. Note: named without 'Total' prefix to avoid clashing with the existing claims-table measure 'Total Incurred (Cumulative)', which uses a different base (claims-level Incurred, joined via policy cohort + DTNotify cutoff).
+	measure 'Incurred (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			RETURN
+			CALCULATE(
+			    SUM(fact_master_bdx_switched_on[Incurred]),
+			    ALL(fact_master_bdx_switched_on[Month]),
+			    fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			    fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			    IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			)
+		formatString: #,##0
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 61e48898-ba71-44e0-9341-02bf53ebfe1d
+
+	/// Cumulative Total Policies, base field TotalPolicies (already 0 for Cancelled), for policies incepted within the UW Year cohort, cumulative up to and including the selected Development Month (via MonthSortKey, same pattern as NWP (Cumulative)/GWP (Cumulative)).
+	measure 'Total Policies (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			RETURN
+			CALCULATE(
+			    SUM(fact_master_bdx_switched_on[TotalPolicies]),
+			    ALL(fact_master_bdx_switched_on[Month]),
+			    fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			    fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			    IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			)
+		formatString: #,##0
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 0808b079-ac4e-4f49-bf94-055890fb4936
+
+	/// Cumulative Total Retail, base field TotalRetail (0 when TotalPolicies=0, else Combined TotalGross), for policies incepted within the UW Year cohort, cumulative up to and including the selected Development Month (via MonthSortKey, same pattern as NWP (Cumulative)/GWP (Cumulative)).
+	measure 'Total Retail (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			RETURN
+			CALCULATE(
+			    SUM(fact_master_bdx_switched_on[TotalRetail]),
+			    ALL(fact_master_bdx_switched_on[Month]),
+			    fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			    fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			    IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			)
+		formatString: #,##0
+		displayFolder: Cumulative (UW Year)
+		lineageTag: b6669ef3-d48c-48fd-8490-44531395d94e
+
+	column Month
+		dataType: string
+		lineageTag: 58f85c0e-fa6e-47f2-a517-11ea06004637
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: MonthSortKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 9714dc35-cece-4566-9317-319c7c05143e
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyID
+		dataType: string
+		lineageTag: 36b2cd03-e175-457a-bb97-85fa409d30cc
+		summarizeBy: none
+		sourceColumn: PolicyID
+
+		annotation SummarizationSetBy = Automatic
+
+	column initial_policy
+		dataType: string
+		lineageTag: e84559aa-7384-4af1-9620-27386ee77ae5
+		summarizeBy: none
+		sourceColumn: initial_policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyStatus
+		dataType: string
+		lineageTag: 2a4d3896-e3c5-45de-80c3-508a897bb324
+		summarizeBy: none
+		sourceColumn: PolicyStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column LTR
+		dataType: double
+		lineageTag: e30ab4e4-795d-4acf-858c-996a852ddf9c
+		summarizeBy: sum
+		sourceColumn: LTR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DR
+		dataType: double
+		lineageTag: 0dea6270-7f6a-44c7-8ab4-3baebdc00e9d
+		summarizeBy: sum
+		sourceColumn: DR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LTR_UB
+		dataType: double
+		lineageTag: 32ce9231-b933-4340-a589-c1c6d2657418
+		summarizeBy: sum
+		sourceColumn: LTR_UB
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DR_UB
+		dataType: double
+		lineageTag: d3dd3d1f-0cdc-4a0b-9d78-5807a364ef3d
+		summarizeBy: sum
+		sourceColumn: DR_UB
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Lead Time Banding'
+		dataType: int64
+		formatString: 0
+		lineageTag: 855ba8c7-c607-4038-84b5-8662e9e35239
+		summarizeBy: sum
+		sourceColumn: Lead Time Banding
+
+		annotation SummarizationSetBy = Automatic
+
+	column EP_LT
+		dataType: double
+		lineageTag: 516aa1b6-9526-4584-9c1d-4022fb93b920
+		summarizeBy: sum
+		sourceColumn: EP_LT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EP_D
+		dataType: double
+		lineageTag: 850679eb-e22a-42b4-b5cc-67f955cac9ec
+		summarizeBy: sum
+		sourceColumn: EP_D
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EP_ST
+		dataType: double
+		lineageTag: d3a3e6b7-d69f-4932-a3e5-0b82d2e6c011
+		summarizeBy: sum
+		sourceColumn: EP_ST
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'AMT EP Period'
+		dataType: int64
+		formatString: 0
+		lineageTag: dfee7d12-4467-4a2e-ae05-673b6b87ecfc
+		summarizeBy: sum
+		sourceColumn: AMT EP Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column EP_AMT
+		dataType: string
+		lineageTag: c5448ff8-7673-41d3-9315-2c85166a589c
+		summarizeBy: none
+		sourceColumn: EP_AMT
+
+		annotation SummarizationSetBy = Automatic
+
+	column Earned_Sales
+		dataType: double
+		lineageTag: 0fc8e363-fbd8-4f78-b1d9-6ff3c97b1c85
+		summarizeBy: sum
+		sourceColumn: Earned_Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Earned NWP'
+		dataType: double
+		formatString: 0
+		lineageTag: 77b2c1e0-b22f-40ec-a4ac-59558d7d3ea4
+		summarizeBy: sum
+		sourceColumn: Earned NWP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Total NWP'
+		dataType: double
+		formatString: 0
+		lineageTag: 65f9ae80-cfc7-471c-a491-0626ee54418d
+		summarizeBy: sum
+		sourceColumn: Total NWP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Total GWP ex'
+		dataType: double
+		lineageTag: 318a7769-8fa9-4ba0-8c44-69d9879e96de
+		summarizeBy: sum
+		sourceColumn: Total GWP ex
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IssueDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 27b01dba-9147-4a81-9208-bb36ad1535a6
+		summarizeBy: none
+		sourceColumn: IssueDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issue Month'
+		dataType: string
+		lineageTag: 8141c5bb-a7e4-4462-9572-7be04efdd1e3
+		summarizeBy: none
+		sourceColumn: Issue Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issue Year'
+		dataType: string
+		lineageTag: f10afffb-4356-415b-9f94-b33c838e88b2
+		summarizeBy: none
+		sourceColumn: Issue Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agent
+		dataType: string
+		lineageTag: e3756b22-4e66-43b9-8414-cdf0ade5e79a
+		summarizeBy: none
+		sourceColumn: Agent
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand
+		dataType: string
+		lineageTag: 042a2eeb-8c40-4251-92a8-0f5818c5f10e
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubAgent
+		dataType: string
+		lineageTag: ae6d52b4-6ca8-451d-ab4e-b1cc67bac66f
+		summarizeBy: none
+		sourceColumn: SubAgent
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 6b2071d7-e05a-4ed4-832c-e2cd40f1a044
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Channel 2'
+		dataType: string
+		lineageTag: ce22f066-6a4a-457c-b23c-b0fe4a67cdf1
+		summarizeBy: none
+		sourceColumn: Channel 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Med/Non
+		dataType: string
+		lineageTag: c73e103e-6791-464d-8ab0-e8720235447c
+		summarizeBy: none
+		sourceColumn: Med/Non
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGGS
+		dataType: string
+		lineageTag: 4a2f9acb-7551-4a1d-b00f-7b125a87a31f
+		summarizeBy: none
+		sourceColumn: AGGS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scheme
+		dataType: string
+		lineageTag: 7b3aaa4e-97b3-4c92-9382-db79957c589f
+		summarizeBy: none
+		sourceColumn: Scheme
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Scheme 2'
+		dataType: string
+		lineageTag: 83288037-2185-4699-a231-eb0bc5051a2c
+		summarizeBy: none
+		sourceColumn: Scheme 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyType
+		dataType: string
+		lineageTag: 62c75fac-94f6-49d1-9bcd-8e9adc57cba1
+		summarizeBy: none
+		sourceColumn: PolicyType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Policy2
+		dataType: string
+		lineageTag: 00860a02-7f6d-4f23-8aea-a2fb9ab79df3
+		summarizeBy: none
+		sourceColumn: Policy2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PolicyType 2'
+		dataType: string
+		lineageTag: 653f1b9b-4d07-45fe-9e0c-5635a9dd6e6d
+		summarizeBy: none
+		sourceColumn: PolicyType 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign
+		dataType: string
+		lineageTag: 4a369e5e-fdff-467f-88a0-028111e4df20
+		summarizeBy: none
+		sourceColumn: Campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubCampaign
+		dataType: string
+		lineageTag: 0a8b97da-d400-4cf5-b545-0f76017430ad
+		summarizeBy: none
+		sourceColumn: SubCampaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignDiscount
+		dataType: double
+		lineageTag: 215ba76e-4a95-4de5-9be7-0a998ccfaab2
+		summarizeBy: sum
+		sourceColumn: CampaignDiscount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DiscDiff
+		dataType: double
+		lineageTag: 96d4706a-7276-47bc-a5bf-1706d04ec105
+		summarizeBy: sum
+		sourceColumn: DiscDiff
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Destination Country(s)'
+		dataType: string
+		lineageTag: 49ca8357-096e-490e-947a-ad03c61300ca
+		summarizeBy: none
+		sourceColumn: Destination Country(s)
+
+		annotation SummarizationSetBy = Automatic
+
+	column UwRegion
+		dataType: string
+		lineageTag: 0d3fe41a-5d1f-4e8d-a8a9-510068353261
+		summarizeBy: none
+		sourceColumn: UwRegion
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region 2'
+		dataType: string
+		lineageTag: 230e7293-dcde-449b-9fc2-71904c0e029c
+		summarizeBy: none
+		sourceColumn: Region 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUpdated
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: eaaf2e4b-17e0-47ea-bae6-3b797f90ddd2
+		summarizeBy: none
+		sourceColumn: LastUpdated
+
+		annotation SummarizationSetBy = Automatic
+
+	column RecentFinancialEventDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8f713406-3fb1-44ec-b939-e5ee85a2fff8
+		summarizeBy: none
+		sourceColumn: RecentFinancialEventDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravellerType
+		dataType: string
+		lineageTag: 24deeaa2-e078-42e1-b6cb-2443a082cc5d
+		summarizeBy: none
+		sourceColumn: TravellerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravellerType2
+		dataType: string
+		lineageTag: 5f18bd21-1b30-4431-a461-1505e136b77e
+		summarizeBy: none
+		sourceColumn: TravellerType2
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTime
+		dataType: int64
+		formatString: 0
+		lineageTag: ae70d651-0915-40e3-80f9-151e7cfb03a2
+		summarizeBy: sum
+		sourceColumn: LeadTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PIA Band'
+		dataType: string
+		lineageTag: a95fc471-0309-45ee-a299-9e485fcb9534
+		summarizeBy: none
+		sourceColumn: PIA Band
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Oldest DOB'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ca484102-fd5d-431a-8f35-eb7376e2a9a6
+		summarizeBy: none
+		sourceColumn: Oldest DOB
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Oldest Age'
+		dataType: int64
+		formatString: 0
+		lineageTag: 51f8144f-a5bb-4d21-816c-a1ef289fb783
+		summarizeBy: sum
+		sourceColumn: Oldest Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Band'
+		dataType: string
+		lineageTag: e0f3a572-1d84-45ea-b830-11fc61c9de21
+		summarizeBy: none
+		sourceColumn: Age Band
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 28a53e6e-1668-47e4-97b0-0c35be9d0070
+		summarizeBy: sum
+		sourceColumn: Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dur Band'
+		dataType: string
+		lineageTag: d17b6938-4950-4951-b394-84e9a0399d37
+		summarizeBy: none
+		sourceColumn: Dur Band
+
+		annotation SummarizationSetBy = Automatic
+
+	column Start
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6d08ae1d-659b-424e-be72-83f1e1c20979
+		summarizeBy: none
+		sourceColumn: Start
+
+		annotation SummarizationSetBy = Automatic
+
+	column End
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7b02d7ab-73d5-49df-b692-4b99ccf7758c
+		summarizeBy: none
+		sourceColumn: End
+
+		annotation SummarizationSetBy = Automatic
+
+	column Infants
+		dataType: int64
+		formatString: 0
+		lineageTag: 238d7f83-e8fb-4e4d-9d87-4a7a2010729b
+		summarizeBy: sum
+		sourceColumn: Infants
+
+		annotation SummarizationSetBy = Automatic
+
+	column Children
+		dataType: int64
+		formatString: 0
+		lineageTag: 68eab172-5285-4fe7-9bc8-77d7ee3afaf9
+		summarizeBy: sum
+		sourceColumn: Children
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adults
+		dataType: int64
+		formatString: 0
+		lineageTag: 84e01f9c-e872-4ea0-b58e-9e4ad763dff3
+		summarizeBy: sum
+		sourceColumn: Adults
+
+		annotation SummarizationSetBy = Automatic
+
+	column PAX
+		dataType: int64
+		formatString: 0
+		lineageTag: b66b2def-cec5-46eb-8b7c-3b90c6f049cf
+		summarizeBy: sum
+		sourceColumn: PAX
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB1
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 68d275c4-a576-4d72-a7e8-79697f6c621e
+		summarizeBy: none
+		sourceColumn: DOB1
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: babe1c8c-9b49-42ab-a41e-ce1978548bac
+		summarizeBy: none
+		sourceColumn: DOB2
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB3
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9472fc51-c812-4d05-aa59-c278e8f18468
+		summarizeBy: none
+		sourceColumn: DOB3
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB4
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3cce953e-b912-4898-b157-48440a57a473
+		summarizeBy: none
+		sourceColumn: DOB4
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB5
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 19470dc6-d899-43e1-b30a-e61610696be1
+		summarizeBy: none
+		sourceColumn: DOB5
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB6
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 98a4ce56-fa04-49f0-b158-9b568062615d
+		summarizeBy: none
+		sourceColumn: DOB6
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB7
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 923b1a47-b41d-4882-bafa-fc80b7cc8ee2
+		summarizeBy: none
+		sourceColumn: DOB7
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB8
+		dataType: string
+		lineageTag: bcf4e48d-9706-4bc2-95c8-3c1ee3360e21
+		summarizeBy: none
+		sourceColumn: DOB8
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB9
+		dataType: string
+		lineageTag: 90f30e75-4f1f-4d96-8611-3c6ff3b8b532
+		summarizeBy: none
+		sourceColumn: DOB9
+
+		annotation SummarizationSetBy = Automatic
+
+	column CancellationCost
+		dataType: int64
+		formatString: 0
+		lineageTag: d8963ea5-ee16-4acf-bc72-0c301620a9df
+		summarizeBy: sum
+		sourceColumn: CancellationCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column CancellationCover
+		dataType: string
+		lineageTag: 00499f57-9dc2-4490-a1db-9fe2e1b170f5
+		summarizeBy: none
+		sourceColumn: CancellationCover
+
+		annotation SummarizationSetBy = Automatic
+
+	column VehicleRegistration
+		dataType: string
+		lineageTag: a6f0af08-b501-42ed-98d0-98ddef0ddd8b
+		summarizeBy: none
+		sourceColumn: VehicleRegistration
+
+		annotation SummarizationSetBy = Automatic
+
+	column VehicleAge
+		dataType: string
+		lineageTag: f0b16542-eb40-495e-8f7e-90c4babd8569
+		summarizeBy: none
+		sourceColumn: VehicleAge
+
+		annotation SummarizationSetBy = Automatic
+
+	column MarketingPermissions
+		dataType: string
+		lineageTag: a7772ba7-53f0-4866-9b04-2ca420dfd99c
+		summarizeBy: none
+		sourceColumn: MarketingPermissions
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Medical Screening'
+		dataType: string
+		lineageTag: 58ed9ff7-6813-4f1e-9a8b-1c96dae87d0e
+		summarizeBy: none
+		sourceColumn: Medical Screening
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 960e4004-0bf2-45ec-b3a0-b4b903f0ddf0
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Aggregator Reference'
+		dataType: string
+		lineageTag: 77bc9c1e-d25c-482f-a710-78a3bfc9efba
+		summarizeBy: none
+		sourceColumn: Aggregator Reference
+
+		annotation SummarizationSetBy = Automatic
+
+	column PHI
+		dataType: string
+		lineageTag: 55336402-6c05-4b5d-a327-1fe409014f9b
+		summarizeBy: none
+		sourceColumn: PHI
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExcessWaiver
+		dataType: string
+		lineageTag: d0d1d03e-3f6d-40a5-ba16-c41d3162263f
+		summarizeBy: none
+		sourceColumn: ExcessWaiver
+
+		annotation SummarizationSetBy = Automatic
+
+	column WinterSports
+		dataType: string
+		lineageTag: 20614276-639f-48ef-b006-d6306c6e2fbd
+		summarizeBy: none
+		sourceColumn: WinterSports
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravelDisruption
+		dataType: string
+		lineageTag: 9c722d75-a047-4d85-abff-c778edf934f1
+		summarizeBy: none
+		sourceColumn: TravelDisruption
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Standard Gadget Excess'
+		dataType: string
+		lineageTag: 22d5b01f-f579-4766-b1b4-9e6a10a8135a
+		summarizeBy: none
+		sourceColumn: Standard Gadget Excess
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Policy Wording Title'
+		dataType: string
+		lineageTag: 45f56097-0743-420d-9439-e6811b752ddf
+		summarizeBy: none
+		sourceColumn: Policy Wording Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'AMT Max Duration'
+		dataType: string
+		lineageTag: ee029116-daad-4a80-88ce-e67b2a67a4a1
+		summarizeBy: none
+		sourceColumn: AMT Max Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mandatory Gadget Additional Information'
+		dataType: string
+		lineageTag: 7e9ab234-13d0-4704-aa48-7203c6a01f2c
+		summarizeBy: none
+		sourceColumn: Mandatory Gadget Additional Information
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Optional Gadget Additional Information'
+		dataType: string
+		lineageTag: 8239d74a-9153-4113-bbae-e418de5c123c
+		summarizeBy: none
+		sourceColumn: Optional Gadget Additional Information
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enhanced Gadget Cover'
+		dataType: string
+		lineageTag: 1c0583b0-e3ff-471a-8a45-0a12632f19e3
+		summarizeBy: none
+		sourceColumn: Enhanced Gadget Cover
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enhanced Gadget Cover Excess'
+		dataType: string
+		lineageTag: b5aa2888-51cf-4adc-813b-10a34758844b
+		summarizeBy: none
+		sourceColumn: Enhanced Gadget Cover Excess
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enhanced Gadget Cover Benefit'
+		dataType: string
+		lineageTag: dce8d435-428d-4677-9f67-2d3666cde964
+		summarizeBy: none
+		sourceColumn: Enhanced Gadget Cover Benefit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cruise Cover'
+		dataType: string
+		lineageTag: f498be4a-905b-4810-93d6-3017205a68f2
+		summarizeBy: none
+		sourceColumn: Cruise Cover
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rental Vehicle Excess Waiver'
+		dataType: string
+		lineageTag: 8f883774-2932-49f7-ac7c-a6a4e916f17d
+		summarizeBy: none
+		sourceColumn: Rental Vehicle Excess Waiver
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wedding
+		dataType: string
+		lineageTag: f587a5e3-3512-46ae-9d7d-7ab64f578e6b
+		summarizeBy: none
+		sourceColumn: Wedding
+
+		annotation SummarizationSetBy = Automatic
+
+	column Golf
+		dataType: string
+		lineageTag: e08bd0be-9685-4977-a786-eb746b22365e
+		summarizeBy: none
+		sourceColumn: Golf
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sports and Activities Option'
+		dataType: string
+		lineageTag: 5615c4ef-c5ec-494c-9dc0-3725652b23ab
+		summarizeBy: none
+		sourceColumn: Sports and Activities Option
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ERV BaseGrossInc'
+		dataType: double
+		lineageTag: 66705a86-e20b-481c-b61f-6392ec9c2a14
+		summarizeBy: sum
+		sourceColumn: ERV BaseGrossInc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV BaseGrossInc_New'
+		dataType: double
+		lineageTag: 589912b9-d75f-4aae-b948-c3246ac2181f
+		summarizeBy: sum
+		sourceColumn: ERV BaseGrossInc_New
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV BaseGrossExc'
+		dataType: double
+		lineageTag: 6b8250d9-1a7a-46a4-8e70-b245ae6130b9
+		summarizeBy: sum
+		sourceColumn: ERV BaseGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV BaseComm'
+		dataType: double
+		lineageTag: b3cf4c2d-ab48-4f48-b936-987be6d2c499
+		summarizeBy: sum
+		sourceColumn: ERV BaseComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV BaseNetToUw'
+		dataType: double
+		lineageTag: ad10217c-d33b-4c7d-96db-7ce9997d03e7
+		summarizeBy: sum
+		sourceColumn: ERV BaseNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV BaseTotalToUw'
+		dataType: double
+		lineageTag: 6d230b75-b53f-4d17-947a-72ca280b80b1
+		summarizeBy: sum
+		sourceColumn: ERV BaseTotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV BaseIPT'
+		dataType: double
+		lineageTag: d902ef60-3f8d-4d27-8d87-c322440d6adb
+		summarizeBy: sum
+		sourceColumn: ERV BaseIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV OptionGrossInc'
+		dataType: double
+		lineageTag: 0d55f744-99c1-4b68-8f9f-0ff32678aafe
+		summarizeBy: sum
+		sourceColumn: ERV OptionGrossInc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV OptionGrossExc'
+		dataType: double
+		lineageTag: d38ad73c-f884-449a-8a84-b7d94b05e8ba
+		summarizeBy: sum
+		sourceColumn: ERV OptionGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV OptionComm'
+		dataType: double
+		lineageTag: aa33b22f-6c95-42ca-a964-7659032faa50
+		summarizeBy: sum
+		sourceColumn: ERV OptionComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV OptionNetToUw'
+		dataType: double
+		lineageTag: d13d978d-2377-4edf-88ab-f9de7fcf284e
+		summarizeBy: sum
+		sourceColumn: ERV OptionNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV OptionTotalToUW'
+		dataType: double
+		lineageTag: 60c7de5d-c8f6-4cac-a6e4-9f3dca7ee0dc
+		summarizeBy: sum
+		sourceColumn: ERV OptionTotalToUW
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV OptionIPT'
+		dataType: double
+		lineageTag: 897db108-49a4-4f42-88f1-d70a0303ecfd
+		summarizeBy: sum
+		sourceColumn: ERV OptionIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV MedicalGrossInc'
+		dataType: double
+		lineageTag: e811e125-e2ff-4ab2-9449-73a118953698
+		summarizeBy: sum
+		sourceColumn: ERV MedicalGrossInc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV MedicalGrossExc'
+		dataType: double
+		lineageTag: ad8f4f5a-3d6e-403a-99a6-5490d26f18cf
+		summarizeBy: sum
+		sourceColumn: ERV MedicalGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV MedicalComm'
+		dataType: double
+		lineageTag: 735fd32b-133d-4cb0-bcab-b12fc89983b5
+		summarizeBy: sum
+		sourceColumn: ERV MedicalComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV MedicalNetToUw'
+		dataType: double
+		lineageTag: 4d7307b0-999f-4db1-b824-8661bce03ea8
+		summarizeBy: sum
+		sourceColumn: ERV MedicalNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV MedicalTotalToUw'
+		dataType: double
+		lineageTag: e75db348-d6a3-4ba7-a9f3-198102ba9e56
+		summarizeBy: sum
+		sourceColumn: ERV MedicalTotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV MedicalIPT'
+		dataType: double
+		lineageTag: 54842962-f014-4a11-aecf-30cf91ce5b64
+		summarizeBy: sum
+		sourceColumn: ERV MedicalIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV TotalGross'
+		dataType: double
+		lineageTag: a3c1d301-1cbf-4307-8545-e20b39ea21f5
+		summarizeBy: sum
+		sourceColumn: ERV TotalGross
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV TotalGrossExc'
+		dataType: double
+		formatString: 0
+		lineageTag: 279fa8d7-e2fc-4317-9a05-dc5ed5db32af
+		summarizeBy: sum
+		sourceColumn: ERV TotalGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'ERV TotalComm'
+		dataType: double
+		lineageTag: 33f1f4e0-62b4-4913-b3db-0a89effeda87
+		summarizeBy: sum
+		sourceColumn: ERV TotalComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV TotalNetToUw'
+		dataType: double
+		formatString: 0
+		lineageTag: a95bf500-5e45-4ebc-9f1f-5c1c43b2db45
+		summarizeBy: sum
+		sourceColumn: ERV TotalNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'ERV TotalToUw'
+		dataType: double
+		lineageTag: a48ce7e2-3637-47c8-93d1-c8f516674b63
+		summarizeBy: sum
+		sourceColumn: ERV TotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'ERV TotalIPT'
+		dataType: double
+		lineageTag: 242cb5d4-5a6b-4820-ada4-c0cdb12fbbfa
+		summarizeBy: sum
+		sourceColumn: ERV TotalIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget Base Retail'
+		dataType: double
+		lineageTag: be70b52d-2e11-4c21-b210-9355527a0cdb
+		summarizeBy: sum
+		sourceColumn: Gadget Base Retail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget BaseGrossExc'
+		dataType: double
+		lineageTag: 73a3058b-38db-479a-bfe8-02ca51a9a646
+		summarizeBy: sum
+		sourceColumn: Gadget BaseGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget BaseComm'
+		dataType: double
+		lineageTag: 7f557aaf-aad7-45fe-be6d-306e6f251f70
+		summarizeBy: sum
+		sourceColumn: Gadget BaseComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget Base Net'
+		dataType: double
+		lineageTag: ec559296-c64d-4418-a0f6-3fd93ca9ea15
+		summarizeBy: sum
+		sourceColumn: Gadget Base Net
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget BaseTotalToUw'
+		dataType: double
+		lineageTag: b1f5c7af-1b32-4a1f-9687-3e77ae94a655
+		summarizeBy: sum
+		sourceColumn: Gadget BaseTotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget BaseIPT'
+		dataType: double
+		lineageTag: b4cd09c1-5559-4135-8a01-be4dcf8b993e
+		summarizeBy: sum
+		sourceColumn: Gadget BaseIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GadgetOptionRetail
+		dataType: double
+		lineageTag: 689c2eb3-2824-4e30-b6be-312b8e2262f9
+		summarizeBy: sum
+		sourceColumn: GadgetOptionRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget OptionGrossExc'
+		dataType: double
+		lineageTag: a463343f-a8fb-48d3-8e21-fd9f2c9595ad
+		summarizeBy: sum
+		sourceColumn: Gadget OptionGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget OptionComm'
+		dataType: double
+		lineageTag: 631c4eca-fd62-47e7-bc2a-0b64755925d0
+		summarizeBy: sum
+		sourceColumn: Gadget OptionComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GadgetOptionNet
+		dataType: double
+		lineageTag: 8dd4a40c-a252-4517-aceb-c2dce85b5bd5
+		summarizeBy: sum
+		sourceColumn: GadgetOptionNet
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget OptionTotalToUW'
+		dataType: double
+		lineageTag: 036ab9e4-189f-4a03-ae92-40c0b0f9358c
+		summarizeBy: sum
+		sourceColumn: Gadget OptionTotalToUW
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget OptionIPT'
+		dataType: double
+		lineageTag: 6d8f8082-af81-464c-a30f-d14e09faf489
+		summarizeBy: sum
+		sourceColumn: Gadget OptionIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget TotalGross'
+		dataType: double
+		lineageTag: 321fc6ae-74de-468c-bae2-144c062f7a25
+		summarizeBy: sum
+		sourceColumn: Gadget TotalGross
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget TotalGrossExc'
+		dataType: double
+		lineageTag: 904c70c5-47e7-4fda-956e-c76ee8e89be7
+		summarizeBy: sum
+		sourceColumn: Gadget TotalGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget TotalComm'
+		dataType: double
+		lineageTag: 00673729-7124-4f60-880e-1a2c85c91174
+		summarizeBy: sum
+		sourceColumn: Gadget TotalComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget TotalNetToUw'
+		dataType: double
+		lineageTag: c8b11a00-41d8-42b8-bcd1-d570e4a320ab
+		summarizeBy: sum
+		sourceColumn: Gadget TotalNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget TotalToUw'
+		dataType: double
+		lineageTag: 73377ae7-6c6d-4eaf-96a3-bfd4bb71928f
+		summarizeBy: sum
+		sourceColumn: Gadget TotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gadget TotalIPT'
+		dataType: double
+		lineageTag: 988c5522-a3ad-4836-96c4-4fcf3da4b648
+		summarizeBy: sum
+		sourceColumn: Gadget TotalIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IPP BaseGross'
+		dataType: double
+		lineageTag: 23ccf604-46a0-45f7-8b24-c02f206b2fe7
+		summarizeBy: sum
+		sourceColumn: IPP BaseGross
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IPP BaseGrossExc'
+		dataType: double
+		lineageTag: e8b4d978-4a34-45ed-8ee4-2cf1fd7c5bef
+		summarizeBy: sum
+		sourceColumn: IPP BaseGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IPP BaseComm'
+		dataType: double
+		lineageTag: c3c09425-8603-48ad-b5b7-46b984e22d5f
+		summarizeBy: sum
+		sourceColumn: IPP BaseComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IPP BaseNetToUw'
+		dataType: double
+		lineageTag: f8f9fe67-9ec4-4409-9dc9-14d33a889e61
+		summarizeBy: sum
+		sourceColumn: IPP BaseNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IPP BaseToUw'
+		dataType: double
+		lineageTag: f83602af-1973-43d9-99cd-502c0dccf02b
+		summarizeBy: sum
+		sourceColumn: IPP BaseToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IPP BaseIPT'
+		dataType: double
+		lineageTag: 265c8322-6f40-4380-8984-1dda934d7121
+		summarizeBy: sum
+		sourceColumn: IPP BaseIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined BaseGrossInc'
+		dataType: double
+		lineageTag: fa52a607-78d8-4519-b8f4-53672739e4ad
+		summarizeBy: sum
+		sourceColumn: Combined BaseGrossInc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined BaseGrossExc'
+		dataType: double
+		lineageTag: da0777d0-2849-402b-adff-7f475549b28b
+		summarizeBy: sum
+		sourceColumn: Combined BaseGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined BaseComm'
+		dataType: double
+		lineageTag: d4274470-3c98-480d-962c-9872fefff698
+		summarizeBy: sum
+		sourceColumn: Combined BaseComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined BaseNetToUw'
+		dataType: double
+		lineageTag: aa03ff13-5baf-4665-839d-282e12690142
+		summarizeBy: sum
+		sourceColumn: Combined BaseNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined BaseTotalToUw'
+		dataType: double
+		lineageTag: 995393b5-fbc8-4016-8e30-14999023d512
+		summarizeBy: sum
+		sourceColumn: Combined BaseTotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined BaseIPT'
+		dataType: double
+		lineageTag: 5a795179-3d49-47bd-a70b-6a52c0fedcc4
+		summarizeBy: sum
+		sourceColumn: Combined BaseIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined OptionGrossInc'
+		dataType: double
+		lineageTag: 2af03685-530f-4ecd-ab92-92abcee429be
+		summarizeBy: sum
+		sourceColumn: Combined OptionGrossInc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined OptionGrossExc'
+		dataType: double
+		lineageTag: a7c5e3a9-877b-4e57-823a-13b1fc2ec110
+		summarizeBy: sum
+		sourceColumn: Combined OptionGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined OptionComm'
+		dataType: double
+		lineageTag: 51ea77b5-755f-4d9c-9737-a8eeb5d3d858
+		summarizeBy: sum
+		sourceColumn: Combined OptionComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined OptionNetToUw'
+		dataType: double
+		lineageTag: 49b7aada-4a94-4c89-a5bd-4b065f335451
+		summarizeBy: sum
+		sourceColumn: Combined OptionNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined OptionTotalToUW'
+		dataType: double
+		lineageTag: 38deda3d-09cf-4819-92c7-8c98fe2f032a
+		summarizeBy: sum
+		sourceColumn: Combined OptionTotalToUW
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined OptionIPT'
+		dataType: double
+		lineageTag: f6661785-cc9f-44fe-9209-4686a4f4eef9
+		summarizeBy: sum
+		sourceColumn: Combined OptionIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined MedicalGrossInc'
+		dataType: double
+		lineageTag: 54502210-0d10-420f-b2dc-fa322bb87d1a
+		summarizeBy: sum
+		sourceColumn: Combined MedicalGrossInc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined MedicalGrossExc'
+		dataType: double
+		lineageTag: 06bf9ac2-3b89-4706-8dca-a81380e130b3
+		summarizeBy: sum
+		sourceColumn: Combined MedicalGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined MedicalComm'
+		dataType: double
+		lineageTag: f2e1289d-3559-4eb8-a122-3af1f74394f2
+		summarizeBy: sum
+		sourceColumn: Combined MedicalComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined MedicalNetToUw'
+		dataType: double
+		lineageTag: 88b2716e-6273-4ad2-b9f7-9226ccf9bff0
+		summarizeBy: sum
+		sourceColumn: Combined MedicalNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined MedicalTotalToUw'
+		dataType: double
+		lineageTag: f056ddd1-86d6-4066-9d84-a48cb615ce9f
+		summarizeBy: sum
+		sourceColumn: Combined MedicalTotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined  MedicalIPT'
+		dataType: double
+		lineageTag: 81f8b566-f36a-4cf8-9e56-96ad96ee55df
+		summarizeBy: sum
+		sourceColumn: Combined  MedicalIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined TotalGross'
+		dataType: double
+		lineageTag: 47d3d38b-9d52-45e6-b83d-65d45f809866
+		summarizeBy: sum
+		sourceColumn: Combined TotalGross
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined TotalGrossExc'
+		dataType: double
+		lineageTag: 90aee5d1-0ef6-4168-9d90-246835e10c62
+		summarizeBy: sum
+		sourceColumn: Combined TotalGrossExc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined TotalComm'
+		dataType: double
+		lineageTag: 75221955-8526-40f6-9bc3-53369b1a8b26
+		summarizeBy: sum
+		sourceColumn: Combined TotalComm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined TotalNetToUw'
+		dataType: double
+		lineageTag: 8021c545-57a7-4def-9c7b-1ca6331b593f
+		summarizeBy: sum
+		sourceColumn: Combined TotalNetToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined TotalToUw'
+		dataType: double
+		lineageTag: 9642327c-c5a3-4330-b713-2a5435c285ab
+		summarizeBy: sum
+		sourceColumn: Combined TotalToUw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined TotalIPT'
+		dataType: double
+		lineageTag: 83607a4f-b3ff-4818-901e-08b3a2dbef6b
+		summarizeBy: sum
+		sourceColumn: Combined TotalIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CancelledDate
+		dataType: string
+		lineageTag: d40ea086-65a6-44bd-aa2e-fa552a787882
+		summarizeBy: none
+		sourceColumn: CancelledDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column CancellationReason
+		dataType: string
+		lineageTag: 29585d1d-0fbc-4b4f-afcc-d746f869851f
+		summarizeBy: none
+		sourceColumn: CancellationReason
+
+		annotation SummarizationSetBy = Automatic
+
+	column TransactionType
+		dataType: string
+		lineageTag: 9d4aef4b-5435-48ee-ae14-19b7ede66137
+		summarizeBy: none
+		sourceColumn: TransactionType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Premium Currency'
+		dataType: string
+		lineageTag: a9f4e923-c93a-4d11-aa5a-6375cd8c1bca
+		summarizeBy: none
+		sourceColumn: Premium Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column Healix1
+		dataType: double
+		lineageTag: 2e29306e-ebcd-4c93-93f1-9fbafe336bd3
+		summarizeBy: sum
+		sourceColumn: Healix1
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Healix2
+		dataType: double
+		lineageTag: 1b5f144e-a2b0-49b2-888c-7a768696456c
+		summarizeBy: sum
+		sourceColumn: Healix2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Healix3
+		dataType: double
+		lineageTag: 7c687f24-a144-454b-aef5-3708c32027d4
+		summarizeBy: sum
+		sourceColumn: Healix3
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Healix4
+		dataType: double
+		lineageTag: 5dc76238-1a8a-4d02-913e-5a150f415960
+		summarizeBy: sum
+		sourceColumn: Healix4
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Healix5
+		dataType: double
+		lineageTag: b59915f0-8fbd-45df-b437-29f85c9527fc
+		summarizeBy: sum
+		sourceColumn: Healix5
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Healix6
+		dataType: double
+		lineageTag: 44924270-5479-4417-9998-94079169948c
+		summarizeBy: sum
+		sourceColumn: Healix6
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Healix7
+		dataType: string
+		lineageTag: df3e50f3-261a-4c22-a141-9ef0f262b5ac
+		summarizeBy: none
+		sourceColumn: Healix7
+
+		annotation SummarizationSetBy = Automatic
+
+	column Healix8
+		dataType: string
+		lineageTag: 89052b87-5621-4faa-a5df-7259d9e704c8
+		summarizeBy: none
+		sourceColumn: Healix8
+
+		annotation SummarizationSetBy = Automatic
+
+	column Healix9
+		dataType: string
+		lineageTag: 0d319d97-8056-4756-ae98-8349886e89fb
+		summarizeBy: none
+		sourceColumn: Healix9
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Med Score'
+		dataType: double
+		lineageTag: 8f3bdd9d-6530-4d74-894d-9e564f430722
+		summarizeBy: sum
+		sourceColumn: Max Med Score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Med
+		dataType: string
+		lineageTag: b02c8d2d-d74a-4787-84dd-d8fcb834d066
+		summarizeBy: none
+		sourceColumn: Med
+
+		annotation SummarizationSetBy = Automatic
+
+	column Med2
+		dataType: string
+		lineageTag: db232a26-8b73-4ba0-b172-0483656b6f54
+		summarizeBy: none
+		sourceColumn: Med2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Med Banding'
+		dataType: string
+		lineageTag: a797a0f2-00e9-432a-8ac3-47d71ebe7886
+		summarizeBy: none
+		sourceColumn: Med Banding
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyVersion
+		dataType: int64
+		formatString: 0
+		lineageTag: d8964569-4155-4b10-8cdd-0a6dbb338f60
+		summarizeBy: sum
+		sourceColumn: PolicyVersion
+
+		annotation SummarizationSetBy = Automatic
+
+	column IPTRate
+		dataType: int64
+		formatString: 0
+		lineageTag: 765efae0-6a21-4f3b-8bc8-f21566fd779a
+		summarizeBy: sum
+		sourceColumn: IPTRate
+
+		annotation SummarizationSetBy = Automatic
+
+	column CoverType
+		dataType: string
+		lineageTag: fb4dd726-4c3d-47eb-8f94-19343089aadc
+		summarizeBy: none
+		sourceColumn: CoverType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Retail
+		dataType: double
+		lineageTag: 61c62352-4def-4d1a-bceb-cc4fb5028a29
+		summarizeBy: sum
+		sourceColumn: Retail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalNet(Base/IPP/Gadget)
+		dataType: double
+		lineageTag: 52340b9a-6a0e-4838-a7e1-1ecf90af9b8f
+		summarizeBy: sum
+		sourceColumn: TotalNet(Base/IPP/Gadget)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CertificateID
+		dataType: int64
+		formatString: 0
+		lineageTag: 30ce6962-1e4d-43c3-aff9-ec635f3e123a
+		summarizeBy: count
+		sourceColumn: CertificateID
+
+		annotation SummarizationSetBy = Automatic
+
+	column marketing-email
+		dataType: string
+		lineageTag: 38cde360-be51-4402-a439-319a6ea1b946
+		summarizeBy: none
+		sourceColumn: marketing-email
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentStatus
+		dataType: string
+		lineageTag: 61b9c974-604c-4c20-b9cb-7647394c6d17
+		summarizeBy: none
+		sourceColumn: PaymentStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column Underwriter
+		dataType: string
+		lineageTag: 11d44422-3b80-4a2e-91f9-67fbba3335e6
+		summarizeBy: none
+		sourceColumn: Underwriter
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClaimCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 1f213819-28d1-40ab-9ad4-b0bbcd3f7a04
+		summarizeBy: sum
+		sourceColumn: ClaimCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Incurred
+		dataType: double
+		lineageTag: 4f9f2ef7-9e78-42ec-92ff-ff7039924f6b
+		summarizeBy: sum
+		sourceColumn: Incurred
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Ex Large Losses'
+		dataType: double
+		formatString: 0
+		lineageTag: 16da8245-be00-4f95-a6b8-4e39b1280e83
+		summarizeBy: sum
+		sourceColumn: Ex Large Losses
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Policy
+		dataType: int64
+		formatString: 0
+		lineageTag: 61e31ffc-169e-4032-9090-9815874330d5
+		summarizeBy: sum
+		sourceColumn: Policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalPolicies
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ddecd90-b960-436c-b8c8-b12667f1bf92
+		summarizeBy: sum
+		sourceColumn: TotalPolicies
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalRetail
+		dataType: double
+		lineageTag: 829fdba6-28ab-435a-8ab6-d4e0f4b37556
+		summarizeBy: sum
+		sourceColumn: TotalRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Combined MedicalIPT'
+		dataType: double
+		lineageTag: 067ad27c-018e-4a0e-8492-ec83eb2a44c2
+		summarizeBy: sum
+		sourceColumn: Combined MedicalIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column gold_loaded_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d5a304f1-dc79-4dbf-9692-1ffb7fb94ba4
+		summarizeBy: none
+		sourceColumn: gold_loaded_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Avg GWP' = 'fact_master_bdx_switched_on'[Policy]
+		lineageTag: 23be261f-80e0-4ed9-8147-df16f13ee78b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Superseded by the 'Total Incurred Ex LL (Cumulative)' measure — this raw column is single-month only and was equal to plain Incurred (never actually excluded Large Losses). Hidden to prevent accidental reuse in visuals.
+	column 'Total Incurred Ex LL' = 'fact_master_bdx_switched_on'[Incurred]
+		isHidden
+		formatString: 0
+		lineageTag: 25f9b0c6-9577-4e53-a5f1-b91ab68972de
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Open Count' = 'fact_master_bdx_switched_on'[ClaimCount]
+		formatString: 0
+		lineageTag: baa8ef1a-3289-4ef1-ac0d-8919b2719331
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Open Incurred' = 'fact_master_bdx_switched_on'[Total Incurred Ex LL]
+		formatString: 0
+		lineageTag: 83815b07-7732-4c85-9870-8ece9fa6b46f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Avg Retail' = DIVIDE(SUM('fact_master_bdx_switched_on'[TotalRetail]),SUM('fact_master_bdx_switched_on'[TotalPolicies]),BLANK())
+		lineageTag: 2ad1fa9b-50a0-4489-b083-8f918ea16ea6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Total Total Retail' = SUM('fact_master_bdx_switched_on'[TotalRetail])
+		lineageTag: ed6601f7-5638-43a8-9f3c-600a5400727a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Total Retail' =
+			
+			CALCULATE(
+			    SUM('fact_master_bdx_switched_on'[TotalRetail]),
+			    ALL()
+			)
+		lineageTag: ea2a9218-3b82-45b4-95ae-d271cd766be5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Total Policies' =
+			
+			CALCULATE(
+			    SUM('fact_master_bdx_switched_on'[TotalPolicies]),
+			    ALL()
+			)
+		lineageTag: 09c307fe-2c9b-4b31-ad79-141e3b8bb269
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MonthSortKey = YEAR('fact_master_bdx_switched_on'[IssueDate]) * 100 + MONTH('fact_master_bdx_switched_on'[IssueDate])
+		dataType: int64
+		isHidden
+		lineageTag: 494e422a-a771-415d-8b1c-3a757035b583
+		summarizeBy: none
+
+	column PolicyTypeSortOrder = RELATED('DimPolicy2'[PolicyTypeSortOrder])
+		dataType: int64
+		isHidden
+		lineageTag: 3cccb124-21a4-4a84-82a3-205d6a401336
+
+	partition fact_master_bdx_switched_on = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-mcybvrzqd3tufdttrjbjhzokdi.datawarehouse.fabric.microsoft.com", "taurus_lakehouse"),
+				    gold_fact_master_bdx_switched_on = Source{[Schema="gold",Item="fact_master_bdx_switched_on"]}[Data]
+				in
+				    gold_fact_master_bdx_switched_on
+
+	partition fact_master_bdx_viva = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-mcybvrzqd3tufdttrjbjhzokdi.datawarehouse.fabric.microsoft.com", "taurus_lakehouse"),
+				    gold_fact_master_bdx_switched_on = Source{[Schema="gold",Item="fact_master_bdx_viva"]}[Data]
+				in
+				    gold_fact_master_bdx_switched_on
+
+	annotation PBI_ResultType = Table
+

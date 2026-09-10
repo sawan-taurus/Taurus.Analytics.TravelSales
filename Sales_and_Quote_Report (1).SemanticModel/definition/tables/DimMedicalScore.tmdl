@@ -1,0 +1,78 @@
+table DimMedicalScore
+	lineageTag: 3bc42ee9-75a0-4921-b51a-1f93d2fd7d61
+
+	measure SingleTripMSPer = ```
+			
+			IF(
+			    HASONEVALUE('DimMedicalScore'[SingleTrip]),
+			    FORMAT(VALUES('DimMedicalScore'[SingleTrip]), "0.00") & "%",
+			    FORMAT(SUM('DimMedicalScore'[SingleTrip]), "0.00") & "%"
+			)
+			
+			
+			```
+		lineageTag: 1c5c6c0d-f2b7-4b87-aa22-15099954cb17
+
+	measure AMTMSPer = ```
+			
+			IF(
+			    HASONEVALUE('DimMedicalScore'[AMT]),
+			    FORMAT(VALUES('DimMedicalScore'[AMT]), "0.00") & "%",
+			    FORMAT(SUM('DimMedicalScore'[AMT]), "0.00") & "%"
+			)
+			
+			
+			```
+		lineageTag: ab3f8faa-809c-402f-b8b3-0ae66a9088f3
+
+	column MedicalScoreId
+		dataType: int64
+		formatString: 0
+		lineageTag: f5aa98d3-be7b-4dee-bc9b-5ac26a6009fc
+		summarizeBy: none
+		sourceColumn: MedicalScoreId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MedicalScore
+		dataType: string
+		lineageTag: 1a961586-6ed0-4ced-a81b-5377592a6894
+		summarizeBy: none
+		sourceColumn: MedicalScore
+		sortByColumn: MedicalScoreId
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column SingleTrip
+		dataType: double
+		lineageTag: 17c83a6b-d9b8-4932-b089-58db76ab7719
+		summarizeBy: sum
+		sourceColumn: SingleTrip
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMT
+		dataType: double
+		lineageTag: a71a8dcf-bc1f-4e53-be45-b037152b1310
+		summarizeBy: sum
+		sourceColumn: AMT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimMedicalScore = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimMedicalScore = Source{[Schema="dbo",Item="DimMedicalScore"]}[Data]
+				in
+				    dbo_DimMedicalScore
+
+	annotation PBI_ResultType = Table
+

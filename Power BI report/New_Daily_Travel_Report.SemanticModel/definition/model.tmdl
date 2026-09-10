@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["FactDailyReport","DimDate","FactDailySalesReport","FactDailyForecastReport","DimSubSet","DimSchemeSubSet"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+ref table FactDailyReport
+ref table DimDate
+ref table DateTableTemplate_a33bca5f-5c15-4e31-9627-1ab6efe1b749
+ref table LocalDateTable_83c20beb-a333-4cfe-b715-34d3e8add953
+ref table FactDailySalesReport
+ref table FactDailyForecastReport
+ref table DimSubSet
+ref table DimSchemeSubSet
+
+ref cultureInfo en-US
+

@@ -1,0 +1,291 @@
+table FactDailyReport
+	lineageTag: f3ee0083-edc2-46bd-9c9c-38cbfd3e8b72
+
+	measure 'Previous Day Volume' =
+			
+			VAR SelectedDate = SELECTEDVALUE(DimDate[Date])
+			RETURN
+			IF (
+			    NOT ISBLANK(SelectedDate),
+			    CALCULATE(
+			        SUM(FactDailyReport[DateVol]),
+			        FILTER(
+			            ALL(DimDate),
+			            DimDate[Date] = SelectedDate - 1
+			        )
+			    )
+			)
+		lineageTag: 5668738e-dd7e-4158-a20a-2ad14f255cca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous Day Retail' =
+			
+			VAR SelectedDate = SELECTEDVALUE(DimDate[Date])
+			RETURN
+			IF (
+			    NOT ISBLANK(SelectedDate),
+			    CALCULATE(
+			        SUM(FactDailyReport[DateRetail]),
+			        FILTER(
+			            ALL(DimDate),
+			            DimDate[Date] = SelectedDate - 1
+			        )
+			    )
+			)
+		lineageTag: 43c6fb4c-0df4-4987-9c5d-521edc2bb6fe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DateVol_CurrentMonth_ExclToday = ```
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR Yesterday = TodayDate - 1
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailyReport[DateVol]),
+			    DimDate[Date] >= FirstDayOfCurrentMonth &&
+			    DimDate[Date] <= Yesterday
+			)
+			
+			
+			```
+		lineageTag: f2d9e0c3-8dcb-45e7-9e61-3988a5d7d044
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DateVol_PreviousMonth_ExclToday = ```
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR LastDayOfPreviousMonth = FirstDayOfCurrentMonth - 1
+			VAR FirstDayOfPreviousMonth = DATE(YEAR(LastDayOfPreviousMonth), MONTH(LastDayOfPreviousMonth), 1)
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailyReport[DateVol]),
+			    DimDate[Date] >= FirstDayOfPreviousMonth &&
+			    DimDate[Date] <= LastDayOfPreviousMonth
+			)
+			
+			```
+		lineageTag: 9c675508-1ee6-4526-9d9b-ae7616fbd33b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DateRetail_MTD_ExclToday = ```
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR Yesterday = TodayDate - 1
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailyReport[DateRetail]),
+			    DimDate[Date] >= FirstDayOfCurrentMonth &&
+			    DimDate[Date] <= Yesterday
+			)
+			
+			```
+		lineageTag: a3d82a36-b772-48db-9ac7-473594903f22
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DateRetail_PreviousMonth_ExclToday =
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR LastDayOfPreviousMonth = FirstDayOfCurrentMonth - 1
+			VAR FirstDayOfPreviousMonth = DATE(YEAR(LastDayOfPreviousMonth), MONTH(LastDayOfPreviousMonth), 1)
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailyReport[DateRetail]),
+			    DimDate[Date] >= FirstDayOfPreviousMonth &&
+			    DimDate[Date] <= LastDayOfPreviousMonth
+			)
+		lineageTag: ba96c13a-4b63-4abb-8ae1-00df55df218f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e40a921-b21d-4243-bbfe-afb12d1d0214
+		summarizeBy: count
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeSubsetId
+		dataType: int64
+		formatString: 0
+		lineageTag: 80959621-76b8-4145-bd87-9370a7c7f490
+		summarizeBy: count
+		sourceColumn: SchemeSubsetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateVol
+		dataType: double
+		formatString: 0
+		lineageTag: c98ca75e-177f-4afb-a5a0-35f6f05981d4
+		summarizeBy: sum
+		sourceColumn: DateVol
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column DateRetail
+		dataType: double
+		lineageTag: 55307db8-38ba-45f9-9609-789b013d3786
+		summarizeBy: sum
+		sourceColumn: DateRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTDVol
+		dataType: double
+		lineageTag: ad2042d8-2ec2-4568-8a01-0ad87eb334ff
+		summarizeBy: sum
+		sourceColumn: MTDVol
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTDRetail
+		dataType: double
+		lineageTag: ed4adb94-aa17-44cc-9edb-08cd1292ab2f
+		summarizeBy: sum
+		sourceColumn: MTDRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvgPolPerDay
+		dataType: double
+		lineageTag: c097a807-00cf-4bd3-b604-81281618abed
+		summarizeBy: sum
+		sourceColumn: AvgPolPerDay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvgP
+		dataType: double
+		lineageTag: 0259ddd5-b512-4cf0-a378-e406d64ffc4f
+		summarizeBy: sum
+		sourceColumn: AvgP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EstMonEndVol
+		dataType: double
+		lineageTag: 91a9ae2e-cd9b-4f67-890b-44e7c472203e
+		summarizeBy: sum
+		sourceColumn: EstMonEndVol
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EstMonEndRetail
+		dataType: double
+		lineageTag: bc3d9e1d-4268-41ca-aa04-5978ce958f0f
+		summarizeBy: sum
+		sourceColumn: EstMonEndRetail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EstMonEndNetMargin
+		dataType: double
+		lineageTag: 9a5b06ae-e01c-4ca0-af89-7269ba1acf96
+		summarizeBy: sum
+		sourceColumn: EstMonEndNetMargin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BudgetVol
+		dataType: int64
+		formatString: 0
+		lineageTag: 6586e4f3-0891-4e19-bba5-6d3ed963c404
+		summarizeBy: sum
+		sourceColumn: BudgetVol
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetGWP
+		dataType: int64
+		formatString: 0
+		lineageTag: c012fcd0-f4d6-4a28-b539-1ad56393d886
+		summarizeBy: sum
+		sourceColumn: BudgetGWP
+
+		annotation SummarizationSetBy = Automatic
+
+	column BudgetNetMargin
+		dataType: int64
+		formatString: 0
+		lineageTag: 33772852-b229-4e77-80b3-c88dedb292bc
+		summarizeBy: sum
+		sourceColumn: BudgetNetMargin
+
+		annotation SummarizationSetBy = Automatic
+
+	column PercentToVol
+		dataType: double
+		lineageTag: 73ac5769-21bf-4d61-a9ec-3a094a82ac4c
+		summarizeBy: sum
+		sourceColumn: PercentToVol
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PercentToGWP
+		dataType: double
+		lineageTag: 33f89624-adf9-419b-9294-2ed01ca91bbf
+		summarizeBy: sum
+		sourceColumn: PercentToGWP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PercentToNetMargin
+		dataType: double
+		lineageTag: 92be4a19-6bfa-4d0e-9edb-5b09f08e5b79
+		summarizeBy: sum
+		sourceColumn: PercentToNetMargin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactDailyReport = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactDailyReport = Source{[Schema="dbo",Item="FactDailyReport"]}[Data]
+				in
+				    dbo_FactDailyReport
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

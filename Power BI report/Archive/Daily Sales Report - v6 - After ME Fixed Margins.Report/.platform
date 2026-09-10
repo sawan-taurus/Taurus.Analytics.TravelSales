@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Daily Sales Report - v6 - After ME Fixed Margins"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b6fde828-5f00-91f7-407c-03f196612e3f"
+  }
+}

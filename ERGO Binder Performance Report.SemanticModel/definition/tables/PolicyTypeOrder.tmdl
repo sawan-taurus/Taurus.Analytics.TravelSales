@@ -1,0 +1,17 @@
+table PolicyTypeOrder
+	lineageTag: 980410ff-ca9c-41ee-aa03-3d0b62740f2d
+
+	column PolicyType
+		lineageTag: a3daea32-f11c-4cea-854b-b4ffeaadeae4
+		isNameInferred
+		sourceColumn: [PolicyType]
+
+	column SortOrder
+		lineageTag: 70582a0f-c5c5-42d8-a336-94f570e77404
+		isNameInferred
+		sourceColumn: [SortOrder]
+
+	partition PolicyTypeOrder = calculated
+		mode: import
+		source = DATATABLE("PolicyType", STRING, "SortOrder", INTEGER, {{"AMT", 1}, {"Single Trip", 2}, {"BP", 3}})
+

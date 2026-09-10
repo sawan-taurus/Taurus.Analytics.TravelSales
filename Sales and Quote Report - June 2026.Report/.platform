@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Sales and Quote Report - June 2026"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "42d3e0c5-cb9d-9375-443d-245a0c0795a8"
+  }
+}

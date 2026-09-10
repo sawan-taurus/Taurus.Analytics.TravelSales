@@ -1,0 +1,229 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": "select * from mtd.control_events \nwhere enable_flag = 1 and processing_frequency = 'daily'\nand source_container_name is not null\nand source_container_name in ('Atoz','Sales','Oasis');",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "TaurusWH",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "f2147c92-84fa-a24e-4085-cc3b803397c4",
+                  "endpoint": "2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "LKP_fetchControlEventsForLoad",
+        "description": "Control event is used to control and select an item from the source system to be moved into a data lake. This activity is used to load items for full load which are enabled.",
+        "dependsOn": []
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "3a3565a2-2a52-4119-a214-0193dd3f556f",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "par_successflag": "True"
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Send_Success_Email_Notification",
+        "description": "This activity is used to send File and DB ingestion email success notification",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "Gold_ForEach_ItemInControlEnvent",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "batchCount": 1,
+          "items": {
+            "value": "@activity('LKP_fetchControlEventsForLoad').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "f6a4fe08-67de-9ff3-46c2-fbedfe2da323",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "Source_Type": {
+                    "value": {
+                      "value": "@item().source_container_name",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "DimSchemeHeaders",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "ea5fe825-cb94-bfa4-4452-54bcd4edc3f1",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "Source_Type": {
+                    "value": {
+                      "value": "@item().source_container_name",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "Data_Load_Type": {
+                    "value": {
+                      "value": "@item().data_load_type",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "FactTables",
+              "dependsOn": [
+                {
+                  "activity": "DimSchemeHeaders",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SqlServerStoredProcedure",
+              "typeProperties": {
+                "storedProcedureName": "[mtd].[usp_UpdateControlEvent]",
+                "storedProcedureParameters": {
+                  "DataLoadType": {
+                    "value": {
+                      "value": "yesterday",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "SourceContainerName": {
+                    "value": {
+                      "value": "@item().source_container_name",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "SourceTableName": {
+                    "value": {
+                      "value": "@item().source_table_name",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  }
+                }
+              },
+              "linkedService": {
+                "name": "TaurusWH",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "803397c4-cc3b-4085-a24e-84faf2147c92",
+                    "endpoint": "2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "9c958852-649b-48e2-ac6a-f03167ff64dc"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Stored procedure1",
+              "state": "Inactive",
+              "onInactiveMarkAs": "Succeeded",
+              "dependsOn": [
+                {
+                  "activity": "FactTables",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "name": "Gold_ForEach_ItemInControlEnvent",
+        "description": "This activity will iterate over all the objects fetched from the control table. Please note that the sequential checkbox is on to ensure that the ",
+        "dependsOn": [
+          {
+            "activity": "LKP_fetchControlEventsForLoad",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "process_date": {
+        "type": "String"
+      },
+      "LastProcessId": {
+        "type": "Integer"
+      },
+      "DataLoadType": {
+        "type": "String"
+      }
+    }
+  }
+}

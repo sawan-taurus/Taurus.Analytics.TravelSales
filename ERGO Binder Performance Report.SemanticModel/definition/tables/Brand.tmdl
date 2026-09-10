@@ -1,0 +1,28 @@
+table Brand
+	lineageTag: 7e732416-4aed-46fb-949e-d7bec9fd31f0
+
+	/// Single slicer to switch the whole report between All brands, SOI (Switched On), and Viva. Default (no selection) behaves as All, so existing pages are unaffected until this slicer is added to them.
+	calculationGroup
+		precedence: 10
+
+		/// Multiple/empty selection falls back to All (unfiltered) rather than blending results.
+		multipleOrEmptySelectionExpression = SELECTEDMEASURE()
+
+		/// No selection = behave as All (unfiltered) so existing visuals without this slicer are unaffected.
+		noSelectionExpression = SELECTEDMEASURE()
+
+		/// No brand filter applied - shows all brands combined.
+		calculationItem All = SELECTEDMEASURE()
+
+		/// Filters to Switched On brand rows on the master BDX table and Scheme='SwitchedOn' on the claims table.
+		calculationItem SOI = CALCULATE(SELECTEDMEASURE(), fact_master_bdx_switched_on[Brand] = "Switched On", fact_claims_switched_on[Scheme] = "SwitchedOn")
+
+		/// Filters to Viva brand rows on the master BDX table and Scheme='Viva' on the claims table.
+		calculationItem Viva = CALCULATE(SELECTEDMEASURE(), fact_master_bdx_switched_on[Brand] = "Viva", fact_claims_switched_on[Scheme] = "Viva")
+
+	column Brand
+		dataType: string
+		lineageTag: e4b6b041-57e3-4998-bb7b-0bc9dae0eb55
+
+	partition 'Partition_Brand Selection' = calculationGroup
+

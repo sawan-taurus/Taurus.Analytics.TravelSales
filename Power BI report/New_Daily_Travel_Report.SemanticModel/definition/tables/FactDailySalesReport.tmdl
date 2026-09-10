@@ -1,0 +1,450 @@
+table FactDailySalesReport
+	lineageTag: c94c8049-d0f9-404c-ac3e-3b8a59650c6c
+
+	measure 'Previous Day Volume New' =
+			
+			VAR SelectedDate = SELECTEDVALUE(DimDate[Date])
+			RETURN
+			IF (
+			    NOT ISBLANK(SelectedDate),
+			    CALCULATE(
+			        SUM(FactDailySalesReport[Day_Volume]),
+			        FILTER(
+			            ALL(DimDate),
+			            DimDate[Date] = SelectedDate - 1
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 2d6380fe-5511-4401-b58d-75187b7f3b89
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Previous Day Retail New' =
+			
+			VAR SelectedDate = SELECTEDVALUE(DimDate[Date])
+			RETURN
+			IF (
+			    NOT ISBLANK(SelectedDate),
+			    CALCULATE(
+			        SUM(FactDailySalesReport[Day_Retail]),
+			        FILTER(
+			            ALL(DimDate),
+			            DimDate[Date] = SelectedDate - 1
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: d14d9e86-c19f-4b60-9f63-f1276c2bd83f
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'DateVol_CurrentMonth_ExclToday New' = ```
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR Yesterday = TodayDate - 1
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailySalesReport[Day_Volume]),
+			    DimDate[Date] >= FirstDayOfCurrentMonth &&
+			    DimDate[Date] <= Yesterday
+			)
+			
+			
+			```
+		lineageTag: 3fe19589-0b21-49cf-80a0-965e31861344
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'DateVol_PreviousMonth_ExclToday New' = ```
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR LastDayOfPreviousMonth = FirstDayOfCurrentMonth - 1
+			VAR FirstDayOfPreviousMonth = DATE(YEAR(LastDayOfPreviousMonth), MONTH(LastDayOfPreviousMonth), 1)
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailySalesReport[Day_Volume]),
+			    DimDate[Date] >= FirstDayOfPreviousMonth &&
+			    DimDate[Date] <= LastDayOfPreviousMonth
+			)
+			
+			```
+		lineageTag: 81e96f0b-bb0e-48f6-b5ab-ef38f2d53d9b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'DateRetail_MTD_ExclToday New' = ```
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR Yesterday = TodayDate - 1
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailySalesReport[Day_Retail]),
+			    DimDate[Date] >= FirstDayOfCurrentMonth &&
+			    DimDate[Date] <= Yesterday
+			)
+			
+			```
+		lineageTag: 14cf8de1-b39c-4d95-a698-5de5702bf36c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'DateRetail_PreviousMonth_ExclToday New' =
+			
+			VAR TodayDate = TODAY()
+			VAR FirstDayOfCurrentMonth = DATE(YEAR(TodayDate), MONTH(TodayDate), 1)
+			VAR LastDayOfPreviousMonth = FirstDayOfCurrentMonth - 1
+			VAR FirstDayOfPreviousMonth = DATE(YEAR(LastDayOfPreviousMonth), MONTH(LastDayOfPreviousMonth), 1)
+			
+			RETURN
+			CALCULATE(
+			    SUM(FactDailySalesReport[Day_Retail]),
+			    DimDate[Date] >= FirstDayOfPreviousMonth &&
+			    DimDate[Date] <= LastDayOfPreviousMonth
+			)
+		lineageTag: 510b03f1-46f6-4982-ae22-97ecb58933e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure BudgetVolTotal = ```
+			
+			CALCULATE(
+			    SUM('FactDailyForecastReport'[Budget_Volume]),
+			    FILTER(
+			        'DimSchemeSubset',
+			        CONTAINSSTRING('DimSchemeSubset'[Brand], "Total")
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 9810e8e6-bdfc-44f9-9c47-40bb8a639220
+
+	measure MTDVol_LastDay_PreviousMonth = ```
+			
+			SUM(factdailysalesreport[MTD_Volume])
+			
+			
+			
+			
+			```
+		lineageTag: 720e93f5-e596-47bd-a9fa-3860e2e63de3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MTDVol_LastDayPrevMonth_TotalSubSet = ```
+			
+			CALCULATE(
+			    SUM(factdailysalesreport[MTD_Volume]),
+			    DimSubSet[Channel] IN {"Atoz", "SOI", "Oasis", "Viva", "Trusted"},
+			    DimDate[Date] = EOMONTH(TODAY(), -1)
+			)
+			
+			
+			```
+		lineageTag: 619f47aa-0ae5-429c-925b-1a34b1da52a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Date' = ```
+			
+			FORMAT(SELECTEDVALUE(DimDate[Date]), "dd-mmm-yyyy")
+			
+			
+			```
+		lineageTag: be4082b7-21f3-4915-b09c-7c4ed6fdde18
+
+	measure MTDRetail_LastDayPrevMonth_TotalSubSet = ```
+			
+			CALCULATE(
+			    SUM(FactDailySalesReport[MTD_Retail]),
+			    DimSubSet[Channel] IN {"Atoz", "SOI", "Oasis", "Viva","Trusted"},
+			    DimDate[Date] = EOMONTH(TODAY(), -1)
+			)
+			
+			```
+		lineageTag: 41b2b545-08b5-47ca-beb6-a224ce683b99
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Volume_Percentage_To_Vol_New =
+			
+			IF (
+			    ISBLANK(SUM('FactDailySalesReport'[Volume_Percentage_To_Budget])),
+			    BLANK(),
+			    FORMAT(SUM('FactDailySalesReport'[Volume_Percentage_To_Budget]), "0") & "%"
+			)
+		lineageTag: fd981aa4-510f-481a-88a5-334d7989d933
+
+	measure GWP_Percentage_To_GWP_New =
+			
+			IF (
+			    ISBLANK(SUM('FactDailySalesReport'[GWP_Percentage_To _Budget])),
+			    BLANK(),
+			    FORMAT(SUM('FactDailySalesReport'[GWP_Percentage_To _Budget]), "0") & "%"
+			)
+		lineageTag: fa233b88-94b7-46cd-af3b-7a87d85d34a0
+
+	measure NetMargin_Percentage_To_NM_New =
+			
+			IF (
+			    ISBLANK(SUM('FactDailySalesReport'[Net_Margin_Percentage_To_Budget])),
+			    BLANK(),
+			    FORMAT(SUM('FactDailySalesReport'[Net_Margin_Percentage_To_Budget]), "0") & "%"
+			)
+		lineageTag: f740bdf6-c308-4431-ad62-58d67fb2c880
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		lineageTag: e9da8444-0ae9-47ee-8b3a-e69fc3bf0853
+		summarizeBy: none
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeSubsetId
+		dataType: int64
+		formatString: 0
+		lineageTag: 93a36027-b6fd-4004-84f0-5070bd3bea49
+		summarizeBy: count
+		sourceColumn: SchemeSubsetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalSubSetId
+		dataType: int64
+		formatString: 0
+		lineageTag: fc31d74c-c235-4c1d-886c-de026407c6cd
+		summarizeBy: none
+		sourceColumn: TotalSubSetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 0416091d-78b7-4431-8e92-4e122d590698
+		summarizeBy: sum
+		sourceColumn: Day_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Day_Retail
+		dataType: double
+		formatString: 0.00
+		lineageTag: 9ad83b8b-7a24-427d-acff-5aae7cf82ad7
+		summarizeBy: sum
+		sourceColumn: Day_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 78146753-d08f-4613-9a91-db938a3fbed9
+		summarizeBy: sum
+		sourceColumn: MTD_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MTD_Retail
+		dataType: double
+		formatString: 0
+		lineageTag: 0004fbb3-8013-4788-8965-d3127cbdadf2
+		summarizeBy: sum
+		sourceColumn: MTD_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Average_Volume_Per_Day
+		dataType: double
+		formatString: 0
+		lineageTag: 214b883e-bf17-4bb0-999a-71988f3b2664
+		summarizeBy: sum
+		sourceColumn: Average_Volume_Per_Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Average_Retail
+		dataType: double
+		formatString: 0
+		lineageTag: 394e3a64-2cd0-42da-9196-84d56b4943b2
+		summarizeBy: sum
+		sourceColumn: Average_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Month_End_Est_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 5ef079a0-0700-46c7-b61a-84d4bf62e380
+		summarizeBy: sum
+		sourceColumn: Month_End_Est_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Month_End_Est_Retail
+		dataType: double
+		formatString: 0.00
+		lineageTag: 8d2b8889-a4e7-4655-aaa5-96670e024c6f
+		summarizeBy: sum
+		sourceColumn: Month_End_Est_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_End_Est_Net_Margin
+		dataType: double
+		formatString: 0.00
+		lineageTag: bc262971-2ddf-449b-8365-c05298be41e4
+		summarizeBy: sum
+		sourceColumn: Month_End_Est_Net_Margin
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 87bd10fc-862c-46c1-a04b-6f63db7b7198
+		summarizeBy: sum
+		sourceColumn: Budget_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget_GWP
+		dataType: double
+		formatString: 0
+		lineageTag: 78da11c8-2c1e-49ae-bacb-08d376832819
+		summarizeBy: sum
+		sourceColumn: Budget_GWP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget_Net_Margin
+		dataType: double
+		formatString: 0
+		lineageTag: 6a2d7cba-feaa-4bdf-9f20-745afddb6a14
+		summarizeBy: sum
+		sourceColumn: Budget_Net_Margin
+
+		annotation SummarizationSetBy = Automatic
+
+	column Volume_Percentage_To_Budget
+		dataType: double
+		formatString: 0
+		lineageTag: 6a242838-e62b-4935-a808-c9a806b0f5ef
+		summarizeBy: sum
+		sourceColumn: Volume_Percentage_To_Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GWP_Percentage_To _Budget'
+		dataType: double
+		lineageTag: d44ce998-e16b-4523-8235-9fc95b344f26
+		summarizeBy: sum
+		sourceColumn: GWP_Percentage_To _Budget
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Net_Margin_Percentage_To_Budget
+		dataType: double
+		lineageTag: 91f97e58-10ec-4aef-a86b-20d8cbb1bc91
+		summarizeBy: sum
+		sourceColumn: Net_Margin_Percentage_To_Budget
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_Retail_Formatted = ```
+			"£" & FORMAT(FactDailySalesReport[MTD_Retail], "#,##0")
+			
+			```
+		lineageTag: 9c30a860-a823-4275-9655-cef2185a9cba
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_End_Est_Retail_Formatted = ```
+			"£" & FORMAT(FactDailySalesReport[Month_End_Est_Retail], "#,##0")
+			
+			```
+		lineageTag: 1184ea78-4b4d-4e79-959d-ab71872f3e47
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_End_Est_NetMargin_Formatted = "£" & FORMAT(FactDailySalesReport[Month_End_Est_Net_Margin], "#,##0")
+		lineageTag: 0e947f58-b1f1-4fdc-874f-7bf0a63f96cb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day_Retail_Formatted = "£" & FORMAT(FactDailySalesReport[Day_Retail], "#,##0")
+		lineageTag: a0805c26-25e6-4a30-bdad-75c451aedb18
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerToVol = FactDailySalesReport[Month_End_Est_Volume] / FactDailySalesReport[Budget_Volume]
+		formatString: 0%;-0%;0%
+		lineageTag: 29a92a85-25fa-4f07-80cc-3800b0e54449
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerToGWP = ```
+			
+			    FactDailySalesReport[Month_End_Est_Retail]
+			        / 1.2
+			        / FactDailySalesReport[Budget_GWP]
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: f4a5dfc8-a0f1-49d8-ba3a-32d26daa4d96
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerToNetMargin = ```
+			
+			    FactDailySalesReport[Month_End_Est_Net_Margin]
+			        / FactDailySalesReport[Budget_Net_Margin]
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: c07ab8e1-4465-4456-b8a2-0ad0f3271d90
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactDailySalesReport = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactDailySalesReport = Source{[Schema="dbo",Item="FactDailySalesReport"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dbo_FactDailySalesReport,{{"DateVol", "Day_Volume"}, {"DateRetail", "Day_Retail"}, {"MTDVol", "MTD_Volume"}, {"MTDRetail", "MTD_Retail"}, {"AvgPolPerDay", "Average_Volume_Per_Day"}, {"AvgP", "Average_Retail"}, {"EstMonEndVol", "Month_End_Est_Volume"}, {"EstMonEndRetail", "Month_End_Est_Retail"}, {"EstMonEndNetMargin", "Month_End_Est_Net_Margin"}, {"BudgetVol", "Budget_Volume"}, {"BudgetGWP", "Budget_GWP"}, {"BudgetNetMargin", "Budget_Net_Margin"}, {"PercentToVol", "Volume_Percentage_To_Budget"}, {"PercentToGWP", "GWP_Percentage_To _Budget"}, {"PercentToNetMargin", "Net_Margin_Percentage_To_Budget"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

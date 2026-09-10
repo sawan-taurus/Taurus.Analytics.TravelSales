@@ -1,0 +1,162 @@
+table DimDate
+	lineageTag: 4580a95d-3d1f-4e51-adb8-e0a6ec484959
+
+	measure Measure =
+			
+			IF (
+			    COUNTROWS(RELATEDTABLE(FactDailyReport))>0,
+			    1,
+			    0
+			    )
+		formatString: 0
+		lineageTag: 92b30d26-9d55-4ec3-bb09-85f55c9c853d
+
+	measure DefaultYesterday =
+			
+			VAR Yesterday = TODAY() - 1
+			RETURN
+			IF(MAX(DimDate[Date]) = Yesterday, 1, 0)
+		formatString: 0
+		lineageTag: 278d0ce6-afdc-4346-bffc-9baa8b566cd4
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7250f29f-6d65-4be3-bc5e-10c78abb3985
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a793239-6d59-4512-9d96-7df826881191
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 7aedf955-9fcf-42e8-a9e6-f230974cf0f8
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: d889a9f4-45d1-4f19-8c4f-aaf73ffe4c09
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: 865d93a0-d329-41e0-ab15-85be4f7b5e1c
+		summarizeBy: none
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 05fcf185-9564-4186-bb7c-8ea153124c86
+		summarizeBy: none
+		sourceColumn: DayOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		lineageTag: f9536f72-c05e-43e9-86fe-1a45f32361a0
+		summarizeBy: none
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_latest =
+			
+			VAR MaxFactDateId = CALCULATE(
+			    MAX(factdailyreport[DateId]),
+			    ALL(factdailyreport)
+			)
+			RETURN
+			IF (
+			    'dimdate'[DateId] = MaxFactDateId,
+			    "Latest",
+			    FORMAT(CONCATENATE(
+			        DAY('dimdate'[Date]),
+			        "-" &
+			        RIGHT("0" & MONTH('dimdate'[Date]), 2) &
+			        "-" &
+			        YEAR('dimdate'[Date])
+			    ), "yyyy-mm-dd")
+			)
+		lineageTag: bb659941-b3d1-4bbe-8880-eb5151385f25
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_display =
+			
+			VAR YesterdayDateId = CALCULATE(
+			    MAX(factdailyreport[DateId]) - 1,
+			    ALL(factdailyreport)
+			)
+			RETURN
+			IF (
+			    'dimdate'[DateId] = YesterdayDateId,
+			    "Yesterday",
+			    FORMAT('dimdate'[Date], "dd-MM-yyyy")
+			)
+		lineageTag: 62359e0c-1875-4590-a57a-1dd3f2d5e7a5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateSlicer = If(DimDate[Date]=Today(),"Yesterday's Date",FORMAT(DimDate[Date],"yyyy-mm-dd"))
+		lineageTag: 6e0a6f68-bb24-49b0-bf35-dbe78414f9e3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsYesterday = IF(DimDate[Date] = TODAY() - 1, 1, 0)
+		formatString: 0
+		lineageTag: 7e01052b-fda4-48a6-b6e6-49180918f895
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SlicerDate =
+			SWITCH(
+			    TRUE(),
+			    'DimDate'[Date] = TODAY(), "Today",
+			    'DimDate'[Date] = TODAY() - 1, "Latest",
+			    FORMAT('DimDate'[Date], "YYYY/MM/DD")
+			)
+		lineageTag: 54949961-92eb-4508-85ca-5428d54239f7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimDate = Source{[Schema="dbo",Item="DimDate"]}[Data]
+				in
+				    dbo_DimDate
+
+	annotation PBI_ResultType = Table
+

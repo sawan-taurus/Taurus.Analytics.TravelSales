@@ -1,0 +1,1045 @@
+table fact_claims_switched_on
+	lineageTag: bab6931a-842d-457d-89ef-321f2e46d408
+
+	/// Cumulative count: claims with Status2 = Declined whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure 'Declined Count' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), fact_claims_switched_on[Status2] = "Declined"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        fact_claims_switched_on[Status2] = "Declined",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: 0
+		lineageTag: fb585d70-b1a9-4aa4-846d-16bbb332a4a3
+
+	/// Declined Count / Claims Count (Cumulative), both cumulative up to and including the selected Development Month. Replaces the old denominator, which summed the raw single-month fact_master_bdx_switched_on[ClaimCount] column.
+	measure '% Declined' =
+			IF(
+			    [Declined Count] = 0,
+			    0,
+			    DIVIDE([Declined Count], [Claims Count (Cumulative)], 0)
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 401d84f5-5b69-48b6-9caa-510b2155f593
+
+	/// Cumulative count: claims with Section2 = Cancellation whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure ClaimByTypeCancellation =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), TRIM(fact_claims_switched_on[Section2]) = "Cancellation"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        TRIM(fact_claims_switched_on[Section2]) = "Cancellation",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: 0
+		lineageTag: ec250d9b-c07c-44db-81b5-7602c97c6a16
+
+	/// Cumulative count: claims with Section2 = Medical whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure ClaimByTypeMedical =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), TRIM(fact_claims_switched_on[Section2]) = "Medical"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        TRIM(fact_claims_switched_on[Section2]) = "Medical",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: 0
+		lineageTag: 35152194-9a19-49f8-ae90-5c06b682ee05
+
+	/// Cumulative count: claims with Section2 = Baggage whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure ClaimByTypeBaggage =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), TRIM(fact_claims_switched_on[Section2]) = "Baggage"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        TRIM(fact_claims_switched_on[Section2]) = "Baggage",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: 0
+		lineageTag: e9e7af7d-df2b-4558-92aa-6dc031da5c6d
+
+	/// Cumulative count: claims with Section2 = Other whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure ClaimByTypeOther =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), TRIM(fact_claims_switched_on[Section2]) = "Other"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        TRIM(fact_claims_switched_on[Section2]) = "Other",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: 0
+		lineageTag: 2ca2e9a2-7745-4fdf-92c4-e6e2931cea28
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Medical whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure ClaimByCostMedical =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), TRIM(fact_claims_switched_on[Section2]) = "Medical"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        TRIM(fact_claims_switched_on[Section2]) = "Medical",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: c7840156-ebae-4e03-9ca2-060e53f23042
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Other whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure ClaimByCostOther =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), TRIM(fact_claims_switched_on[Section2]) = "Other"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        TRIM(fact_claims_switched_on[Section2]) = "Other",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: be5ac57b-e020-4165-903d-9129ae1bc7f5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Baggage whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure ClaimByCostBaggage =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), TRIM(fact_claims_switched_on[Section2]) = "Baggage"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        TRIM(fact_claims_switched_on[Section2]) = "Baggage",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 4eaf74b6-4f9c-497e-be1c-37f617c54914
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Cancellation whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure ClaimByCostCancellation =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), TRIM(fact_claims_switched_on[Section2]) = "Cancellation"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        TRIM(fact_claims_switched_on[Section2]) = "Cancellation",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 0a15ada5-77dd-4f82-bd6c-a1ae7ebf0b07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Correct open-claim count based on claim-level Status2, for policies issued on or before the selected Development Month within the UW Year cohort. Claims data is now cumulative-to-date per Month tag, so the claim set is filtered by direct Month equality instead of a DTNotify cutoff.
+	measure 'Open Claims Count' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    COUNTROWS(fact_claims_switched_on),
+			    ALL(fact_claims_switched_on[Month]),
+			    fact_claims_switched_on[Status2] = "Open",
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: 0
+		lineageTag: 6efa6870-64e5-49dd-8dff-a97d30120470
+
+	/// Correct open-claims incurred value based on claim-level Status2, for policies issued on or before the selected Development Month within the UW Year cohort. Claims data is now cumulative-to-date per Month tag, so the claim set is filtered by direct Month equality instead of a DTNotify cutoff.
+	measure 'Open Incurred Claims' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    SUM(fact_claims_switched_on[Incurred]),
+			    ALL(fact_claims_switched_on[Month]),
+			    fact_claims_switched_on[Status2] = "Open",
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: #,##0
+		lineageTag: aa9313cf-9e13-4918-b983-b77d09eff624
+
+	/// Total Incurred for claims linked to policies incepted in the UW year window AND issued on or before the selected Development Month (via MonthSortKey). Claims data is now cumulative-to-date per Month tag, so the claim set is filtered by direct Month equality instead of a DTNotify cutoff.
+	measure 'Total Incurred (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    SUM(fact_claims_switched_on[Incurred]),
+			    ALL(fact_claims_switched_on[Month]),
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: #,##0
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 572020d7-4a80-4877-8c46-533a20f53b11
+
+	/// Claims count for claims linked to policies incepted in the UW year window AND issued on or before the selected Development Month (via MonthSortKey). Claims data is now cumulative-to-date per Month tag, so the claim set is filtered by direct Month equality instead of a DTNotify cutoff.
+	measure 'Claims Count (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    COUNTROWS(fact_claims_switched_on),
+			    ALL(fact_claims_switched_on[Month]),
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: #,##0
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 78ac9d01-7dea-4907-a920-5d4756bbb748
+
+	/// Cumulative sum: Reserved amount for claims whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure 'Total Reserved' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    SUM(fact_claims_switched_on[Reserved]),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Reserved]),
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 15097407-f81a-4053-81e3-390e339f1a03
+
+	/// Cumulative sum: Paid amount for claims whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure 'Total Paid' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    SUM(fact_claims_switched_on[Paid]),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Paid]),
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 3de6c815-4347-4486-a039-69d564fe70f8
+
+	/// Cumulative count: claims with Section2 = Cancellation whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure 'Cancellation Count' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), fact_claims_switched_on[Section2] = "Cancellation"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        fact_claims_switched_on[Section2] = "Cancellation",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		lineageTag: e0e0e4a9-e17e-48d1-85a1-8423d6d65db8
+
+	/// Cumulative count: claims with Section2 = Medical whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure 'Medical Count' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), fact_claims_switched_on[Section2] = "Medical"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        fact_claims_switched_on[Section2] = "Medical",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		lineageTag: 4f15908a-7ca5-4b17-ac36-d4b137071b26
+
+	/// Cumulative count: claims with Section2 = Baggage whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure 'Baggage Count' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), fact_claims_switched_on[Section2] = "Baggage"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        fact_claims_switched_on[Section2] = "Baggage",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		lineageTag: e8f1f072-3a8d-4610-b3ef-64333ca83f1e
+
+	/// Cumulative count: claims with Section2 = Other whose own Month is on or before the selected Development Month (falls back to all-time count if none selected).
+	measure 'Other Count Old' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(COUNTROWS(fact_claims_switched_on), fact_claims_switched_on[Section2] = "Other"),
+			    CALCULATE(
+			        COUNTROWS(fact_claims_switched_on),
+			        fact_claims_switched_on[Section2] = "Other",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		lineageTag: 57ed7323-5e4a-4f28-b366-795546e89c6a
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Cancellation whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure 'Cancellation Cost' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), fact_claims_switched_on[Section2] = "Cancellation"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        fact_claims_switched_on[Section2] = "Cancellation",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 3c3a8973-402b-4eb2-95f5-897f4dd0ab02
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Medical whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure 'Medical Cost' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), fact_claims_switched_on[Section2] = "Medical"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        fact_claims_switched_on[Section2] = "Medical",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: f73b6de0-f263-4e24-aa48-89298f1f4a3f
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Baggage whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure 'Baggage Cost' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), fact_claims_switched_on[Section2] = "Baggage"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        fact_claims_switched_on[Section2] = "Baggage",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: eb97acb9-bb35-415a-b437-cd7b5e557542
+
+	/// Cumulative sum: Incurred cost for claims with Section2 = Other whose own Month is on or before the selected Development Month (falls back to all-time total if none selected).
+	measure 'Other Cost' =
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_claims_switched_on[Month]), SELECTEDVALUE(fact_master_bdx_switched_on[Month]))
+			RETURN
+			IF(
+			    ISBLANK(SelMonth),
+			    CALCULATE(SUM(fact_claims_switched_on[Incurred]), fact_claims_switched_on[Section2] = "Other"),
+			    CALCULATE(
+			        SUM(fact_claims_switched_on[Incurred]),
+			        fact_claims_switched_on[Section2] = "Other",
+			        ALL(fact_claims_switched_on[Month]),
+			        fact_claims_switched_on[Month] = SelMonth
+			    )
+			)
+		formatString: #,##0
+		lineageTag: 846a39b3-8023-49bc-a00f-a5b4447ec8ca
+
+	/// Total Incurred excluding Large Losses, sourced from the claims table's own ex_large_losses column (which is already cumulative-to-date per Month tag), for policies within the UW Year cohort. Corrected from an earlier version that wrongly summed fact_master_bdx_switched_on[Ex Large Losses] instead of the claims-side figure.
+	measure 'Total Incurred Ex LL (Cumulative)' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    SUM(fact_claims_switched_on[ex_large_losses]),
+			    ALL(fact_claims_switched_on[Month]),
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: #,##0
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 10d5848a-5b72-444e-a10c-15ec755d7487
+
+	/// Average cost per claim, cumulative up to and including the selected Development Month = Total Incurred (Cumulative) / Claims Count (Cumulative). Corrected 2026-08-26 to match the formula used in SOI Performance Report and Viva Performance Report (previously held the Av Cost Per Open formula by mistake).
+	measure 'Av Cost Per Claim' = IFERROR([Total Incurred (Cumulative)]/[Claims Count (Cumulative)], 0)
+		formatString: #,##0.00
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 848d0196-4a94-4ba4-bca7-7510f3b81fef
+
+	/// Cumulative settled-claim count based on claim-level Status2 = Closed, for policies issued on or before the selected Development Month within the UW Year cohort.
+	measure 'Settled Count' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    COUNTROWS(fact_claims_switched_on),
+			    ALL(fact_claims_switched_on[Month]),
+			    fact_claims_switched_on[Status2] = "Closed",
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: 0
+		lineageTag: 829ca38b-1d0f-4d6a-8d37-1c4e687802c2
+
+	/// Cumulative settled-claims incurred value based on claim-level Status2 = Closed, for policies issued on or before the selected Development Month within the UW Year cohort.
+	measure 'Settled Incurred' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    SUM(fact_claims_switched_on[Incurred]),
+			    ALL(fact_claims_switched_on[Month]),
+			    fact_claims_switched_on[Status2] = "Closed",
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: #,##0
+		lineageTag: 752d0e53-1caf-4f1c-9482-a04eb67b4462
+
+	/// Average cost per settled claim = Settled Incurred / Settled Count, cumulative up to and including the selected Development Month.
+	measure 'Av Cost Per Settled' = IFERROR([Settled Incurred]/[Settled Count], 0)
+		formatString: 0.00
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 832c1b97-89ed-4cee-a602-d0f8b956a59c
+
+	/// Cumulative claim count where Status2 is neither Open nor Closed, for policies issued on or before the selected Development Month within the UW Year cohort.
+	measure 'Other Count' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    COUNTROWS(fact_claims_switched_on),
+			    ALL(fact_claims_switched_on[Month]),
+			    fact_claims_switched_on[Status2] <> "Open",
+			    fact_claims_switched_on[Status2] <> "Closed",
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: 0
+		lineageTag: 6c540cdb-efdf-4b46-93d0-b8b1516b9243
+
+	/// Cumulative incurred value where Status2 is neither Open nor Closed, for policies issued on or before the selected Development Month within the UW Year cohort.
+	measure 'Other Incurred' =
+			VAR CohortStart = [_CohortStart]
+			VAR CohortEnd = [_CohortEnd]
+			VAR SelMonth = COALESCE(SELECTEDVALUE(fact_master_bdx_switched_on[Month]), SELECTEDVALUE(fact_claims_switched_on[Month]))
+			VAR SelKey = IF(NOT ISBLANK(SelMonth), YEAR(DATEVALUE("01-" & SelMonth)) * 100 + MONTH(DATEVALUE("01-" & SelMonth)))
+			VAR QualifyingPolicies =
+			    CALCULATETABLE(
+			        VALUES(fact_master_bdx_switched_on[PolicyID]),
+			        ALL(fact_master_bdx_switched_on[Month]),
+			        fact_master_bdx_switched_on[IssueDate] >= CohortStart,
+			        fact_master_bdx_switched_on[IssueDate] <= CohortEnd,
+			        IF(ISBLANK(SelKey), TRUE(), fact_master_bdx_switched_on[MonthSortKey] <= SelKey)
+			    )
+			RETURN
+			CALCULATE(
+			    SUM(fact_claims_switched_on[Incurred]),
+			    ALL(fact_claims_switched_on[Month]),
+			    fact_claims_switched_on[Status2] <> "Open",
+			    fact_claims_switched_on[Status2] <> "Closed",
+			    TREATAS(QualifyingPolicies, fact_claims_switched_on[PolicyID]),
+			    IF(ISBLANK(SelMonth), TRUE(), fact_claims_switched_on[Month] = SelMonth)
+			)
+		formatString: #,##0
+		lineageTag: 93f96329-1513-42c2-9e91-82f51536572c
+
+	/// Average cost per claim where Status2 is neither Open nor Closed = Other Status Incurred / Other Status Count, cumulative up to and including the selected Development Month.
+	measure 'Av Cost Per Other' = IFERROR([Other Incurred]/[Other Count], 0)
+		formatString: 0.00
+		displayFolder: Cumulative (UW Year)
+		lineageTag: 8e520a6e-3371-4739-8ab8-9d539c676c53
+
+	/// Average cost per open claim = Open Incurred Claims / Open Claims Count, using DIVIDE with a 0 fallback to avoid divide-by-zero errors. Corrected 2026-08-26: previously referenced a non-existent physical column and errored.
+	measure 'Av Cost Per Open' =
+			DIVIDE(
+			    [Open Incurred Claims],
+			    [Open Claims Count],
+			    0
+			)
+		formatString: #,##0.00
+		displayFolder: Cumulative (UW Year)
+		lineageTag: beaeeeaa-85e6-4a57-8b40-230bfaa3eede
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column report_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b201e5d7-891a-4e30-9732-120f8ad97e91
+		summarizeBy: none
+		sourceColumn: report_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Month
+		dataType: string
+		lineageTag: c669f340-67d8-4802-aaf7-c483c12363b6
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: MonthSortKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 82332cbe-f2f4-4346-9853-38909502bbd3
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Claim_No
+		dataType: string
+		lineageTag: 5f4ca8ad-615f-4fa6-ae49-fe5bf1bd8453
+		summarizeBy: none
+		sourceColumn: Claim_No
+
+		annotation SummarizationSetBy = Automatic
+
+	column Policy_Ref
+		dataType: string
+		lineageTag: c77ccd98-e167-4bfc-b49d-8d0b8b4c13a3
+		summarizeBy: none
+		sourceColumn: Policy_Ref
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyID
+		dataType: string
+		lineageTag: fb0c4eae-91f6-4e0d-b2da-9e18b15dc936
+		summarizeBy: none
+		sourceColumn: PolicyID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scheme
+		dataType: string
+		lineageTag: f5827705-2b44-43d9-af20-68f108667629
+		summarizeBy: none
+		sourceColumn: Scheme
+
+		annotation SummarizationSetBy = Automatic
+
+	column CoverLevel
+		dataType: string
+		lineageTag: 4e745f50-6dd7-46b9-941a-b91151876f7c
+		summarizeBy: none
+		sourceColumn: CoverLevel
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyType
+		dataType: string
+		lineageTag: 95b07822-3e70-4bbb-8749-7cffe38027a2
+		summarizeBy: none
+		sourceColumn: PolicyType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Policy2
+		dataType: string
+		lineageTag: 95f1b571-a18d-4047-ac56-35e93f34ddc5
+		summarizeBy: none
+		sourceColumn: Policy2
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravellerType
+		dataType: string
+		lineageTag: 7cca1205-34c6-49ae-8f41-466d57e4d975
+		summarizeBy: none
+		sourceColumn: TravellerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnderWriting_Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a34a2ad-02a7-4dbb-8fc6-9b5029e70f7f
+		summarizeBy: sum
+		sourceColumn: UnderWriting_Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnderWriting_Region
+		dataType: string
+		lineageTag: 25053e35-ad44-47e2-ba83-47e07eab57c5
+		summarizeBy: none
+		sourceColumn: UnderWriting_Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Destination_Country
+		dataType: string
+		lineageTag: eb1dae61-cd7a-45ee-a4f4-d0dd07b3feb0
+		summarizeBy: none
+		sourceColumn: Destination_Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column IssueDate
+		dataType: string
+		lineageTag: 92185730-38dd-47f7-95dd-ac7a520363bb
+		summarizeBy: none
+		sourceColumn: IssueDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dash
+		dataType: string
+		lineageTag: 27cdbc7b-478f-4857-b9a1-ae4a2ea20375
+		summarizeBy: none
+		sourceColumn: Dash
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartDate
+		dataType: string
+		lineageTag: 62ed28b6-e6c7-49db-bfa7-e85a38688840
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column EndDate
+		dataType: string
+		lineageTag: adc04684-694e-4532-8dd8-4057a90954b0
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 4da99077-1db0-4b87-880f-c987a2d2d735
+		summarizeBy: sum
+		sourceColumn: Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column PAX
+		dataType: int64
+		formatString: 0
+		lineageTag: b334d3fb-405b-4670-947b-58ae43ff65c8
+		summarizeBy: sum
+		sourceColumn: PAX
+
+		annotation SummarizationSetBy = Automatic
+
+	column DTNotify
+		dataType: string
+		lineageTag: 815caace-820a-4abb-9b6f-14c1a13cd6b9
+		summarizeBy: none
+		sourceColumn: DTNotify
+
+		annotation SummarizationSetBy = Automatic
+
+	column Section
+		dataType: string
+		lineageTag: bf8d1600-f6a1-452b-8c22-50d153c405f9
+		summarizeBy: none
+		sourceColumn: Section
+
+		annotation SummarizationSetBy = Automatic
+
+	column Section2
+		dataType: string
+		lineageTag: 9ea52b64-56eb-41f9-9a89-547464d2da46
+		summarizeBy: none
+		sourceColumn: Section2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 5d4e46e2-a320-4f63-9d8a-0dca8fa702c9
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status2
+		dataType: string
+		lineageTag: 13ae07ff-ba1d-477a-bca7-cf6925fb4bb7
+		summarizeBy: none
+		sourceColumn: Status2
+
+		annotation SummarizationSetBy = Automatic
+
+	column DtLoss
+		dataType: string
+		lineageTag: 4806aeca-9a35-474b-9399-e7e66d69956d
+		summarizeBy: none
+		sourceColumn: DtLoss
+
+		annotation SummarizationSetBy = Automatic
+
+	column DtDepart
+		dataType: string
+		lineageTag: d88ccc09-b9db-4b55-b741-6b912b94a304
+		summarizeBy: none
+		sourceColumn: DtDepart
+
+		annotation SummarizationSetBy = Automatic
+
+	column DtReturn
+		dataType: string
+		lineageTag: b563825e-f44a-4079-aa65-69437f3e181f
+		summarizeBy: none
+		sourceColumn: DtReturn
+
+		annotation SummarizationSetBy = Automatic
+
+	column DtClosed
+		dataType: string
+		lineageTag: e8a7ce72-1c54-4d45-907a-3d6552a6b7c6
+		summarizeBy: none
+		sourceColumn: DtClosed
+
+		annotation SummarizationSetBy = Automatic
+
+	column Days_to_Close
+		dataType: int64
+		formatString: 0
+		lineageTag: dc0ac2c8-c1fe-4e2a-a0dc-2fb385d9f97b
+		summarizeBy: sum
+		sourceColumn: Days_to_Close
+
+		annotation SummarizationSetBy = Automatic
+
+	column Closed
+		dataType: string
+		lineageTag: 40a8c784-1e2a-4242-8e9f-588db3ac44e1
+		summarizeBy: none
+		sourceColumn: Closed
+
+		annotation SummarizationSetBy = Automatic
+
+	column DeclineReason
+		dataType: string
+		lineageTag: 2ead7b13-4082-4393-b965-b106b24866a3
+		summarizeBy: none
+		sourceColumn: DeclineReason
+
+		annotation SummarizationSetBy = Automatic
+
+	column NoClaimants
+		dataType: int64
+		formatString: 0
+		lineageTag: 64a3a13d-2527-46bd-82e1-ea2aa8e56b31
+		summarizeBy: sum
+		sourceColumn: NoClaimants
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reserved
+		dataType: double
+		lineageTag: 717bfebf-e3d8-450d-a2ae-e0cf1c29c42e
+		summarizeBy: sum
+		sourceColumn: Reserved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Paid
+		dataType: double
+		lineageTag: d7eaa2b5-2c47-4a9c-97c6-c86f51fd22f6
+		summarizeBy: sum
+		sourceColumn: Paid
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Incurred
+		dataType: double
+		lineageTag: e297fbc1-76fe-4c90-b7cf-f903b956f336
+		summarizeBy: sum
+		sourceColumn: Incurred
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Recovered
+		dataType: double
+		lineageTag: d7776298-a318-4242-939f-3994e224303f
+		summarizeBy: sum
+		sourceColumn: Recovered
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ClaimFee
+		dataType: double
+		lineageTag: 84083a95-d736-4e03-bce9-31382dd7f3d8
+		summarizeBy: sum
+		sourceColumn: ClaimFee
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ClaimHandler
+		dataType: string
+		lineageTag: 5f70161c-3a5d-407a-84b8-912ee675b0ed
+		summarizeBy: none
+		sourceColumn: ClaimHandler
+
+		annotation SummarizationSetBy = Automatic
+
+	column IlnessCode
+		dataType: string
+		lineageTag: 0cafb5da-bbc5-4c32-acb0-1b5af08d0a09
+		summarizeBy: none
+		sourceColumn: IlnessCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrimaryClaimsGroup
+		dataType: string
+		lineageTag: 94f0ff76-af33-44da-831c-8c56d8e6da56
+		summarizeBy: none
+		sourceColumn: PrimaryClaimsGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column SecondaryClaimsGroup
+		dataType: string
+		lineageTag: cd3a98be-7988-4e0b-8909-73219f8012cd
+		summarizeBy: none
+		sourceColumn: SecondaryClaimsGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column ex_large_losses
+		dataType: double
+		lineageTag: d417ba00-05e9-4186-9974-150770822665
+		summarizeBy: sum
+		sourceColumn: ex_large_losses
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AGGS
+		dataType: string
+		lineageTag: d356b304-cf99-42f8-a26e-1d287cb4c2a7
+		summarizeBy: none
+		sourceColumn: AGGS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: b189c803-4376-454f-89b5-5adb04ec6e56
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column gold_loaded_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d1d45bee-8d8c-4ba9-9483-a8ccbd50f092
+		summarizeBy: none
+		sourceColumn: gold_loaded_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column Policy3 =
+			
+			SWITCH(
+			    TRUE(),
+			    'fact_claims_switched_on'[Policy2] = "Single", "Single Trip",
+			    'fact_claims_switched_on'[Policy2] = "Ext Stay", "BP",
+			    'fact_claims_switched_on'[Policy2]
+			)
+		lineageTag: 0b16066e-193f-4d9e-994b-0b7b1be562dd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthSortKey = YEAR('fact_claims_switched_on'[report_date]) * 100 + MONTH('fact_claims_switched_on'[report_date])
+		dataType: int64
+		isHidden
+		lineageTag: 69558daa-ac13-486a-a2be-46629f12f291
+		summarizeBy: none
+
+	partition fact_claims_switched_on = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-mcybvrzqd3tufdttrjbjhzokdi.datawarehouse.fabric.microsoft.com", "taurus_lakehouse"),
+				    gold_fact_claims_switched_on = Source{[Schema="gold",Item="fact_claims_switched_on"]}[Data],
+				    gold_fact_master_bdx_switched_on = Source{[Schema="gold",Item="fact_master_bdx_switched_on"]}[Data],
+				    MasterLookup = Table.Distinct(Table.SelectColumns(gold_fact_master_bdx_switched_on, {"PolicyID", "Channel", "AGGS"}), {"PolicyID"}),
+				    MasterLookupTrimmed = Table.TransformColumns(MasterLookup, {{"PolicyID", Text.Trim, type text}}),
+				    ClaimsTrimmedKey = Table.AddColumn(gold_fact_claims_switched_on, "_JoinKey", each Text.Trim(Text.From([PolicyID])), type text),
+				    Merged = Table.NestedJoin(ClaimsTrimmedKey, {"_JoinKey"}, MasterLookupTrimmed, {"PolicyID"}, "MasterMatch", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(Merged, "MasterMatch", {"Channel", "AGGS"}, {"Channel_M", "AGGS_M"}),
+				    ChannelFilled = Table.AddColumn(Expanded, "Channel_Final", each if [Channel] <> null and [Channel] <> "" then [Channel] else [Channel_M], type text),
+				    AggsFilled = Table.AddColumn(ChannelFilled, "AGGS_Final", each if [AGGS] <> null and [AGGS] <> "" then [AGGS] else [AGGS_M], type text),
+				    Cleaned = Table.RemoveColumns(AggsFilled, {"_JoinKey", "Channel", "AGGS", "Channel_M", "AGGS_M"}),
+				    Renamed = Table.RenameColumns(Cleaned, {{"Channel_Final", "Channel"}, {"AGGS_Final", "AGGS"}})
+				in
+				    Renamed
+
+	partition fact_claims_viva = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-mcybvrzqd3tufdttrjbjhzokdi.datawarehouse.fabric.microsoft.com", "taurus_lakehouse"),
+				    gold_fact_claims_switched_on = Source{[Schema="gold",Item="fact_claims_viva"]}[Data],
+				    gold_fact_master_bdx_switched_on = Source{[Schema="gold",Item="fact_master_bdx_viva"]}[Data],
+				    MasterLookup = Table.Distinct(Table.SelectColumns(gold_fact_master_bdx_switched_on, {"PolicyID", "Channel", "AGGS"}), {"PolicyID"}),
+				    MasterLookupTrimmed = Table.TransformColumns(MasterLookup, {{"PolicyID", Text.Trim, type text}}),
+				    ClaimsTrimmedKey = Table.AddColumn(gold_fact_claims_switched_on, "_JoinKey", each Text.Trim(Text.From([PolicyID])), type text),
+				    Merged = Table.NestedJoin(ClaimsTrimmedKey, {"_JoinKey"}, MasterLookupTrimmed, {"PolicyID"}, "MasterMatch", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(Merged, "MasterMatch", {"Channel", "AGGS"}, {"Channel_M", "AGGS_M"}),
+				    ChannelFilled = Table.AddColumn(Expanded, "Channel_Final", each if [Channel] <> null and [Channel] <> "" then [Channel] else [Channel_M], type text),
+				    AggsFilled = Table.AddColumn(ChannelFilled, "AGGS_Final", each if [AGGS] <> null and [AGGS] <> "" then [AGGS] else [AGGS_M], type text),
+				    Cleaned = Table.RemoveColumns(AggsFilled, {"_JoinKey", "Channel", "AGGS", "Channel_M", "AGGS_M"}),
+				    Renamed = Table.RenameColumns(Cleaned, {{"Channel_Final", "Channel"}, {"AGGS_Final", "AGGS"}})
+				in
+				    Renamed
+
+	annotation PBI_ResultType = Table
+

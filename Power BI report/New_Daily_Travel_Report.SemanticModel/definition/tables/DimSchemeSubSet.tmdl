@@ -1,0 +1,80 @@
+table DimSchemeSubSet
+	lineageTag: a4d203b6-e99e-410c-9fa5-07b40153b83d
+
+	column Brand
+		dataType: string
+		lineageTag: aee90ad4-434b-43dc-8400-2ee6d7f77092
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeSubsetId
+		dataType: int64
+		formatString: 0
+		lineageTag: dcf7d7b8-be54-4f5d-ab04-7476159a31d8
+		summarizeBy: none
+		sourceColumn: SchemeSubsetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 323dd302-ea52-4f1c-bf44-8c5e2705abce
+		summarizeBy: none
+		sourceColumn: Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrderForcast =
+			SWITCH(
+			    DimSchemeSubSet[Brand],
+			    "Atoz AGG", 1,
+			    "Atoz Direct", 2,
+			    "Atoz Total", 3,
+			    "SOI AGG", 4,
+			    "SOI Direct", 5,
+			    "SOI Total", 6,
+			    "Oasis AGG", 7,
+			    "Oasis Direct", 8,
+			    "Oasis Total", 9,
+			    "Viva AGG", 10,
+			    "Viva Direct", 11,
+			    "Viva Total", 12,
+			    "Trusted AGG", 13,
+			    "Trusted Direct", 14,
+			    "Trusted Total", 15,
+			    "TotalBrandSubSet", 20,
+			    99
+			)
+		formatString: 0
+		lineageTag: c346fb08-8879-4ac4-908a-e391b1e8dc55
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column BrandRenamed = ```
+			
+			IF(
+			    DimSchemeSubSet[Brand] = "TotalBrandSubSet",
+			    "Total",
+			    DimSchemeSubSet[Brand]
+			)
+			
+			```
+		lineageTag: 6489788e-151e-49f9-b3b4-362791bf6355
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSchemeSubSet = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimSchemeSubSet = Source{[Schema="dbo",Item="DimSchemeSubSet"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dbo_DimSchemeSubSet,{{"SchemeSubset", "Brand"}})
+				in
+				    #"Renamed Columns"
+

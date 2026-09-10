@@ -1,0 +1,289 @@
+table FactEnquiries
+	lineageTag: cb3a0169-2694-4cde-acbe-46542f42446e
+
+	measure TravelEnquiryCount =
+			
+			ROUND(COUNT('FactEnquiries'[TravelEnquiryId]), 2)
+		formatString: 0
+		lineageTag: 834e40fa-87c6-47ec-b85e-af3ce148972e
+
+	measure AvgQuotesPerEnquiry =
+			
+			DIVIDE(
+			    SUM('FactEnquiries'[NoOfQuotes]),
+			    COUNT('FactEnquiries'[TravelEnquiryId]),
+			    0
+			)
+		lineageTag: c5609c03-6efd-48d8-8c00-5cd2ab217c58
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure EnquiriesConversionRate = ```
+			
+			DIVIDE(
+			    SUM('FactEnquiries'[IsSold]),
+			    COUNT('FactEnquiries'[TravelEnquiryID]),
+			    0
+			)
+			
+			```
+		formatString: 0.000
+		lineageTag: ad8968ae-756f-4d29-8569-efdefb7c9084
+
+	measure DurationEnquiries = ```
+			
+			IF(
+			    HASONEVALUE(DimDuration[Duration]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactEnquiries[IsQuoted]),
+			            REMOVEFILTERS(DimDuration),
+			            DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimDuration[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimDuration[Duration]),
+			        VAR DurationValue = [Duration]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimDuration[SingleTrip],
+			                DimDuration[Duration], DurationValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactEnquiries[IsQuoted]),
+			                REMOVEFILTERS(DimLeadTimeGroup),
+			                DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 692028ea-985e-4ad3-bd8b-a2ef65b96402
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure DurationConversionRate =
+			
+			DIVIDE(
+			    SUM(FactSales[TotalSaleVolume]),
+			    SUM(FactEnquiries[IsQuoted])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2baf48e2-bc3e-4cae-af73-422e708e6d82
+
+	measure LeadTimeGroupConversionRate =
+			
+			DIVIDE(
+			    SUM(FactSales[TotalSaleVolume]),
+			    SUM(FactEnquiries[IsQuoted])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a38fb947-6699-4379-9d89-cc92bc2dca83
+
+	measure MedicalScoreConversionRate =
+			
+			DIVIDE(
+			    SUM(FactSales[TotalSaleVolume]),
+			    SUM(FactEnquiries[IsQuoted])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 483087d7-da94-4711-867d-5fc9f5e4e065
+
+	measure AgeGroupAMTConversionRate = ```
+			
+			DIVIDE(
+			    SUM('FactEnquiries'[IsSold]),
+			    COUNT('FactEnquiries'[TravelEnquiryID]),
+			    0
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c4e119ec-817b-4a26-aeac-f1c82c169a77
+
+	measure AgeGroupSingleConversionRate = ```
+			
+			DIVIDE(
+			    SUM('FactEnquiries'[IsSold]),
+			    COUNT('FactEnquiries'[TravelEnquiryID]),
+			    0
+			)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d7ef11e9-6c19-4164-a206-02720b00c159
+
+	column TravelEnquiryID
+		dataType: int64
+		formatString: 0
+		lineageTag: 8032d50b-15e7-4c1c-ad43-2ed67a1c3bd7
+		summarizeBy: count
+		sourceColumn: TravelEnquiryID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateID
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b6a934f-2072-413a-a545-1dcfb27df96d
+		summarizeBy: none
+		sourceColumn: DateID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravelBrandId
+		dataType: int64
+		formatString: 0
+		lineageTag: b5cf8fbb-20fd-495b-8d25-1e49c2a892ef
+		summarizeBy: none
+		sourceColumn: TravelBrandId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DurationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9d8ac4ff-0c3f-443f-925b-0426382ee27b
+		summarizeBy: none
+		sourceColumn: DurationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 129aec73-9e89-4392-ae2e-fdb3aed56b71
+		summarizeBy: none
+		sourceColumn: PolicyTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DestinationId
+		dataType: int64
+		formatString: 0
+		lineageTag: cf08b525-cc64-4a61-ae20-67adceaa3fe5
+		summarizeBy: none
+		sourceColumn: DestinationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: bd052cc9-6e62-4998-bebf-31ae85f96ff8
+		summarizeBy: none
+		sourceColumn: FamilyGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MarketingChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: 89c56769-f6ee-41f9-9feb-0e6b80cb452a
+		summarizeBy: none
+		sourceColumn: MarketingChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsQuoted
+		dataType: int64
+		formatString: 0
+		lineageTag: 125a31bc-e687-4877-9a37-a9dfce5da6e0
+		summarizeBy: sum
+		sourceColumn: IsQuoted
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsSold
+		dataType: int64
+		formatString: 0
+		lineageTag: f60fa4ac-efe1-4827-8bc3-0e0b46c93812
+		summarizeBy: sum
+		sourceColumn: IsSold
+
+		annotation SummarizationSetBy = Automatic
+
+	column NoOfQuotes
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e3b4d5f-0973-4761-af75-2cad2b540f28
+		summarizeBy: sum
+		sourceColumn: NoOfQuotes
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalTravellers
+		dataType: int64
+		formatString: 0
+		lineageTag: b8cf9b7b-8c67-402f-a9ec-2925571c934d
+		summarizeBy: sum
+		sourceColumn: TotalTravellers
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgentID
+		dataType: int64
+		formatString: 0
+		lineageTag: 6cb17830-eb1d-4f51-9ed6-6f48f6c27910
+		summarizeBy: none
+		sourceColumn: AgentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTimeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: b76da233-e407-4715-8e48-9028809474ca
+		summarizeBy: none
+		sourceColumn: LeadTimeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MedicalScoreId
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e584edf-3fc1-4f08-ac8c-7cf070b509f3
+		summarizeBy: none
+		sourceColumn: MedicalScoreId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 1983e445-3d3f-462c-8aed-4c6873e0fbda
+		summarizeBy: none
+		sourceColumn: AgeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d5e072d-7f02-404c-850c-31e2e0cbcb3a
+		summarizeBy: none
+		sourceColumn: ChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactEnquiries = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactEnquiries = Source{[Schema="dbo",Item="FactEnquiries"]}[Data]
+				in
+				    dbo_FactEnquiries
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

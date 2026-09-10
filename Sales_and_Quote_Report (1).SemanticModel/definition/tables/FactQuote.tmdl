@@ -1,0 +1,84 @@
+table FactQuote
+	lineageTag: 8b0d3dd4-c3eb-4345-bedd-fe7ad463ac3c
+
+	column DateID
+		dataType: int64
+		formatString: 0
+		lineageTag: be7201ab-6f80-4386-b39a-b6d25fcb6b2c
+		summarizeBy: none
+		sourceColumn: DateID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TravelBrandId
+		dataType: int64
+		formatString: 0
+		lineageTag: a99d68fb-21da-4ce3-b315-5632bd8edaf7
+		summarizeBy: none
+		sourceColumn: TravelBrandId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DurationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 907d7182-23c9-452e-adc4-b26ab1a9fa93
+		summarizeBy: none
+		sourceColumn: DurationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PolicyTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 62335202-bc63-40e5-9661-eb805cfeae32
+		summarizeBy: none
+		sourceColumn: PolicyTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DestinationId
+		dataType: int64
+		formatString: 0
+		lineageTag: a7064bf4-e040-44d3-a104-835e64a3d4bc
+		summarizeBy: none
+		sourceColumn: DestinationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 86b84446-7bf9-447d-8714-457c7c5a155d
+		summarizeBy: none
+		sourceColumn: FamilyGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MarketingChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: a9e905ec-62c8-47dd-af6e-24b4f8a8ae4d
+		summarizeBy: none
+		sourceColumn: MarketingChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column RecordCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 253472a1-b3f8-4d4d-90fd-1eaf5eb6e864
+		summarizeBy: sum
+		sourceColumn: RecordCount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactQuote = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactQuote = Source{[Schema="dbo",Item="FactQuote"]}[Data]
+				in
+				    dbo_FactQuote
+

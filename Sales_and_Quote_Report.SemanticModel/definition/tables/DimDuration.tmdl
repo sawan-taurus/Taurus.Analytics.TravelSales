@@ -1,0 +1,63 @@
+table DimDuration
+	lineageTag: 7dfab308-cf5a-40b1-a610-717f804467e0
+
+	measure SingleTripDurationPer = ```
+			
+			IF(
+			    HASONEVALUE('DimDuration'[SingleTrip]),
+			    FORMAT(VALUES('DimDuration'[SingleTrip]), "0.00") & "%",
+			    FORMAT(SUM('DimDuration'[SingleTrip]), "0.00") & "%"
+			)
+			
+			
+			```
+		lineageTag: e6041757-181e-46fc-8385-eeaaf3f7cac1
+
+	column DurationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c9ed19f-527d-4ba6-89e4-b51b7b283d64
+		summarizeBy: none
+		sourceColumn: DurationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duration
+		dataType: string
+		lineageTag: a9a680d2-5ecc-430f-a983-0f50037dbb69
+		summarizeBy: none
+		sourceColumn: Duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column SingleTrip
+		dataType: double
+		lineageTag: 8e5e19cf-4508-4043-ae6b-87ae45f99339
+		summarizeBy: sum
+		sourceColumn: SingleTrip
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMT
+		dataType: double
+		lineageTag: de799299-e961-4e4b-89dd-643ce9053db7
+		summarizeBy: sum
+		sourceColumn: AMT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimDuration = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimDuration = Source{[Schema="dbo",Item="DimDuration"]}[Data]
+				in
+				    dbo_DimDuration
+
+	annotation PBI_ResultType = Table
+

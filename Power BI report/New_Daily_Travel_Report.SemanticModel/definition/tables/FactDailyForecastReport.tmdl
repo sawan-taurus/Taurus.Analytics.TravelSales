@@ -1,0 +1,354 @@
+table FactDailyForecastReport
+	lineageTag: de9a2460-f91e-4799-832e-b8994edd7b13
+
+	measure Percentage_To_Vol =
+			
+			CALCULATE(
+			    DIVIDE(SUM(FactDailyForecastReport[MTD_Volume]), SUM(FactDailyForecastReport[Budget_Volume])) * 100,
+			    FILTER(FactDailyForecastReport, FactDailyForecastReport[Budget_Volume] <> 0)
+			)
+		formatString: 0
+		lineageTag: 1485cfa6-02a5-4ee2-b262-7b8bfb3d04f1
+
+	measure Percentage_To_GWP =
+			
+			CALCULATE(
+			    DIVIDE(SUM(FactDailyForecastReport[MTD_Retail]), SUM(FactDailyForecastReport[Budget_GWP])) * 100,
+			    FILTER(FactDailyForecastReport, FactDailyForecastReport[Budget_GWP] <> 0)
+			)
+		formatString: 0.0
+		lineageTag: 25a79f33-1dbe-4752-8083-f56cd4b8ab16
+
+	measure Percentage_To_NetMargin =
+			
+			CALCULATE(
+			    DIVIDE(SUM(FactDailyForecastReport[Month_End_Est_Net_Margin]), SUM(FactDailyForecastReport[Budget_Net_Margin])) * 100,
+			    FILTER(FactDailyForecastReport, FactDailyForecastReport[Budget_Net_Margin] <> 0)
+			)
+		lineageTag: 5c851fca-4a25-4482-b488-2ed59913848c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SortOrderForcast = ```
+			SWITCH(
+			    DimSchemeSubSet[SchemeSubset],
+			    "Atoz", 1,
+			    "SOI", 2,
+			    "Oasis", 3,
+			    "Viva", 4,
+			    "Trusted", 5,
+			    "TotalSubSet", 6,
+			    99
+			)
+			
+			```
+		lineageTag: fb0f85dc-7453-4f3d-8e84-637bb8983d01
+
+	measure Percentage_To_Vol_New = ```
+			
+			IF (
+			    ISBLANK(SUM('FactDailyForecastReport'[PercentToVol])),
+			    BLANK(),
+			    FORMAT(SUM('FactDailyForecastReport'[PercentToVol]), "0") & "%"
+			)
+			
+			
+			```
+		lineageTag: 0c183832-d5ba-44ca-a3a4-a1872957511b
+
+	measure Percentage_To_GWP_New =
+			IF (
+			    ISBLANK(SUM('FactDailyForecastReport'[PercentToGWP])),
+			    BLANK(),
+			    FORMAT(SUM('FactDailyForecastReport'[PercentToGWP]), "0") & "%"
+			)
+		lineageTag: b59ae3fc-8170-4763-99e1-28d47525f653
+
+	measure Percentage_To_NetMargin_New = ```
+			IF (
+			    ISBLANK(SUM('FactDailyForecastReport'[PercentToNetMargin])),
+			    BLANK(),
+			    FORMAT(SUM('FactDailyForecastReport'[PercentToNetMargin]), "0") & "%"
+			)
+			
+			```
+		lineageTag: 502f9ba7-6cbd-47de-bda0-df04038e240b
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f2f4410-fae8-4250-9bf1-36fa82eb62e6
+		summarizeBy: none
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeSubsetId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8db2045e-b02c-43e3-9557-dae6849d096c
+		summarizeBy: none
+		sourceColumn: SchemeSubsetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalSubSetId
+		dataType: int64
+		formatString: 0
+		lineageTag: 634f2d52-0690-4033-a73e-bdab04982f6d
+		summarizeBy: none
+		sourceColumn: TotalSubSetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 91bf1b3d-2403-41d4-9aaf-a2f6738b78dc
+		summarizeBy: sum
+		sourceColumn: Day_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Day_Retail
+		dataType: double
+		formatString: 0.00
+		lineageTag: 03091bec-6405-4537-b996-e69a4e17e310
+		summarizeBy: sum
+		sourceColumn: Day_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 60d18b01-c33d-4abf-8f3e-99e253e19536
+		summarizeBy: sum
+		sourceColumn: MTD_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MTD_Retail
+		dataType: double
+		formatString: 0.00
+		lineageTag: e9d003ba-d28e-4e78-9b9c-3925d841bba9
+		summarizeBy: sum
+		sourceColumn: MTD_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+	column Average_Volume_Per_Day
+		dataType: double
+		formatString: 0
+		lineageTag: c478ae37-8748-4583-8b8f-75a7534235a5
+		summarizeBy: sum
+		sourceColumn: Average_Volume_Per_Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Average_Retail
+		dataType: double
+		formatString: 0
+		lineageTag: 98ec0efa-7f8b-4932-9284-4cd13b13de7d
+		summarizeBy: sum
+		sourceColumn: Average_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Month_End_Est_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 6e1cfb14-f8f8-4943-9476-6dff6f42b8a7
+		summarizeBy: sum
+		sourceColumn: Month_End_Est_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Month_End_Est_Retail
+		dataType: double
+		formatString: 0.00
+		lineageTag: 80590349-6ee1-4c07-a0f0-3742a2c46eb4
+		summarizeBy: sum
+		sourceColumn: Month_End_Est_Retail
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_End_Est_Net_Margin
+		dataType: double
+		formatString: 0.00
+		lineageTag: 1f9a5e9f-5432-4ae3-bfc6-d85e00e617a1
+		summarizeBy: sum
+		sourceColumn: Month_End_Est_Net_Margin
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget_Volume
+		dataType: double
+		formatString: 0
+		lineageTag: 3226d136-cae5-43cf-a57b-aca9814b3404
+		summarizeBy: sum
+		sourceColumn: Budget_Volume
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget_GWP
+		dataType: double
+		formatString: 0
+		lineageTag: 6096222b-99d8-4a23-8674-8c3a485d96af
+		summarizeBy: sum
+		sourceColumn: Budget_GWP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Budget_Net_Margin
+		dataType: double
+		formatString: 0
+		lineageTag: 2410f964-d233-4f52-8de0-4e5debd371e3
+		summarizeBy: sum
+		sourceColumn: Budget_Net_Margin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column PercentToVol
+		dataType: int64
+		formatString: 0
+		lineageTag: fbd9be2f-d281-4069-b004-9a574b4ad078
+		summarizeBy: none
+		sourceColumn: PercentToVol
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column PercentToGWP
+		dataType: double
+		formatString: 0
+		lineageTag: 854322b5-5bcd-4074-9365-53af2638f300
+		summarizeBy: sum
+		sourceColumn: PercentToGWP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column PercentToNetMargin
+		dataType: double
+		formatString: 0
+		lineageTag: 8c083f50-e380-444e-9b17-b49588576b6a
+		summarizeBy: sum
+		sourceColumn: PercentToNetMargin
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MTD_Retail_Formatted = ```
+			"£" & FORMAT(FactDailyForecastReport[MTD_Retail], "#,##0")
+			
+			```
+		lineageTag: 9b144ab9-7970-4fa5-b4ee-5497ebe6ca87
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day_Retail_Formatted = "£" & FORMAT(FactDailyForecastReport[Day_Retail], "#,##0")
+		lineageTag: 42151573-edaf-40a9-8a41-aa46debac041
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_End_Est_Retail_Formatted = "£" & FORMAT(FactDailyForecastReport[Month_End_Est_Retail], "#,##0")
+		lineageTag: 8cc9b851-5e66-44d9-bc3e-1fe9ecb5f797
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_End_Est_NetMargin_Formatted = "£" & FORMAT(FactDailyForecastReport[Month_End_Est_Net_Margin], "#,##0")
+		lineageTag: 641abd14-e4cd-4601-b9da-4dcdc72ad369
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget_GWP_Formatted = "£" & FORMAT(FactDailyForecastReport[Budget_GWP], "#,##0")
+		lineageTag: e0794be8-107a-4006-af63-abea0aedd4c4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget_Margin_Formatted = "£" & FORMAT(FactDailyForecastReport[Budget_Net_Margin], "#,##0")
+		lineageTag: f6ea9c89-94bd-4909-90e6-1ef70401eb18
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Avg_Retail_Formatted = "£" & FORMAT(FactDailyForecastReport[Average_Retail], "#,##0")
+		lineageTag: 1ab0aba8-7795-40eb-aa06-d078813a5fba
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerToGWP =
+			
+			[Month_End_Est_Retail_Formatted] / 1.2 / [Budget_GWP_Formatted]
+		lineageTag: e25aaa9d-a5e6-433b-98fb-709eabd8b8cf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PerToGWP2 =
+			
+			ROUND(
+			    FactDailyForecastReport[Month_End_Est_Retail]
+			        / 1.2
+			        / FactDailyForecastReport[Budget_GWP],
+			    2
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 31932d7b-eadb-430b-895b-84cf7ebe928b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerToNetMargin2 =
+			
+			ROUND(
+			    FactDailyForecastReport[Month_End_Est_Net_Margin]
+			        / FactDailyForecastReport[Budget_Net_Margin],
+			    2
+			)
+		formatString: 0%;-0%;0%
+		lineageTag: 23ed9b4b-acfd-4079-821c-5d7390dd458b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactDailyForecastReport = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactDailyForecastReport = Source{[Schema="dbo",Item="FactDailyForecastReport"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(dbo_FactDailyForecastReport,{{"DateVol", "Day_Volume"}, {"DateRetail", "Day_Retail"}, {"MTDVol", "MTD_Volume"}, {"MTDRetail", "MTD_Retail"}, {"AvgPolPerDay", "Average_Volume_Per_Day"}, {"AvgP", "Average_Retail"}, {"EstMonEndVol", "Month_End_Est_Volume"}, {"EstMonEndRetail", "Month_End_Est_Retail"}, {"EstMonEndNetMargin", "Month_End_Est_Net_Margin"}, {"BudgetVol", "Budget_Volume"}, {"BudgetGWP", "Budget_GWP"}, {"BudgetNetMargin", "Budget_Net_Margin"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

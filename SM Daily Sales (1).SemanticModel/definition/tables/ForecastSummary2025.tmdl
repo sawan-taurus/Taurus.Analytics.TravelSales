@@ -1,0 +1,193 @@
+table ForecastSummary2025
+	lineageTag: cfccacac-5b8c-481b-9e8f-2ba8b74a2ff1
+	sourceLineageTag: [dbo].[ForecastSummary2025]
+
+	column Brand
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 10e9d55b-62e6-4aed-9a67-e6c01da731ac
+		sourceLineageTag: Brand
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8fb7b7e7-7edb-41a5-b282-6274638b0e16
+		sourceLineageTag: Type
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 2024est
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 25995b16-3d80-4679-9f8a-928ef15cefd2
+		sourceLineageTag: 2024est
+		summarizeBy: none
+		sourceColumn: 2024est
+
+		annotation SummarizationSetBy = Automatic
+
+	column 2025
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5d4e994d-9633-408a-aca8-d0c23a6c55a6
+		sourceLineageTag: 2025
+		summarizeBy: none
+		sourceColumn: 2025
+
+		annotation SummarizationSetBy = Automatic
+
+	column 2026
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 221e32db-8156-46b1-8fec-e4ad08c31d1b
+		sourceLineageTag: 2026
+		summarizeBy: none
+		sourceColumn: 2026
+
+		annotation SummarizationSetBy = Automatic
+
+	column 2027
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 298b392f-be49-4676-846d-bc632989d52b
+		sourceLineageTag: 2027
+		summarizeBy: none
+		sourceColumn: 2027
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Jan
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 16f54ca1-00b0-4bf0-be50-6c5409ef63c9
+		sourceLineageTag: 25-Jan
+		summarizeBy: none
+		sourceColumn: 25-Jan
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Feb
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 0b82ce6b-6d39-45bf-b8e9-41bbd8f1ea14
+		sourceLineageTag: 25-Feb
+		summarizeBy: none
+		sourceColumn: 25-Feb
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Mar
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7f1cc54e-734a-426d-aafd-7e764119cdaf
+		sourceLineageTag: 25-Mar
+		summarizeBy: none
+		sourceColumn: 25-Mar
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Apr
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 095de560-aa53-43eb-b375-801f3e64dec6
+		sourceLineageTag: 25-Apr
+		summarizeBy: none
+		sourceColumn: 25-Apr
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-May
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 1d033a08-a695-4468-85bc-2b2fa46c1996
+		sourceLineageTag: 25-May
+		summarizeBy: none
+		sourceColumn: 25-May
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Jun
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 10eb2d56-44ef-43cf-8fec-d9aff56d030b
+		sourceLineageTag: 25-Jun
+		summarizeBy: none
+		sourceColumn: 25-Jun
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Jul
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: e324e048-524a-4491-b4f2-0fa01342c85c
+		sourceLineageTag: 25-Jul
+		summarizeBy: none
+		sourceColumn: 25-Jul
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Aug
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: a8203bb2-75ff-48b4-8d07-a9d58a35daf7
+		sourceLineageTag: 25-Aug
+		summarizeBy: none
+		sourceColumn: 25-Aug
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Sep
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 0ef91a4f-f9bb-4783-a3f5-ff4dec4a29ec
+		sourceLineageTag: 25-Sep
+		summarizeBy: none
+		sourceColumn: 25-Sep
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Oct
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d54f242b-ce0c-45a8-9860-1ce9c0b57d77
+		sourceLineageTag: 25-Oct
+		summarizeBy: none
+		sourceColumn: 25-Oct
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Nov
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: b3572ff8-395d-4678-a59e-06794dffff5c
+		sourceLineageTag: 25-Nov
+		summarizeBy: none
+		sourceColumn: 25-Nov
+
+		annotation SummarizationSetBy = Automatic
+
+	column 25-Dec
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 634ee95d-9735-4f2e-995f-f96d39e8322d
+		sourceLineageTag: 25-Dec
+		summarizeBy: none
+		sourceColumn: 25-Dec
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ForecastSummary2025 = entity
+		mode: directLake
+		source
+			entityName: ForecastSummary2025
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

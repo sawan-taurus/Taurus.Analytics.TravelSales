@@ -1,0 +1,47 @@
+table DimChannel
+	lineageTag: 1c85eebf-b28d-4650-96ba-5426ad88d799
+
+	column ChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: 612d8801-b92c-430f-8fe4-792c74943357
+		summarizeBy: none
+		sourceColumn: ChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeName
+		dataType: string
+		lineageTag: 33c515de-5750-4ef3-859a-4e2852fba521
+		summarizeBy: none
+		sourceColumn: SchemeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 782af586-5a51-413d-8c9b-3ca8d5b15239
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column GenericCoverLevel
+		dataType: string
+		lineageTag: a41ee6a2-ba92-42f8-b558-483b049e0592
+		summarizeBy: none
+		sourceColumn: GenericCoverLevel
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimChannel = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimChannel = Source{[Schema="dbo",Item="DimChannel"]}[Data]
+				in
+				    dbo_DimChannel
+
+	annotation PBI_ResultType = Table
+

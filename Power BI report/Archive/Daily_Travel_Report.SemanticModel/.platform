@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Daily_Travel_Report"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "58faa9ab-7ff2-b8c9-46ab-8a197a5ac6e3"
+  }
+}

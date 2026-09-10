@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Sales_and_Quote_Report (1)"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ff4d51a0-65f7-b07c-4d4a-072d7cd01de7"
+  }
+}

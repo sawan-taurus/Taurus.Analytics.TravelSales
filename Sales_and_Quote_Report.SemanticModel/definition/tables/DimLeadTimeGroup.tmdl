@@ -1,0 +1,75 @@
+table DimLeadTimeGroup
+	lineageTag: eda06ba6-bf58-46a7-b461-6e84a99a0001
+
+	measure SingleTripPer = ```
+			
+			IF(
+			    HASONEVALUE('DimLeadTimeGroup'[SingleTrip]),
+			    FORMAT(VALUES('DimLeadTimeGroup'[SingleTrip]), "0.00") & "%",
+			    FORMAT(SUM('DimLeadTimeGroup'[SingleTrip]), "0.00") & "%"
+			)
+			
+			
+			```
+		lineageTag: 292f896c-c166-4130-86a6-5b134b519ab8
+
+	measure AMTPer =
+			
+			IF(
+			    HASONEVALUE('DimLeadTimeGroup'[AMT]),
+			    FORMAT(VALUES('DimLeadTimeGroup'[AMT]), "0.00") & "%",
+			    FORMAT(SUM('DimLeadTimeGroup'[AMT]), "0.00") & "%"
+			)
+		lineageTag: a944f340-06a7-4364-917d-9cfe28734d69
+
+	column LeadTimeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 8264c4b9-f8d2-4f83-a394-6f859fc36b3f
+		summarizeBy: none
+		sourceColumn: LeadTimeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTimeGroup
+		dataType: string
+		lineageTag: d9dcb94f-a754-4766-9faa-ceeca832ff61
+		summarizeBy: none
+		sourceColumn: LeadTimeGroup
+		sortByColumn: LeadTimeGroupId
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column SingleTrip
+		dataType: double
+		lineageTag: c1c559e6-8f8d-4d25-89f4-0f31f91bd3ce
+		summarizeBy: sum
+		sourceColumn: SingleTrip
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMT
+		dataType: double
+		lineageTag: 466167f3-282f-4df8-9b0a-d303a4d5cd6b
+		summarizeBy: sum
+		sourceColumn: AMT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimLeadTimeGroup = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimLeadTimeGroup = Source{[Schema="dbo",Item="DimLeadTimeGroup"]}[Data]
+				in
+				    dbo_DimLeadTimeGroup
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "tblTravelSalesTransactions_2",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactions",
+        "itemId": "806726c4-96e8-41e6-a404-46c140efae38",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "tblTravelSalesTransactions_1",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactions",
+        "itemId": "028417a0-9482-4b57-8a88-178676aae100",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  },
+  {
+    "name": "tblTravelSalesTransactions",
+    "path": "/Tables",
+    "target": {
+      "type": "OneLake",
+      "oneLake": {
+        "path": "Tables/dbo/tblTravelSalesTransactions",
+        "itemId": "4bfdc9ab-670f-442c-b37c-0d54c9e85cf7",
+        "workspaceId": "8ea2ad93-62f8-47f6-8bb4-4fd5e3f85ec9"
+      }
+    }
+  }
+]

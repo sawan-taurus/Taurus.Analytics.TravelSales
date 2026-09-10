@@ -1,0 +1,109 @@
+table FactForecastByBrand
+	lineageTag: f7d8c2b6-860a-4e32-b05a-61daeb39823f
+
+	measure DurationForecastVolByBrand = ```
+			
+			IF(
+			    HASONEVALUE(DimDuration[Duration]),
+			    
+			    // Row-level calculation
+			    VAR BaseTotal = 
+			        CALCULATE(
+			            SUM(FactForecastByBrand[ForecastVolume]),
+			            REMOVEFILTERS(DimDuration),
+			            DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			        )
+			    VAR TripValue = SELECTEDVALUE(DimDuration[SingleTrip])
+			    RETURN DIVIDE(BaseTotal * TripValue, 100),
+			    
+			    // Total row logic
+			    SUMX(
+			        VALUES(DimDuration[Duration]),
+			        VAR DurationValue = [Duration]
+			        VAR TripValue = 
+			            LOOKUPVALUE(
+			                DimDuration[SingleTrip],
+			                DimDuration[Duration], DurationValue
+			            )
+			        VAR BaseTotal = 
+			            CALCULATE(
+			                SUM(FactForecastByBrand[ForecastVolume]),
+			                REMOVEFILTERS(DimLeadTimeGroup),
+			                DimDuration[Duration] IN { "1 to 3", "4 to 5", "6 to 10", "11 to 17", "18 to 24", "25 to 31", "32 +"}
+			            )
+			        RETURN DIVIDE(BaseTotal * TripValue, 100)
+			    )
+			)
+			
+			```
+		lineageTag: 7907674b-5e71-4c24-9f6d-7965b9a54a8f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure DurationTrendByBrand = ```
+			
+			VAR Difference = [DurationVarianceByBrand]
+			RETURN
+			    IF(
+			        HASONEVALUE(DimDuration[Duration]),
+			        IF(Difference > 0, "▲", "▼"),
+			        BLANK()
+			    )
+			
+			```
+		lineageTag: 534415da-fa93-4f82-a400-9b102add5aac
+
+	measure DurationVarianceByBrand =
+			
+			SUM(FactSales[TotalSaleVolume]) - FactForecastByBrand[DurationForecastVolByBrand]
+		lineageTag: 91314779-4a58-41bd-876f-9734a058bc71
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a8791d1-b074-4e1b-a427-9987c8506089
+		summarizeBy: none
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ForecastVolume
+		dataType: double
+		formatString: 0
+		lineageTag: 6565f396-8880-4944-a676-582f01f3fe15
+		summarizeBy: sum
+		sourceColumn: ForecastVolume
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column BrandId
+		dataType: int64
+		formatString: 0
+		lineageTag: a7a3560b-586f-486a-9625-e39d7ff92d40
+		summarizeBy: none
+		sourceColumn: BrandId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3836e0c9-0dc2-433f-a1c1-65d16815f772
+		summarizeBy: none
+		sourceColumn: SubChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactForecastByBrand = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_factforecastbybrand = Source{[Schema="dbo",Item="factforecastbybrand"]}[Data]
+				in
+				    dbo_factforecastbybrand
+

@@ -1,0 +1,778 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "4954157778158e08c3de",
+  "position": {
+    "x": 0,
+    "y": 87.537993920972639,
+    "z": 5000,
+    "height": 926.44376899696044,
+    "width": 1464.8024316109422,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "AGGS"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.AGGS",
+              "nativeQueryRef": "AGGS",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimPolicy2"
+                    }
+                  },
+                  "Property": "Policy3"
+                }
+              },
+              "queryRef": "DimPolicy2.Policy3",
+              "nativeQueryRef": "Policy3",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Med Banding"
+                }
+              },
+              "queryRef": "gold fact_master_bdx_switched_on.Med Banding",
+              "nativeQueryRef": "Med Banding",
+              "active": false
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_master_bdx_switched_on"
+                        }
+                      },
+                      "Property": "Policy"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fact_master_bdx_switched_on.Policy)",
+              "nativeQueryRef": "Policies",
+              "displayName": "Policies"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_master_bdx_switched_on"
+                        }
+                      },
+                      "Property": "Earned NWP"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fact_master_bdx_switched_on.Earned NWP)",
+              "nativeQueryRef": "Earned NWP",
+              "displayName": "Earned NWP"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_master_bdx_switched_on"
+                        }
+                      },
+                      "Property": "Total NWP"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fact_master_bdx_switched_on.Total NWP)",
+              "nativeQueryRef": "NEP",
+              "displayName": "NEP"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_master_bdx_switched_on"
+                        }
+                      },
+                      "Property": "Incurred"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fact_master_bdx_switched_on.Incurred)",
+              "nativeQueryRef": "Total Incurred",
+              "displayName": "Total Incurred"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_master_bdx_switched_on"
+                        }
+                      },
+                      "Property": "ClaimCount"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fact_master_bdx_switched_on.ClaimCount)",
+              "nativeQueryRef": "Claims Count",
+              "displayName": "Claims Count"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_master_bdx_switched_on"
+                        }
+                      },
+                      "Property": "TotalPolicies"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fact_master_bdx_switched_on.TotalPolicies)",
+              "nativeQueryRef": "Total Policies",
+              "displayName": "Total Policies"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "% Total PoliciesMedBanding"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.% Total PoliciesMedBanding",
+              "nativeQueryRef": "% Total Policies",
+              "displayName": "% Total Policies"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fact_master_bdx_switched_on"
+                        }
+                      },
+                      "Property": "TotalRetail"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(gold fact_master_bdx_switched_on.TotalRetail)",
+              "nativeQueryRef": "Total Retail",
+              "displayName": "Total Retail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "% Total RetailMedBanding"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.% Total RetailMedBanding",
+              "nativeQueryRef": "% Total Retail",
+              "displayName": "% Total Retail"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "Avg Retail2"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.Avg Retail2",
+              "nativeQueryRef": "Avg Retail2"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NELR"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NELR",
+              "nativeQueryRef": "NELR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "NELR Ex LL"
+                }
+              },
+              "queryRef": "fact_master_bdx_switched_on.NELR Ex LL",
+              "nativeQueryRef": "NELR Ex LL"
+            }
+          ]
+        }
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "fact_master_bdx_switched_on.AGGS"
+            ],
+            "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_master_bdx_switched_on"
+                    }
+                  },
+                  "Property": "AGGS"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "DimPolicy2.Policy3"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "gold fact_master_bdx_switched_on.Med Banding"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'MTC'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'MSM'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'IDOL'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
+      }
+    ],
+    "objects": {
+      "rowHeaders": [
+        {
+          "properties": {
+            "showExpandCollapseButtons": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#A6ADC6'"
+                    }
+                  }
+                }
+              }
+            },
+            "preset": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Custom'"
+                }
+              }
+            },
+            "shadowSpread": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "shadowBlur": {
+              "expr": {
+                "Literal": {
+                  "Value": "5L"
+                }
+              }
+            },
+            "angle": {
+              "expr": {
+                "Literal": {
+                  "Value": "90L"
+                }
+              }
+            },
+            "shadowDistance": {
+              "expr": {
+                "Literal": {
+                  "Value": "4L"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "85L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#E0E0E0'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "4L"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "82a5b3b760cd42c70bb9",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "% Total Policies"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "76c40b6800a6057ce9e8",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "% Total Retail"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "f8f3bf0773ea36c8191f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "AGGS"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "7621881052b3f6f05832",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimPolicy2"
+              }
+            },
+            "Property": "Policy3"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "7ece92fb396486455a09",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "Med Banding"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "374d3f57758bab63302c",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "Policy"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c9d7e3b20d3d61381c2b",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "Earned NWP"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0fb7efc5527cb6c6ca6d",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "Total NWP"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5e8b197f3941fec19d56",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "Incurred"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "fd1559c4a9619c5b7768",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "ClaimCount"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5d8be3759eb0ff073653",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "TotalPolicies"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6a5156c7d69657d3defa",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "% Total PoliciesMedBanding"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "5e827e661adbf53561ed",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "fact_master_bdx_switched_on"
+                  }
+                },
+                "Property": "TotalRetail"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6377589894bea6a2fc56",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "% Total RetailMedBanding"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1606db67acae79632b82",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "Avg Retail2"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "4fb9183f4ec0cf6ded29",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "NELR"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3c42ccd4037749d258e4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_master_bdx_switched_on"
+              }
+            },
+            "Property": "NELR Ex LL"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  },
+  "howCreated": "Copilot"
+}

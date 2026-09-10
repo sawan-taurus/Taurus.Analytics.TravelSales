@@ -1,0 +1,149 @@
+table FactSalesAndQuotes
+	lineageTag: fbc36611-9bff-4698-a113-9ee38cada386
+
+	column DateID
+		dataType: int64
+		formatString: 0
+		lineageTag: 68d7ef1b-f954-44f5-8afe-7050d0aee4fb
+		summarizeBy: none
+		sourceColumn: DateID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelId
+		dataType: int64
+		formatString: 0
+		lineageTag: dfad0b2f-0be6-40eb-9661-b49cd9d47631
+		summarizeBy: none
+		sourceColumn: ChannelId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgentId
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c7ed027-e803-426d-a404-84136b5d9e32
+		summarizeBy: none
+		sourceColumn: AgentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampaignId
+		dataType: int64
+		formatString: 0
+		lineageTag: 66591dfc-111b-4b32-98ca-ba94a6e70af6
+		summarizeBy: none
+		sourceColumn: CampaignId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemeHeaderId
+		dataType: int64
+		formatString: 0
+		lineageTag: 773fe310-58e3-4756-9c64-f37d62431217
+		summarizeBy: none
+		sourceColumn: SchemeHeaderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalEnquiries
+		dataType: int64
+		formatString: 0
+		lineageTag: 24053fbc-08a1-4b00-9abd-37fa8a4e8097
+		summarizeBy: sum
+		sourceColumn: TotalEnquiries
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalSales
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ea3aaa8-a3af-46e4-a6a3-d0a8a45a2c51
+		summarizeBy: sum
+		sourceColumn: TotalSales
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConversionRate
+		dataType: double
+		lineageTag: 06fa684a-5fe2-4e96-adf9-fad13ceb3a1c
+		summarizeBy: sum
+		sourceColumn: ConversionRate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalGrossIncIPT
+		dataType: double
+		lineageTag: 90ac748d-0804-4342-b941-bd1995a3912c
+		summarizeBy: sum
+		sourceColumn: TotalGrossIncIPT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalNetToUnderwriter
+		dataType: double
+		lineageTag: 3e34858c-8885-47e4-ac36-f5bbada4b307
+		summarizeBy: sum
+		sourceColumn: TotalNetToUnderwriter
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SourceType
+		dataType: string
+		lineageTag: f4057254-7ead-4149-8972-d699292a9ead
+		summarizeBy: none
+		sourceColumn: SourceType
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadTimeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 27d806d6-9f1e-4352-9658-fde905be6f51
+		summarizeBy: none
+		sourceColumn: LeadTimeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DurationId
+		dataType: int64
+		formatString: 0
+		lineageTag: 323dd575-920f-4be4-ac08-cf2697708f63
+		summarizeBy: none
+		sourceColumn: DurationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 91c29578-b684-494f-8d87-bd4c9d15a109
+		summarizeBy: none
+		sourceColumn: AgeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column MedicalScoreId
+		dataType: int64
+		formatString: 0
+		lineageTag: cffa38c4-0d45-4d08-af90-7d27a758cd75
+		summarizeBy: none
+		sourceColumn: MedicalScoreId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactSalesAndQuotes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_FactSalesAndQuotes = Source{[Schema="dbo",Item="FactSalesAndQuotes"]}[Data]
+				in
+				    dbo_FactSalesAndQuotes
+

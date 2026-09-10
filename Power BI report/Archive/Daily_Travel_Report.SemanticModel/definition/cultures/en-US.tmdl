@@ -1,0 +1,197 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "dimschemesubset.schemesubset": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DimSchemeSubSet",
+			          "ConceptualProperty": "SchemeSubset"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Brand": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "factdailyreport.previous_day_volume": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "Previous Day Volume"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Previous Day": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dimschemesubset.sort": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "DimSchemeSubSet",
+			          "ConceptualProperty": "Sort"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "|": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "factdailyreport.pertofcastretail": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "PerToFCastRetail"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "factdailyreport.pertofcastmargin": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "PerToFCastMargin"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "factdailyreport.previous_day_retail": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "Previous Day Retail"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Previous Day": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "factdailyreport.datevol_mtd_excltoday": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "DateVol_CurrentMonth_ExclToday"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "factdailyreport.datevol_previousmonth_excltoday": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "DateVol_PreviousMonth_ExclToday"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Previous Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "factdailyreport.dateretail_mtd_excltoday": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "DateRetail_MTD_ExclToday"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "factdailyreport.dateretail_previousmonth_excltoday": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "FactDailyReport",
+			          "ConceptualProperty": "DateRetail_PreviousMonth_ExclToday"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Previous Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

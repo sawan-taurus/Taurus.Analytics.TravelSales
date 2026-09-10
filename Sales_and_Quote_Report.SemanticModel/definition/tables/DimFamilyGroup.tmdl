@@ -1,0 +1,51 @@
+table DimFamilyGroup
+	lineageTag: 6e1222ae-1597-4d24-9466-9ffe7faad345
+
+	column FamilyGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: adc88a66-1272-486f-b600-96e435f359a9
+		summarizeBy: none
+		sourceColumn: FamilyGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyGroup
+		dataType: string
+		lineageTag: ca0ca1e8-1d49-456b-ad97-dc933a63bd3b
+		summarizeBy: none
+		sourceColumn: FamilyGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column SingleTrip
+		dataType: double
+		lineageTag: f4d5a540-b9f9-49ed-9a6c-d0258392eddb
+		summarizeBy: sum
+		sourceColumn: SingleTrip
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMT
+		dataType: double
+		lineageTag: e7170a40-5b84-424f-8d70-12b43b97edb7
+		summarizeBy: sum
+		sourceColumn: AMT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimFamilyGroup = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimFamilyGroup = Source{[Schema="dbo",Item="DimFamilyGroup"]}[Data]
+				in
+				    dbo_DimFamilyGroup
+
+	annotation PBI_ResultType = Table
+

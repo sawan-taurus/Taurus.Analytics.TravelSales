@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "CSVFileIngestionManual"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "acdf7ec4-b789-a5ab-47d2-4eb625f85ae9"
+  }
+}

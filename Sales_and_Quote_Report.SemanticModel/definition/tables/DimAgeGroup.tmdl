@@ -1,0 +1,74 @@
+table DimAgeGroup
+	lineageTag: 408499bb-c2c5-4cbb-95a6-63c336178fc1
+
+	measure SingleTripAgeGroupPer = ```
+			
+			IF(
+			    HASONEVALUE('DimAgeGroup'[SingleTrip]),
+			    FORMAT(VALUES('DimAgeGroup'[SingleTrip]), "0.00") & "%",
+			    FORMAT(SUM('DimAgeGroup'[SingleTrip]), "0.00") & "%"
+			)
+			
+			
+			```
+		lineageTag: d4d5ca37-69a4-4519-a863-42b174bb0c3f
+
+	measure AMTAgeGroupPer = ```
+			
+			IF(
+			    HASONEVALUE('DimAgeGroup'[AMT]),
+			    FORMAT(VALUES('DimAgeGroup'[AMT]), "0.00") & "%",
+			    FORMAT(SUM('DimAgeGroup'[AMT]), "0.00") & "%"
+			)
+			
+			```
+		lineageTag: d2dd1966-8cb9-46ca-87c2-7ccea0a78235
+
+	column AgeGroupId
+		dataType: int64
+		formatString: 0
+		lineageTag: 90241fa4-7b2a-4b48-bb36-e443c63eb34d
+		summarizeBy: none
+		sourceColumn: AgeGroupId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroup
+		dataType: string
+		lineageTag: c69cda00-dc5e-4f9f-8eca-6e1d67d8830a
+		summarizeBy: none
+		sourceColumn: AgeGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column SingleTrip
+		dataType: double
+		lineageTag: 7f5e0283-c7be-45a2-850f-65c64e82f508
+		summarizeBy: sum
+		sourceColumn: SingleTrip
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMT
+		dataType: double
+		lineageTag: d7f80c17-d0b1-4b63-8754-8b85c0224023
+		summarizeBy: sum
+		sourceColumn: AMT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimAgeGroup = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimAgeGroup = Source{[Schema="dbo",Item="DimAgeGroup"]}[Data]
+				in
+				    dbo_DimAgeGroup
+
+	annotation PBI_ResultType = Table
+

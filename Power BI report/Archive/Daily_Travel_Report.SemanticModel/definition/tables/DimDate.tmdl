@@ -1,0 +1,115 @@
+table DimDate
+	lineageTag: c1b6fb93-70d6-47b9-aed0-e8e76a99ba8b
+
+	measure Measure =
+			
+			IF (
+			    COUNTROWS(RELATEDTABLE(FactDailyReport))>0,
+			    1,
+			    0
+			    )
+		formatString: 0
+		lineageTag: 34dab683-3864-45a6-9f07-bb89a39e6d07
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 76a65424-133e-4ca6-b67f-8b1eb4401458
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 24a407b0-278a-4609-bd0f-a64a325a6a60
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: ba73d32a-4d83-4259-836d-4c4a031787c8
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: b404c363-7296-4ec3-86b7-3ffdfea734fc
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 707bf250-2a6d-4d56-ac4d-345814b135c1
+		summarizeBy: none
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfMonth
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: ff7c9acc-333f-44a7-9667-fc415317b275
+		summarizeBy: none
+		sourceColumn: DayOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateId
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e80c1777-ac5d-4f23-b5da-48ad2f610053
+		summarizeBy: none
+		sourceColumn: DateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SlicerDate = ```
+			
+			SWITCH(
+			    TRUE(),
+			    'DimDate'[Date] = TODAY(), "Today",
+			    'DimDate'[Date] = TODAY() - 1, "Latest",
+			    YEAR('DimDate'[Date]) & "/" &
+			    RIGHT("0" & MONTH('DimDate'[Date]), 2) & "/" &
+			    RIGHT("0" & DAY('DimDate'[Date]), 2)
+			)
+			
+			```
+		lineageTag: 8ed4118b-eabd-4c17-94db-d60d358eb542
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: dual
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimDate = Source{[Schema="dbo",Item="DimDate"]}[Data]
+				in
+				    dbo_DimDate
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

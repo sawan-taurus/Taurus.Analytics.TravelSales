@@ -1,0 +1,41 @@
+table DimOption
+	lineageTag: b209fa03-4fba-4c1a-bb51-ad72069d8319
+
+	column OptionId
+		dataType: int64
+		formatString: 0
+		lineageTag: c5cce684-bf67-452f-9698-d27b4deb5917
+		summarizeBy: none
+		sourceColumn: OptionId
+
+		annotation SummarizationSetBy = Automatic
+
+	column OptionName
+		dataType: string
+		lineageTag: 085d4dc5-8ca4-40ed-9e97-7e3ddc57f7ba
+		summarizeBy: none
+		sourceColumn: OptionName
+
+		annotation SummarizationSetBy = Automatic
+
+	column OptionCategory
+		dataType: string
+		lineageTag: 146981e5-9919-40e9-a4b3-908ae22d4a71
+		summarizeBy: none
+		sourceColumn: OptionCategory
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimOption = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com", "TaurusGoldLH"),
+				    dbo_DimOption = Source{[Schema="dbo",Item="DimOption"]}[Data]
+				in
+				    dbo_DimOption
+
+	annotation PBI_ResultType = Table
+

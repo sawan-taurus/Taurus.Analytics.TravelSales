@@ -1,0 +1,8 @@
+relationship AutoDetected_1ff24d54-2e4a-4a06-aa28-88d40c66d54e
+	fromColumn: FactDailyReport.DateId
+	toColumn: DimDate.DateId
+
+relationship AutoDetected_2ce028c5-8633-470d-ba47-59c663f1b368
+	fromColumn: FactDailyReport.SchemeSubsetId
+	toColumn: DimSchemeSubSet.SchemeSubsetId
+

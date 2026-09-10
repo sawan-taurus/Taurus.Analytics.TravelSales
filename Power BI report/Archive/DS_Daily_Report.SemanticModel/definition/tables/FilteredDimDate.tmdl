@@ -1,0 +1,25 @@
+table FilteredDimDate
+	lineageTag: f0ca5065-7c89-4ea2-93f4-feda43c3af15
+
+	column Column
+		formatString: 0
+		lineageTag: 4d919472-ae14-44ba-8c3e-d3220ddc56b6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FilteredDimDate = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 6449491a34934702b49d76a91c6ab86f
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":"\nCALCULATETABLE(\n    DimDate,\n    DimDate[Date] IN VALUES(FactDailyReport[DateId])\n)"}
+
+	annotation 277cc1b9-af89-4597-8e15-cacc25c0886b = ```
+			You cannot use calculated table to reference Direct Lake table. The model includes the following calculated table, '<oii>Table</oii>', which is not supported. Please remove the calculated table. See https://go.microsoft.com/fwlink/?linkid=2215281 to learn more.
+			
+			```
+

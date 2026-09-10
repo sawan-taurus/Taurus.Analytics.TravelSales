@@ -1,0 +1,82 @@
+table FactForecastVsSalesByBrand
+	lineageTag: 409648d6-1ab4-4fc5-b3e7-6c1afd13cfe6
+
+	column BrandName
+		lineageTag: a399db5f-b87a-43f7-95b1-f73fb197cf64
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [BrandName]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalForecastVolByBrand
+		lineageTag: 77a0e528-e18a-46ff-a11b-cbaaa35adc59
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TotalForecastVolByBrand]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalSalesVolByBrand
+		formatString: 0
+		lineageTag: 3b9cfb92-0c3f-4877-b42b-8251b13c4634
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TotalSalesVolByBrand]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactForecastVsSalesByBrand = calculated
+		mode: import
+		source = ```
+				
+				VAR ForecastTable =
+				    SUMMARIZE(
+				        ADDCOLUMNS(
+				            'FactForecastByChannel',
+				            "BrandName",
+				                TRIM(
+				                    SUBSTITUTE(
+				                        SUBSTITUTE(
+				                            'FactForecastByChannel'[TravelBrand],
+				                            "Agg", ""
+				                        ),
+				                        "Direct", ""
+				                    )
+				                )
+				        ),
+				        [BrandName],
+				        "TotalForecastVolByBrand", SUM('FactForecastByChannel'[ForecastVolume])
+				    )
+				VAR SalesTable =
+				    SUMMARIZE(
+				        FILTER(
+				            ADDCOLUMNS(
+				                'DimTravelBrand',
+				                "BrandName",
+				                    SWITCH(
+				                        TRUE(),
+				                        'DimTravelBrand'[TravelBrand] = "atoz_travel", "Atoz",
+				                        'DimTravelBrand'[TravelBrand] = "oasis_travel", "Oasis",
+				                        'DimTravelBrand'[TravelBrand] = "start_travel", "Start",
+				                        'DimTravelBrand'[TravelBrand] = "switched_on", "SOI",
+				                        'DimTravelBrand'[TravelBrand] = "trusted_ins", "Trusted",
+				                        'DimTravelBrand'[TravelBrand] = "viva_ins", "Viva",
+				                        BLANK()
+				                    )
+				            ),
+				            NOT ISBLANK([BrandName])
+				        ),
+				        [BrandName],
+				        "TotalSalesVolByBrand",
+				            CALCULATE( SUM('FactSales'[TotalSaleVolume]) )
+				    )
+				RETURN
+				    NATURALINNERJOIN(ForecastTable, SalesTable)
+				
+				```
+
+	annotation PBI_Id = da4c414ba84a4c59bac9d61c7ad8ac6c
+

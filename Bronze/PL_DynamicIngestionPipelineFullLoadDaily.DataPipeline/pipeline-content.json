@@ -1,0 +1,559 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": "select * from mtd.control_events where enable_flag = 1 and load_type='Full Load' and processing_frequency = 'daily'\nand source_container_name is null;",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "TaurusWH",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "f2147c92-84fa-a24e-4085-cc3b803397c4",
+                  "endpoint": "2co7m4mimwiezlh3t4sejyt2uy-kkejlhe3mtrerldk6aywp73e3q.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "LKP_fetchControlEventsForLoad",
+        "description": "Control event is used to control and select an item from the source system to be moved into a data lake. This activity is used to load items for full load which are enabled.",
+        "dependsOn": [
+          {
+            "activity": "Set variable1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": false,
+          "batchCount": 1,
+          "items": {
+            "value": "@activity('LKP_fetchControlEventsForLoad').output.value\n\n\n",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "IfCondition",
+              "typeProperties": {
+                "expression": {
+                  "value": "@equals(item().source_type, 'FABRIC')",
+                  "type": "Expression"
+                },
+                "ifTrueActivities": [
+                  {
+                    "type": "TridentNotebook",
+                    "typeProperties": {
+                      "notebookId": "ac9bdc57-6fed-a8ef-4b5f-1535754dbf1e",
+                      "workspaceId": "00000000-0000-0000-0000-000000000000",
+                      "parameters": {
+                        "SelectedDate": {
+                          "value": {
+                            "value": "@variables('process_date')",
+                            "type": "Expression"
+                          },
+                          "type": "string"
+                        },
+                        "SourceType": {
+                          "value": {
+                            "value": "@item().source_table_name",
+                            "type": "Expression"
+                          },
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "policy": {
+                      "timeout": "0.12:00:00",
+                      "retry": 3,
+                      "retryIntervalInSeconds": 30,
+                      "secureInput": false,
+                      "secureOutput": false
+                    },
+                    "name": "Source_To_Bronze",
+                    "dependsOn": []
+                  }
+                ],
+                "ifFalseActivities": [
+                  {
+                    "type": "Copy",
+                    "typeProperties": {
+                      "source": {
+                        "type": "DelimitedTextSource",
+                        "formatSettings": {
+                          "type": "DelimitedTextReadSettings"
+                        },
+                        "storeSettings": {
+                          "type": "LakehouseReadSettings",
+                          "recursive": true,
+                          "enablePartitionDiscovery": false
+                        },
+                        "datasetSettings": {
+                          "type": "DelimitedText",
+                          "typeProperties": {
+                            "location": {
+                              "type": "LakehouseLocation",
+                              "folderPath": {
+                                "value": "@item().source_schema_name",
+                                "type": "Expression"
+                              },
+                              "fileName": {
+                                "value": "@concat(item().source_table_name,'.csv')",
+                                "type": "Expression"
+                              }
+                            },
+                            "columnDelimiter": ",",
+                            "quoteChar": "\"",
+                            "escapeChar": "\\",
+                            "firstRowAsHeader": true
+                          },
+                          "schema": [],
+                          "linkedService": {
+                            "name": "TaurusBronzeLH",
+                            "properties": {
+                              "type": "Lakehouse",
+                              "typeProperties": {
+                                "artifactId": "791cfcdd-21da-a7c8-4046-dd7d3b2d8490",
+                                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                                "rootFolder": "Files"
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "annotations": []
+                        }
+                      },
+                      "sink": {
+                        "type": "LakehouseTableSink",
+                        "tableActionOption": "OverwriteSchema",
+                        "partitionOption": "None",
+                        "datasetSettings": {
+                          "type": "LakehouseTable",
+                          "typeProperties": {
+                            "table": {
+                              "value": "@concat(item().source_table_name)",
+                              "type": "Expression"
+                            }
+                          },
+                          "schema": [],
+                          "linkedService": {
+                            "name": "TaurusBronzeLH",
+                            "properties": {
+                              "type": "Lakehouse",
+                              "typeProperties": {
+                                "artifactId": "791cfcdd-21da-a7c8-4046-dd7d3b2d8490",
+                                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                                "rootFolder": "Tables"
+                              },
+                              "annotations": []
+                            }
+                          },
+                          "annotations": []
+                        }
+                      },
+                      "translator": {
+                        "type": "TabularTranslator",
+                        "typeConversion": true,
+                        "typeConversionSettings": {
+                          "allowDataTruncation": true,
+                          "treatBooleanAsNumber": false
+                        }
+                      },
+                      "enableStaging": false
+                    },
+                    "policy": {
+                      "timeout": "0.12:00:00",
+                      "retry": 3,
+                      "retryIntervalInSeconds": 30,
+                      "secureInput": false,
+                      "secureOutput": false
+                    },
+                    "name": "Copy_ingestCSVdataForFullLoad",
+                    "description": "This activity is used to copy full CSV data.",
+                    "dependsOn": []
+                  },
+                  {
+                    "type": "ExecutePipeline",
+                    "typeProperties": {
+                      "pipeline": {
+                        "referenceName": "e6886636-4730-a6b4-418b-17813248206c",
+                        "type": "PipelineReference"
+                      },
+                      "parameters": {
+                        "par_data_consistency_verification": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').output.dataConsistencyVerification.VerificationResult",
+                          "type": "Expression"
+                        },
+                        "par_data_read": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').output.dataRead",
+                          "type": "Expression"
+                        },
+                        "par_data_written": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').output.dataWritten",
+                          "type": "Expression"
+                        },
+                        "par_files_read": 0,
+                        "par_files_written": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').output.filesWritten",
+                          "type": "Expression"
+                        },
+                        "par_item_name": {
+                          "value": "@concat(item().source_schema_name,'.',item().source_table_name)",
+                          "type": "Expression"
+                        },
+                        "par_event_run_id": {
+                          "value": "@pipeline().RunId",
+                          "type": "Expression"
+                        },
+                        "par_copy_duration": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').output.copyDuration",
+                          "type": "Expression"
+                        },
+                        "par_rows_read": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').output.rowsRead",
+                          "type": "Expression"
+                        },
+                        "par_source_type": {
+                          "value": "@item().source_type",
+                          "type": "Expression"
+                        },
+                        "par_status": {
+                          "value": "@if(equals(activity('Copy_ingestCSVdataForFullLoad').output.executionDetails[0].status, 'Succeeded'), 'success','failure')",
+                          "type": "Expression"
+                        },
+                        "par_rows_written": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').output.rowsCopied",
+                          "type": "Expression"
+                        },
+                        "par_event_start_time": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').ExecutionStartTime",
+                          "type": "Expression"
+                        },
+                        "par_event_end_time": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').ExecutionEndTime",
+                          "type": "Expression"
+                        },
+                        "par_source_cutoff_time": {
+                          "value": "@item().source_cutoff_time",
+                          "type": "Expression"
+                        },
+                        "par_load_type": "Full",
+                        "par_event_triggered_by": {
+                          "value": "@pipeline().TriggerType",
+                          "type": "Expression"
+                        },
+                        "par_event_activity_run_id": {
+                          "value": "@activity('Copy_ingestCSVdataForFullLoad').ActivityRunId",
+                          "type": "Expression"
+                        },
+                        "par_pipeline_url": {
+                          "value": "@concat('https://app.fabric.microsoft.com/workloads/data-pipeline/monitoring/workspaces/',pipeline().DataFactory,'/pipelines/',pipeline().PipelineName,'/',pipeline().RunId,'?experience=data-factory')",
+                          "type": "Expression"
+                        }
+                      },
+                      "waitOnCompletion": true
+                    },
+                    "policy": {
+                      "secureInput": false
+                    },
+                    "name": "AuditingSuccess",
+                    "description": "This activity is used to invoke auditing on successful full CSV ingestion. ",
+                    "dependsOn": [
+                      {
+                        "activity": "Copy_ingestCSVdataForFullLoad",
+                        "dependencyConditions": [
+                          "Succeeded"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "name": "IF_chkBlobOrDB",
+              "description": "If the source type is \"Blob\", file ingestion is invoked else DB ingestion is invoked for full load.",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "Bronze_ForEach_ItemInControlEvent",
+        "description": "This activity will iterate over all the objects fetched from the control table. Please note that the sequential checkbox is on to ensure that the variables used are set appropriately.",
+        "dependsOn": [
+          {
+            "activity": "LKP_fetchControlEventsForLoad",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "batchCount": 1,
+          "items": {
+            "value": "@activity('LKP_fetchControlEventsForLoad').output.value\n",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "8f264f2f-cdf2-b126-48e5-349a06cc6eae",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "File_Type": {
+                    "value": {
+                      "value": "@item().source_table_name",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "SelectedDate": {
+                    "value": {
+                      "value": "@variables('process_date')",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 3,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Bronze_To_Silver_Load",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "Silver_ForEach_ItemInControlEvent",
+        "description": "This activity will iterate over all the objects fetched from the control table. Please note that the sequential checkbox is on to ensure that the variables used are set appropriately.",
+        "dependsOn": [
+          {
+            "activity": "Bronze_ForEach_ItemInControlEvent",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "batchCount": 1,
+          "items": {
+            "value": "@activity('LKP_fetchControlEventsForLoad').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "71fbf79a-6122-aaca-49c5-34c3895f3e6b",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "File_Type": {
+                    "value": {
+                      "value": "@concat('Daily',item().source_table_name)",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 3,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "DimTravelBrand",
+              "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "9c89e364-9d10-9e22-4836-5393d7be8855",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "File_Type": {
+                    "value": {
+                      "value": "@item().source_table_name",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  },
+                  "Process_Date": {
+                    "value": {
+                      "value": "@variables('process_date')",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 3,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "FactTables",
+              "dependsOn": [
+                {
+                  "activity": "DimTravelBrand",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "name": "Gold_ForEach_ItemInControlEnvent",
+        "description": "This activity will iterate over all the objects fetched from the control table. Please note that the sequential checkbox is on to ensure that the ",
+        "dependsOn": [
+          {
+            "activity": "Silver_ForEach_ItemInControlEvent",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "e418d9fe-ecda-9d1e-45db-c5bddcd3bee2",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "process_date": {
+              "value": "@variables('process_date')",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Report_Generation",
+        "dependsOn": [
+          {
+            "activity": "Gold_ForEach_ItemInControlEnvent",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "process_date",
+          "value": {
+            "value": "@formatDateTime(addDays(utcNow(), -1), 'yyyy-MM-dd')",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Set variable1",
+        "dependsOn": []
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "7d01d93d-34b0-ac54-4c30-3d05719d1091",
+            "type": "PipelineReference"
+          },
+          "parameters": {},
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "PBI Semantic Model Refresh",
+        "dependsOn": [
+          {
+            "activity": "Refresh Data SQL Endpoint",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "RefreshSqlEndpoint",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "sqlEndpointId": "b05ccdfb-1ff2-49af-aa0c-2a7f19f10f13",
+          "recreateTables": false
+        },
+        "externalReferences": {
+          "connection": "11ba5233-2a47-4c64-94a6-573f2e7782f6"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Refresh Data SQL Endpoint",
+        "dependsOn": [
+          {
+            "activity": "Report_Generation",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "selected_date": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "process_date": {
+        "type": "String"
+      }
+    }
+  }
+}

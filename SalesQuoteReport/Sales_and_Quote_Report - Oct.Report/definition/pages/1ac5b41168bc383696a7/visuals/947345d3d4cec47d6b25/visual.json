@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "947345d3d4cec47d6b25",
+  "position": {
+    "x": 1071.9116022099447,
+    "y": 70.541436464088392,
+    "z": 20000,
+    "height": 62.055248618784525,
+    "width": 197.30386740331491,
+    "tabOrder": 19000
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DimChannel"
+                    }
+                  },
+                  "Property": "GenericCoverLevel"
+                }
+              },
+              "queryRef": "DimChannel.GenericCoverLevel",
+              "nativeQueryRef": "Generic Cover Level",
+              "active": true,
+              "displayName": "Generic Cover Level"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "98192df4df5892a4d6cb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimChannel"
+              }
+            },
+            "Property": "GenericCoverLevel"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}
